@@ -1,0 +1,26 @@
+#!/usr/bin/perl
+
+my $email_only = (shift @ARGV eq '--email-only');
+my $login = $ENV{'USER'} || getlogin || (getpwuid($<))[0] || sprintf("uid#%d",$<);
+my $mailfrom = $login;
+my $mailname = "";
+
+# Parse the cvsusers file for the sender information                                  
+open CVSUSERS, "</horde/cvs/CVSROOT/cvsusers"
+    or die "$mailfrom";
+while (<CVSUSERS>) {
+    if (m/^(\w+)\s+(.+\w)\s+(.*@[\w\.]+)\s+(.*)$/) {
+        if ($1 eq $login) {
+            $mailfrom = $3;
+            $mailname = $2;
+        }
+    }
+}
+close CVSUSERS;
+
+if ($mailname && !$email_only) {
+    print "$mailname <$mailfrom>";
+} else {
+    print $mailfrom;
+}
+exit(0);
