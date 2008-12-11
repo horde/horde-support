@@ -390,8 +390,13 @@ generate_update_branch_email()
 
 		echo ""
 		echo $LOGBEGIN
-		git rev-parse --not --branches | grep -v $(git rev-parse $refname) |
-		git rev-list --pretty --stdin $oldrev..$newrev
+
+        # Old, default way of displaying log.
+		#git rev-parse --not --branches | grep -v $(git rev-parse $refname) |
+		#git rev-list --pretty --stdin $oldrev..$newrev
+
+        # This displays the log with file info.
+        git log --stat=76 --no-color $oldrev..$newrev
 
 		# XXX: Need a way of detecting whether git rev-list actually
 		# outputted anything, so that we can issue a "no new
