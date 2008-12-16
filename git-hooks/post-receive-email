@@ -58,6 +58,7 @@
 #  - generate_delete_XXXX_email
 #  - generate_email_footer
 #
+
 generate_email()
 {
 	# --- Arguments
