@@ -186,17 +186,13 @@ generate_email_header()
 	cat <<-EOF
 	To: $recipients
 	From: $mailfrom
-	Subject: ${emailprefix}$projectdesc $refname_type, $short_refname, ${change_type}d. $describe
+	Subject: ${emailprefix}$projectdesc $refname_type $short_refname ${change_type}d. $describe
 	X-Git-Refname: $refname
 	X-Git-Reftype: $refname_type
 	X-Git-Oldrev: $oldrev
 	X-Git-Newrev: $newrev
 
-	This is an automated email from the git hooks/post-receive script. It was
-	generated because a ref change was pushed to the repository containing
-	the project "$projectdesc".
-
-	The $refname_type, $short_refname has been ${change_type}d
+	The $refname_type $short_refname has been ${change_type}d
 	EOF
 }
 
@@ -205,10 +201,6 @@ generate_email_footer()
 	SPACE=" "
 	cat <<-EOF
 
-
-	hooks/post-receive
-	--${SPACE}
-	$projectdesc
 	EOF
 }
 
@@ -384,11 +376,6 @@ generate_update_branch_email()
 
 	echo ""
 	if [ -z "$rewind_only" ]; then
-		echo "Those revisions listed above that are new to this repository have"
-		echo "not appeared on any other notification email; so we list those"
-		echo "revisions in full, below."
-
-		echo ""
 		echo $LOGBEGIN
 
         # Old, default way of displaying log.
@@ -406,17 +393,6 @@ generate_update_branch_email()
 	else
 		echo "No new revisions were added by this update."
 	fi
-
-	# The diffstat is shown from the old revision to the new revision.
-	# This is to show the truth of what happened in this change.
-	# There's no point showing the stat from the base to the new
-	# revision because the base is effectively a random revision at this
-	# point - the user will be interested in what this revision changed
-	# - including the undoing of previous revisions in the case of
-	# non-fast forward updates.
-	echo ""
-	echo "Summary of changes:"
-	git diff-tree --stat --summary --find-copies-harder $oldrev..$newrev
 }
 
 #
@@ -605,8 +581,8 @@ send_mail()
 # ---------------------------- main()
 
 # --- Constants
-LOGBEGIN="- Log -----------------------------------------------------------------"
-LOGEND="-----------------------------------------------------------------------"
+LOGBEGIN="-----------------------------------------------------------------------"
+LOGEND=""
 
 # --- Config
 # Set GIT_DIR either from the working directory, or from the environment
