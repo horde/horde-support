@@ -58,7 +58,6 @@
 #  - generate_delete_XXXX_email
 #  - generate_email_footer
 #
-
 generate_email()
 {
 	# --- Arguments
@@ -199,10 +198,6 @@ generate_email_header()
 
 generate_email_footer()
 {
-	SPACE=" "
-	cat <<-EOF
-
-	EOF
 }
 
 # --------------- Branches
