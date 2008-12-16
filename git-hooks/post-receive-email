@@ -198,6 +198,7 @@ generate_email_header()
 
 generate_email_footer()
 {
+	:
 }
 
 # --------------- Branches
