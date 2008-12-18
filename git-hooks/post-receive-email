@@ -373,14 +373,24 @@ generate_update_branch_email()
 
 	echo ""
 	if [ -z "$rewind_only" ]; then
-		echo $LOGBEGIN
+        reponame=$(sed -ne '1p' "$GIT_DIR/chora-reponame")
 
-        # Old, default way of displaying log.
-		#git rev-parse --not --branches | grep -v $(git rev-parse $refname) |
-		#git rev-list --pretty --stdin $oldrev..$newrev
+        for rev in $(git rev-list $oldrev..$newrev)
+        do
+		    echo $LOGBEGIN
+            git log --no-color $rev^..$rev
+            echo ""
+            git diff --summary --stat=76 --no-color $rev^..$rev
+            echo ""
 
-        # This displays the log with file info.
-        git log --stat=76 --no-color $oldrev..$newrev
+            for fname in $(git diff --name-only $rev^..$rev)
+            do
+                prevrev=$(git rev-list --max-count=1 $rev^ -- $fname)
+                echo "http://cvs.horde.org/diff.php/$fname?rt=$reponame&r1=$prevrev&r2=$rev"
+            done
+
+            echo ""
+        done
 
 		# XXX: Need a way of detecting whether git rev-list actually
 		# outputted anything, so that we can issue a "no new
