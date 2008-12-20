@@ -386,7 +386,11 @@ generate_update_branch_email()
             for fname in $(git diff --name-only $rev^..$rev)
             do
                 prevrev=$(git rev-list --max-count=1 $rev^ -- $fname)
-                echo "http://cvs.horde.org/diff.php/$fname?rt=$reponame&r1=$prevrev&r2=$rev"
+	            if [ "$prevrev" ]; then
+                    echo "http://cvs.horde.org/diff.php/$fname?rt=$reponame&r1=$prevrev&r2=$rev"
+                else
+                    echo "http://cvs.horde.org/co.php/$fname?rt=$reponame&r=$rev"
+                fi
             done
 
             echo ""
