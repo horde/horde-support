@@ -1,0 +1,50 @@
+======================
+Horde Maintainer Tools
+======================
+
+Introduction
+~~~~~~~~~~~~
+This directory contains various maintainer scripts for the Horde distribution.
+
+
+Script Index
+~~~~~~~~~~~~
+horde-build-snaps.php
+    Builds the nightly snapshots for all HEAD modules and selected
+    FRAMEWORK_3 and RELENG_* modules.
+
+horde-build-website-docs.sh
+    Converts reST documentation into HTML for the website.
+
+horde-compress-pngs.php
+    Runs advpng and optipng on PNG images to reduce their size as much as
+    possible.
+
+horde-js-compress.php
+    Runs the YUI compressor or other alternatives on all .js files in the
+    current directory, writing them to a compressed file in the parent
+    directory.
+
+horde-make-release.php
+    Builds distribution tarballs for Horde and Horde modules.
+
+horde-make-release-conf.php.dist
+    Example configuration file for horde-make-release.php
+
+horde-update-ISO3166-countries.php
+    Fetch the current ISO-3166 country definitions to update Horde's
+    country list file in horde/lib/NLS/countries.php.
+
+horde-update-protaculous.php
+    Run from an uncompressed scriptaculous directory, this updates all
+    instances in a Horde tree (passed as a command line argument) of
+    the Prototype and Scriptaculous files.
+
+jsmin/
+    This directory contains the jsmin tool for minifying JavaScript source.
+    jsmin is used as a fallback from horde-js-compress.php.
+
+mime_mapping/
+    This script converts an Apache-style mime.types file into a
+    mime.mapping.php driver file suitable for use with Horde.  It is useful
+    for syncing Apache updates to their MIME types with Horde.

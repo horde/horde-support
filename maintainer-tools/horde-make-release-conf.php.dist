@@ -1,0 +1,41 @@
+<?php
+/**
+ * Configuration for the make-release.php script.
+ *
+ * $Horde: framework/devtools/horde-make-release-conf.php.dist,v 1.2 2007/11/27 19:33:11 mrubinsk Exp $
+ */
+
+/* Uncomment and set this if you haven't installed the Horde framework in your
+ * base include path. */
+//ini_set('include_path', '/horde/libs' . PATH_SEPARATOR . ini_get('include_path'));
+
+/* Username for horde.org.
+ * Make sure you belong to the "horde" group there. */
+$options['horde']['user'] = '';
+
+/* Needed to update the Whups versions */
+$options['horde']['pass'] = '';
+
+/* Path to private SSH identity file. */
+$options['ssh']['identity'] = '';
+
+/* Value of CVS_RSH environment variable. */
+$options['cvs']['cvs_rsh'] = '';
+
+/* From: address for announcements. */
+$options['ml']['from'] = '';
+
+/* Username for freshmeat.net.
+ * Make sure you are a project admin there for the modules
+ * you want to release. */
+$options['fm']['user'] = '';
+
+/* Password for freshmeat.net. */
+$options['fm']['password'] = '';
+
+/* Local MD5 command. */
+$options['md5'] = '/usr/bin/md5sum';
+
+/* Configuration for local MTA. */
+$options['mailer']['type'] = 'sendmail';
+$options['mailer']['params'] = array();
