@@ -315,20 +315,20 @@ generate_update_branch_email()
 		fast_forward=1
 	fi
 
-	# List all the revisions from baserev to newrev in a kind of
-	# "table-of-contents"; note this list can include revisions that
-	# have already had notification emails and is present to show the
-	# full detail of the change from rolling back the old revision to
-	# the base revision and then forward to the new revision
-	for rev in $(git rev-list $oldrev..$newrev)
-	do
-		revtype=$(git cat-file -t "$rev")
-		echo "       via  $rev ($revtype)"
-	done
-
-	if [ "$fast_forward" ]; then
+	if [ -z "$fast_forward" ]; then
+        # List all the revisions from baserev to newrev in a kind of
+        # "table-of-contents"; note this list can include revisions that
+        # have already had notification emails and is present to show the
+        # full detail of the change from rolling back the old revision to
+        # the base revision and then forward to the new revision
 		echo "      from  $oldrev ($oldrev_type)"
-	else
+
+        for rev in $(git rev-list $oldrev..$newrev)
+        do
+            revtype=$(git cat-file -t "$rev")
+            echo "       via  $rev ($revtype)"
+        done
+
 		#  1. Existing revisions were removed.  In this case newrev
 		#     is a subset of oldrev - this is the reverse of a
 		#     fast-forward, a rewind
@@ -375,6 +375,15 @@ generate_update_branch_email()
 	echo ""
 	if [ -z "$rewind_only" ]; then
         reponame=$(sed -ne '1p' "$GIT_DIR/chora-reponame")
+
+        echo "The following is a summary of the commits. Further details on each commit"
+        echo "can be found below."
+        echo ""
+
+        # Print brief summary of commits
+        git log --abbrev-commit --no-color --pretty=oneline $oldrev..$newrev
+
+        echo ""
 
         for rev in $(git rev-list $oldrev..$newrev)
         do
