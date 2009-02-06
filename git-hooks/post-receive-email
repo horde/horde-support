@@ -380,7 +380,9 @@ generate_update_branch_email()
         echo ""
 
         # Print brief summary of commits
+        # TODO: Provide chora link to all diffs in e-mail?
         git log --abbrev-commit --no-color --pretty=oneline $oldrev..$newrev
+        echo ""
         echo "from: $oldrev"
         echo ""
 
@@ -396,6 +398,7 @@ generate_update_branch_email()
             do
                 prevrev=$(git rev-list --max-count=1 $rev^ -- $fname)
 	            if [ "$prevrev" ]; then
+                    # TODO: Provide chora link to patchset page?
                     echo "$GIT_WEB_URL/diff.php/$fname?rt=$reponame&r1=$prevrev&r2=$rev"
                 else
                     echo "$GIT_WEB_URL/co.php/$fname?rt=$reponame&r=$rev"
