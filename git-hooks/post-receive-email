@@ -391,7 +391,7 @@ generate_update_branch_email()
 		    echo $LOGBEGIN
             git log --no-color $rev^..$rev
             echo ""
-            git diff --summary --stat=76 --no-color $rev^..$rev
+            git diff --summary --no-color $rev^..$rev
             echo ""
 
             for fname in $(git diff --name-only $rev^..$rev)
