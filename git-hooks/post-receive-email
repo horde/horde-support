@@ -390,9 +390,7 @@ generate_update_branch_email()
         for rev in $(git rev-list --reverse $oldrev..$newrev)
         do
 		    echo $LOGBEGIN
-            git log --no-color $rev^..$rev
-            echo ""
-            git diff --summary --no-color $rev^..$rev
+            git log --stat --summary --no-color $rev^..$rev
             echo ""
 
             for fname in $(git diff --name-only $rev^..$rev)
