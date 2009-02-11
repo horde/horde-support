@@ -380,13 +380,14 @@ generate_update_branch_email()
         echo ""
 
         # Print brief summary of commits
+        # Print oldest commits first - more natural when reading e-mail
         # TODO: Provide chora link to all diffs in e-mail?
-        git log --abbrev-commit --no-color --pretty=oneline $oldrev..$newrev
-        echo ""
         echo "from: $oldrev"
         echo ""
+        git log --abbrev-commit --no-color --pretty=oneline --reverse $oldrev..$newrev
+        echo ""
 
-        for rev in $(git rev-list $oldrev..$newrev)
+        for rev in $(git rev-list --reverse $oldrev..$newrev)
         do
 		    echo $LOGBEGIN
             git log --no-color $rev^..$rev
