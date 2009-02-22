@@ -193,7 +193,7 @@ generate_email_header()
 	X-Git-Oldrev: $oldrev
 	X-Git-Newrev: $newrev
 
-	The $refname_type $short_refname has been ${change_type}d.
+	The $refname_type "$short_refname" has been ${change_type}d.
 	EOF
 }
 
@@ -375,8 +375,7 @@ generate_update_branch_email()
 	if [ -z "$rewind_only" ]; then
         reponame=$(sed -ne '1p' "$GIT_DIR/chora-reponame")
 
-        echo "The following is a summary of the commits. Further details on each commit"
-        echo "can be found below."
+        echo "The following is a summary of the commits."
         echo ""
 
         # Print brief summary of commits
@@ -390,6 +389,7 @@ generate_update_branch_email()
         for rev in $(git rev-list --reverse $oldrev..$newrev)
         do
 		    echo $LOGBEGIN
+            echo ""
             git log --stat=,999 --summary --no-color $rev^..$rev
             echo ""
 
