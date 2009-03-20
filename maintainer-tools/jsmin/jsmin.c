@@ -1,7 +1,7 @@
 /* jsmin.c
-   2007-12-04
+   2008-08-03
 
-Copyright 2002 Douglas Crockford  (www.crockford.com)
+Copyright (c) 2002 Douglas Crockford  (www.crockford.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -142,28 +142,22 @@ action(int d)
                 if (theA == theB) {
                     break;
                 }
-                if (theA <= '\n') {
-                    fprintf(stderr,
-"Error: JSMIN unterminated string literal: %c\n", theA);
-                    exit(1);
-                }
                 if (theA == '\\') {
                     putc(theA, stdout);
                     theA = get();
-                    if (theA <= '\n') {
-                        fprintf(stderr,
-    "Error: JSMIN unterminated string literal: %c\n", '\\');
-                        exit(1);
-                    }
+                }
+                if (theA == EOF) {
+                    fprintf(stderr, "Error: JSMIN unterminated string literal.");
+                    exit(1);
                 }
             }
         }
     case 3:
         theB = next();
         if (theB == '/' && (theA == '(' || theA == ',' || theA == '=' ||
-                            theA == ':' || theA == '[' || theA == '!' || 
-                            theA == '&' || theA == '|' || theA == '?' || 
-                            theA == '{' || theA == '}' || theA == ';' || 
+                            theA == ':' || theA == '[' || theA == '!' ||
+                            theA == '&' || theA == '|' || theA == '?' ||
+                            theA == '{' || theA == '}' || theA == ';' ||
                             theA == '\n')) {
             putc(theA, stdout);
             putc(theB, stdout);
@@ -171,12 +165,14 @@ action(int d)
                 theA = get();
                 if (theA == '/') {
                     break;
-                } else if (theA =='\\') {
+                }
+                if (theA =='\\') {
                     putc(theA, stdout);
                     theA = get();
-                } else if (theA <= '\n') {
+                }
+                if (theA == EOF) {
                     fprintf(stderr,
-"Error: JSMIN unterminated Regular Expression literal.\n", theA);
+"Error: JSMIN unterminated Regular Expression literal.\n");
                     exit(1);
                 }
                 putc(theA, stdout);

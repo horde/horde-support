@@ -3,3 +3,8 @@
 .#*
 *.orig
 *.rej
+
+# Ignore YUI Compressor and jsmin compiled files
+maintainer-tools/yuicompressor.jar
+maintainer-tools/jsmin/jsmin
+maintainer-tools/jsmin/jsmin.o
