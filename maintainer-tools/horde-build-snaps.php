@@ -93,9 +93,9 @@ function exportCVS()
 
     foreach ($modules as $module) {
         system("cd $dir; cvs -Q export -r HEAD $module > /dev/null");
-        if (in_array($module, $framework3)) {
-            system("cd $dir; cvs -Q export -r FRAMEWORK_3 -d ${module}-FRAMEWORK_3 $module");
-        }
+    }
+    foreach ($framework3 as $module) {
+        system("cd $dir; cvs -Q export -r FRAMEWORK_3 -d ${module}-FRAMEWORK_3 $module");
     }
 }
 
@@ -106,10 +106,10 @@ function makeTarballs()
     foreach ($modules as $module) {
         system("cd $dir; tar -zcf ${module}-HEAD-${dir}.tar.gz $module");
         system("cd $dir; /sbin/md5 ${module}-HEAD-${dir}.tar.gz > ${module}-HEAD-${dir}.tar.gz.md5sum");
-        if (in_array($module, $framework3)) {
-            system("cd $dir; tar -zcf ${module}-FRAMEWORK_3-${dir}.tar.gz ${module}-FRAMEWORK_3");
-            system("cd $dir; /sbin/md5 ${module}-FRAMEWORK_3-${dir}.tar.gz > ${module}-FRAMEWORK_3-${dir}.tar.gz.md5sum");
-        }
+    }
+    foreach ($framework3 as $module) {
+        system("cd $dir; tar -zcf ${module}-FRAMEWORK_3-${dir}.tar.gz ${module}-FRAMEWORK_3");
+        system("cd $dir; /sbin/md5 ${module}-FRAMEWORK_3-${dir}.tar.gz > ${module}-FRAMEWORK_3-${dir}.tar.gz.md5sum");
     }
 }
 
@@ -119,6 +119,8 @@ function cleanup()
 
     foreach ($modules as $module) {
         system("rm -rf $dir/$module");
+    }
+    foreach ($framework3 as $module) {
         system("rm -rf $dir/${module}-FRAMEWORK_3");
     }
 }
