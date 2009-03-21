@@ -115,7 +115,7 @@ function makeTarballs()
 
 function cleanup()
 {
-    global $dir, $modules;
+    global $dir, $modules, $framework3;
 
     foreach ($modules as $module) {
         system("rm -rf $dir/$module");
