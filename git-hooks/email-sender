@@ -6,8 +6,12 @@ my $mailfrom = $login;
 my $mailname = "";
 
 # Parse the cvsusers file for the sender information                                  
-open CVSUSERS, "</horde/cvs/CVSROOT/cvsusers"
-    or die "$mailfrom";
+open CVSUSERS, "</horde/cvs/CVSROOT/cvsusers";
+if (!CVSUSERS) {
+    print $mailfrom;
+    exit(0);
+}
+
 while (<CVSUSERS>) {
     if (m/^(\w+)\s+(.+\w)\s+(.*@[\w\.]+)\s+(.*)$/) {
         if ($1 eq $login) {
