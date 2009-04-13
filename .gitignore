@@ -8,3 +8,6 @@
 maintainer-tools/yuicompressor.jar
 maintainer-tools/jsmin/jsmin
 maintainer-tools/jsmin/jsmin.o
+
+# Ignore local config file
+maintainer-tools/horde-make-release-conf.php
