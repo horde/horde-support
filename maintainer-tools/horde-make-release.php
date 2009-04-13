@@ -35,11 +35,10 @@
  */
 
 require dirname(__FILE__) . '/horde-make-release-conf.php';
-require_once 'Horde/Util.php';
-require_once 'Horde/RPC.php';
-require_once 'Horde/Mime/Mail.php';
-require_once 'Horde/Release.php';
-require_once 'Horde/Serialize.php';
+
+/* Horde autoloader. */
+include_once 'Horde/Autoloader.php';
+
 // Create a class instance
 $tarball = new Horde_Release($options);
 
