@@ -3,82 +3,111 @@
 /**
  * Script to build snapshot tarballs.
  *
- * $Horde: framework/devtools/horde-build-snaps.php,v 1.13 2009/01/18 05:02:58 chuck Exp $
- *
  * @category Horde
  * @package devtools
  */
 
-$modules = array(
-    'agora',
-    'ansel',
-    'forwards',
-    'framework',
-    'genie',
-    'gollem',
-    'hermes',
-    'horde',
-    'ingo',
-    'jeta',
-    'jonah',
-    'juno',
-    'klutz',
-    'luxor',
-    'merk',
-    'midas',
-    'mnemo',
-    'mottle',
-    'nag',
-    'nic',
-    'passwd',
-    'sam',
-    'scry',
-    'sesha',
-    'skeleton',
-    'trean',
-    'turba',
-    'ulaform',
-    'vacation',
-    'vilma',
-    'whups',
-    'wicked',
+// How many days to keep snapshots for.
+$days = 7;
+
+// Location of MD5 binary.
+$md5_path = '/sbin/md5';
+
+// Apps to build.
+$apps = array(
+    // Apps in git:horde-hatchery
+    'hatchery' => array(
+        // 'chora',
+        'imp',
+        'jeta',
+        // 'ingo',
+        'kronolith'
+    ),
+
+    // Apps in CVS HEAD
+    'cvs' => array(
+        'agora',
+        'ansel',
+        'forwards',
+        'framework',
+        'genie',
+        'gollem',
+        'hermes',
+        'horde',
+        'jonah',
+        'juno',
+        'klutz',
+        'luxor',
+        'merk',
+        'midas',
+        'mnemo',
+        'mottle',
+        'nag',
+        'nic',
+        'passwd',
+        'sam',
+        'scry',
+        'sesha',
+        'skeleton',
+        'trean',
+        'turba',
+        'ulaform',
+        'vacation',
+        'vilma',
+        'whups',
+        'wicked',
+    ),
+
+    // Apps in FRAMEWORK_3 CVS
+    'fw3' => array(
+        'agora',
+        'ansel',
+        'chora',
+        'dimp',
+        'forwards',
+        'framework',
+        'gollem',
+        'hermes',
+        'horde',
+        'imp',
+        'ingo',
+        'klutz',
+        'kronolith',
+        'mimp',
+        'mnemo',
+        'nag',
+        'passwd',
+        'scry',
+        'trean',
+        'turba',
+        'vacation',
+        'whups',
+        'wicked',
+    )
 );
 
-$framework3 = array(
-    'agora',
-    'ansel',
-    'chora',
-    'dimp',
-    'forwards',
-    'framework',
-    'gollem',
-    'hermes',
-    'horde',
-    'imp',
-    'ingo',
-    'klutz',
-    'kronolith',
-    'mimp',
-    'mnemo',
-    'nag',
-    'passwd',
-    'scry',
-    'trean',
-    'turba',
-    'vacation',
-    'whups',
-    'wicked',
-);
-
+// Create directory for current day
 $dir = date('Y-m-d');
 if (!is_dir($dir)) {
     mkdir($dir);
 }
 
-exportCVS();
-makeTarballs();
-cleanup();
-prune(7);
+// Prune old snapshots.
+prune($days);
+
+// Do git stuff
+foreach ($apps['hatchery'] as $val) {
+    tarballGit($dir, $val, 'horde-hatchery');
+}
+
+// Do CVS stuff
+foreach ($apps['cvs'] as $val) {
+    tarballCVS($dir, $val, 'HEAD');
+}
+
+foreach ($apps['fw3'] as $val) {
+    tarballCVS($dir, $val, 'FRAMEWORK_3');
+}
 
 // Update latest/ symlink.
 system("ln -sfh $dir latest");
@@ -87,42 +116,17 @@ system("ln -sfh $dir latest");
 /**
  * Functions
  */
-function exportCVS()
+function tarballGit($dir, $module, $repo)
 {
-    global $dir, $modules, $framework3;
-
-    foreach ($modules as $module) {
-        system("cd $dir; cvs -Q export -r HEAD $module > /dev/null");
-    }
-    foreach ($framework3 as $module) {
-        system("cd $dir; cvs -Q export -r FRAMEWORK_3 -d ${module}-FRAMEWORK_3 $module");
-    }
+    // git archive --format=tar --prefix=imp/ HEAD:imp/ | gzip -9 > imp.tar.gz
 }
 
-function makeTarballs()
+function tarballCVS($dir, $module, $tag)
 {
-    global $dir, $modules, $framework3;
-
-    foreach ($modules as $module) {
-        system("cd $dir; tar -zcf ${module}-HEAD-${dir}.tar.gz $module");
-        system("cd $dir; /sbin/md5 ${module}-HEAD-${dir}.tar.gz > ${module}-HEAD-${dir}.tar.gz.md5sum");
-    }
-    foreach ($framework3 as $module) {
-        system("cd $dir; tar -zcf ${module}-FRAMEWORK_3-${dir}.tar.gz ${module}-FRAMEWORK_3");
-        system("cd $dir; /sbin/md5 ${module}-FRAMEWORK_3-${dir}.tar.gz > ${module}-FRAMEWORK_3-${dir}.tar.gz.md5sum");
-    }
-}
-
-function cleanup()
-{
-    global $dir, $modules, $framework3;
-
-    foreach ($modules as $module) {
-        system("rm -rf $dir/$module");
-    }
-    foreach ($framework3 as $module) {
-        system("rm -rf $dir/${module}-FRAMEWORK_3");
-    }
+    system('cd ' . $dir . '; cvs -Q export -r ' . $tag . ' -d ' . $module . '-' . $tag . ' ' . $module . ' > /dev/null');
+    system('cd ' . $dir . '; tar -zcf ' . $module . '-' . $tag . '-' . $dir . '.tar.gz ' . $module . '-' . $tag);
+    system('cd ' . $dir . '; ' . $GLOBALS['md5_path'] . ' ' . $module . '-' . $tag . '-' . $dir . '.tar.gz > ' . $module . '-' . $tag . '-' . $dir . '.tar.gz.md5sum');
+    system('rm -rf ' . $dir . '/' . $module . '-' . $tag);
 }
 
 function prune($keep)
