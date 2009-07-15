@@ -17,11 +17,12 @@ $md5_path = '/sbin/md5';
 $apps = array(
     // Apps in git:horde-hatchery
     'hatchery' => array(
-        // 'chora',
+        'chora',
         'imp',
+        'ingo',
         'jeta',
-        // 'ingo',
-        'kronolith'
+        'kronolith',
+        'turba'
     ),
 
     // Apps in CVS HEAD
@@ -50,7 +51,6 @@ $apps = array(
         'sesha',
         'skeleton',
         'trean',
-        'turba',
         'ulaform',
         'vacation',
         'vilma',
