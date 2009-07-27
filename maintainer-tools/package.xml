@@ -48,6 +48,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <file name="horde-make-release.php" role="script">
     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config"/>
    </file>
+   <file name="horde-patch-config.php" role="script"/>
    <file name="horde-update-protaculous.php" role="script">
     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config"/>
    </file>
