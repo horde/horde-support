@@ -4,9 +4,8 @@
  * Script to find all PNG's in a horde installation, and attempt to max
  * compress them.
  *
- * Usage: horde-compress-pngs.php -h [horde_base] -a [advpng binary] -o [optipng binary]
- *
- * $Horde: framework/devtools/horde-compress-pngs.php,v 1.2 2007/06/29 13:43:30 jan Exp $
+ * Usage: horde-compress-pngs.php -h [horde_base] -a [advpng binary]
+ *                                -o [optipng binary]
  *
  * @category Horde
  * @package devtools

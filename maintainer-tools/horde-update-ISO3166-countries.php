@@ -8,8 +8,6 @@
  * The source for the country list is the International Organization for
  * Standardization (http://iso.org).
  *
- * $Horde: framework/devtools/horde-update-ISO3166-countries.php,v 1.9 2009/01/06 17:50:01 jan Exp $
- *
  * Copyright 2004-2009 The Horde Project (http://www.horde.org/)
  *
  * See the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +16,6 @@
  * @category Horde
  * @package  devtools
  * @author   Marko Djukic <marko@oblo.com>
- * @since    Horde 3.0
  *
  * @todo  Would be good to expand this to fetch also ISO-3166-2 lists from
  *        somewhere for lists of countries' regions/states.
@@ -27,7 +24,6 @@
 define('HORDE_BASE', dirname(__FILE__) . '/..');
 require_once HORDE_BASE . '/lib/core.php';
 
-require_once 'Horde/CLI.php';
 if (!Horde_CLI::runningFromCLI()) {
     exit("Must be run from the command line\n");
 }
@@ -63,8 +59,7 @@ class Countries {
     {
         $this->_url = $url;
 
-        require_once 'Horde/CLI.php';
-        $this->cli = &Horde_CLI::singleton();
+        $this->cli = Horde_CLI::singleton();
 
         $this->old_data = $this->_loadOld();
         $this->new_data = $this->_loadNew();
@@ -166,7 +161,6 @@ class Countries {
         $options['timeout'] = 5;
         $options['allowRedirects'] = true;
 
-        require_once 'HTTP/Request.php';
         $http = new HTTP_Request($this->_url, $options);
         @$http->sendRequest();
         if ($http->getResponseCode() != 200) {
