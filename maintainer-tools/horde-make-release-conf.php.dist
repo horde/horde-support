@@ -25,13 +25,8 @@ $options['cvs']['cvs_rsh'] = '';
 /* From: address for announcements. */
 $options['ml']['from'] = '';
 
-/* Username for freshmeat.net.
- * Make sure you are a project admin there for the modules
- * you want to release. */
-$options['fm']['user'] = '';
-
-/* Password for freshmeat.net. */
-$options['fm']['password'] = '';
+/* This should be set to the developer's API token */
+$options['fm']['user_token'] = '';
 
 /* Local MD5 command. */
 $options['md5'] = '/usr/bin/md5sum';
