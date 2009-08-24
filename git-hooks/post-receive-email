@@ -391,6 +391,7 @@ generate_update_branch_email()
 		    echo $LOGBEGIN
             echo ""
             git show --stat=,999 --summary --no-color $rev
+            whups_update $rev
             echo ""
 
             for fname in $(git diff --name-only $rev^..$rev)
@@ -598,6 +599,11 @@ send_mail()
 {
     envelopesender=$(hooks/email-sender --email-only)
     /usr/sbin/sendmail -t -f "$envelopesender"
+}
+
+whups_update()
+{
+#    ./commit-update-tickets.php $GIT_DIR $1
 }
 
 # ---------------------------- main()
