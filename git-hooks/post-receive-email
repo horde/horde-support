@@ -391,7 +391,7 @@ generate_update_branch_email()
 		    echo $LOGBEGIN
             echo ""
             git show --stat=,999 --summary --no-color $rev
-            whups_update $rev
+            #whups_update $rev
             echo ""
             echo "$GIT_WEB_URL/patchsets.php/$fname?rt=$reponame&ps=$rev"
             echo ""
@@ -590,10 +590,10 @@ send_mail()
     /usr/sbin/sendmail -t -f "$envelopesender"
 }
 
-whups_update()
-{
+#whups_update()
+#{
 #    ./commit-update-tickets.php $GIT_DIR $1
-}
+#}
 
 # ---------------------------- main()
 
