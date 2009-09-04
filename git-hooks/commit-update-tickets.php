@@ -101,9 +101,8 @@ function usage() {
 }
 
 function find_tickets($log_message) {
-    preg_match_all('/#(\d+)/', $log_message, $matches_1);
-    preg_match_all('/(bug|ticket|request|enhancement|issue):?\s*#?(\d+)/i', $log_message, $matches_2);
-    return array_unique(array_merge($matches_1[1], $matches_2[2]));
+    preg_match_all('/(?:(?:bug|ticket|request|enhancement|issue):?\s*#?|#)(\d+)/i', $log_message, $matches);
+    return array_unique($matches[1]);
 }
 
 function post_comment($ticket, $log_message) {
