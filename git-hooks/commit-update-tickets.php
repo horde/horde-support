@@ -25,7 +25,7 @@ require_once 'Horde/Rpc.php';
  ** means, then include our configuration file.
  **/
 
-$git = null = $rpc_endpoint = $rpc_method = null;
+$git = $rpc_endpoint = $rpc_method = null;
 $rpc_options = array();
 
 include dirname(__FILE__) . '/commit-update-tickets-conf.php';
