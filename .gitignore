@@ -9,5 +9,6 @@ maintainer-tools/yuicompressor.jar
 maintainer-tools/jsmin/jsmin
 maintainer-tools/jsmin/jsmin.o
 
-# Ignore local config file
+# Ignore local config files
+git-hooks/commit-update-tickets-conf.php
 maintainer-tools/horde-make-release-conf.php

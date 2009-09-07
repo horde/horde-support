@@ -69,18 +69,21 @@ if (!is_dir($repo)) {
  **/
 
 // Run git show to get the log message for this revision
-exec(implode(' ', array(escapeshellcmd($git),
-                        'show',
-                        '--summary',
-                        '--format="%s"',
-                        '--git-dir=' . escapeshellarg($repo),
-                        escapeshellarg($rev))),
-     $log_message);
+$log_message = shell_exec(implode(' ', array(
+    escapeshellcmd($git),
+    '--git-dir=' . escapeshellarg($repo),
+    'show',
+    '--summary',
+    '--format="%s"',
+    escapeshellarg($rev)
+)));
 
-$tickets = find_tickets($log_message);
-if (count($tickets)) {
-    foreach ($tickets as $ticket) {
-        post_comment($ticket, $log_message);
+if (!empty($log_message)) {
+    $tickets = find_tickets($log_message);
+    if (count($tickets)) {
+        foreach ($tickets as $ticket) {
+            post_comment($ticket, $log_message);
+        }
     }
 }
 
