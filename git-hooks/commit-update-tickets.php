@@ -102,7 +102,7 @@ function abort($msg) {
 }
 
 function usage() {
-    abort("usage: commit-update-tickets.php PATH_TO_REPO REVISION");
+    abort("usage: commit-update-tickets.php PATH_TO_REPO REVISION LINKS");
 }
 
 function find_tickets($log_message) {
