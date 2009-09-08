@@ -393,6 +393,7 @@ generate_update_branch_email()
             git show --stat=,999 --summary --no-color $rev
             echo ""
 
+            links=""
             #links="$GIT_WEB_URL/patchsets.php/$fname?rt=$reponame&ps=$rev"
             #echo $links
             for fname in $(git diff --name-only $rev^..$rev)
