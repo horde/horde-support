@@ -17,7 +17,7 @@
  ** Includes
  **/
 
-require_once 'Horde/Rpc.php';
+require_once 'Horde/Autoloader.php';
 
 
 /**
@@ -74,7 +74,7 @@ $log_message = shell_exec(implode(' ', array(
     '--git-dir=' . escapeshellarg($repo),
     'show',
     '--summary',
-    '--format="%s"',
+    '--pretty=format:%s',
     escapeshellarg($rev)
 )));
 
