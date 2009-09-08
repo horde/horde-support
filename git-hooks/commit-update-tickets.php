@@ -43,7 +43,7 @@ if (is_null($rpc_endpoint) || is_null($rpc_method)) {
     abort("Required XML-RPC configuration is missing or incomplete.");
 }
 
-if (count($_SERVER['argv']) != 3) {
+if (count($_SERVER['argv']) != 4) {
     usage();
 }
 
@@ -54,6 +54,7 @@ if (count($_SERVER['argv']) != 3) {
 
 $repo = $_SERVER['argv'][1];
 $rev = $_SERVER['argv'][2];
+$links = $_SERVER['argv'][3];
 
 if (!file_exists($repo)) {
     abort("Repository $repo does not exist.");
@@ -74,13 +75,14 @@ $log_message = shell_exec(implode(' ', array(
     '--git-dir=' . escapeshellarg($repo),
     'show',
     '--summary',
-    '--pretty=format:%s',
+    '--pretty=format:%s%n%b',
     escapeshellarg($rev)
 )));
 
 if (!empty($log_message)) {
     $tickets = find_tickets($log_message);
     if (count($tickets)) {
+        $log_message = "Changes have been made in Git for this ticket:\n\n$log_message$links";
         foreach ($tickets as $ticket) {
             post_comment($ticket, $log_message);
         }
