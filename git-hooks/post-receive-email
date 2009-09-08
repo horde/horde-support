@@ -609,7 +609,7 @@ send_mail()
 
 whups_update()
 {
-    ./commit-update-tickets.php $GIT_DIR $1 $2
+    $(dirname $(readlink -f $0))/commit-update-tickets.php $GIT_DIR $1 $2
 }
 
 # ---------------------------- main()
