@@ -373,7 +373,7 @@ generate_update_branch_email()
 	fi
 
 	if [ -z "$rewind_only" ]; then
-        reponame=$(sed -ne '1p' "$GIT_DIR/chora-reponame")
+        reponame=$(git config hooks.reponame)
 
         echo "The following is a summary of the commits."
         echo ""
@@ -629,7 +629,7 @@ if [ -z "$GIT_DIR" ]; then
 fi
 
 # Location of Horde web server (Chora) - no trailing slash
-GIT_WEB_URL="http://git.horde.org"
+GIT_WEB_URL=$(git config hooks.weburl || echo 'http://git.horde.org')
 
 projectdesc=$(sed -ne '1p' "$GIT_DIR/description")
 # Check if the description is unchanged from it's default, and shorten it to
