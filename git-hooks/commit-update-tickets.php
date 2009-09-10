@@ -43,7 +43,7 @@ if (is_null($rpc_endpoint) || is_null($rpc_method)) {
     abort("Required XML-RPC configuration is missing or incomplete.");
 }
 
-if (count($_SERVER['argv']) != 4) {
+if (count($_SERVER['argv']) < 4) {
     usage();
 }
 
@@ -52,9 +52,9 @@ if (count($_SERVER['argv']) != 4) {
  ** Command-line parsing
  **/
 
-$repo = $_SERVER['argv'][1];
-$rev = $_SERVER['argv'][2];
-$links = $_SERVER['argv'][3];
+$repo = array_shift($_SERVER['argv']);
+$rev = array_shift($_SERVER['argv']);
+$links = implode("\n", $_SERVER['argv']);
 
 if (!file_exists($repo)) {
     abort("Repository $repo does not exist.");
