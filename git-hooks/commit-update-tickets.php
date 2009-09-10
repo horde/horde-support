@@ -52,6 +52,7 @@ if (count($_SERVER['argv']) < 4) {
  ** Command-line parsing
  **/
 
+array_shift($_SERVER['argv']);
 $repo = array_shift($_SERVER['argv']);
 $rev = array_shift($_SERVER['argv']);
 $links = implode("\n", $_SERVER['argv']);
