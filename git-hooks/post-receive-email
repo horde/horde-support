@@ -430,11 +430,6 @@ $url"
 #
 generate_delete_branch_email()
 {
-	echo "       was  $oldrev"
-	echo ""
-	echo $LOGEND
-	git show -s --pretty=oneline $oldrev
-	echo $LOGEND
 }
 
 # --------------- Annotated tags
@@ -530,11 +525,6 @@ generate_atag_email()
 #
 generate_delete_atag_email()
 {
-	echo "       was  $oldrev"
-	echo ""
-	echo $LOGEND
-	git show -s --pretty=oneline $oldrev
-	echo $LOGEND
 }
 
 # --------------- General references
