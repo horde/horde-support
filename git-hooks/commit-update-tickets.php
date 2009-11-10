@@ -82,6 +82,12 @@ $log_message = shell_exec(implode(' ', array(
 
 if (!empty($log_message)) {
     $tickets = find_tickets($log_message);
+    $kolab_tickets = find_kolab_tickets($log_message);
+
+    foreach ($kolab_tickets as $ticket) {
+        $log_message .= "\n\nThis ticket also references kolab issue: http://issues.kolab.org/issue$ticket";
+    }
+
     if (count($tickets)) {
         $log_message = "Changes have been made in Git for this ticket:\n\n$log_message$links";
         foreach ($tickets as $ticket) {
@@ -107,7 +113,12 @@ function usage() {
 }
 
 function find_tickets($log_message) {
-    preg_match_all('/(?:(?:bug|ticket|request|enhancement|issue):?\s*#?|#)(\d+)/i', $log_message, $matches);
+    preg_match_all('/(?:(?:kolab){0}[^\/](?:bug|ticket|request|enhancement|issue):?\s*#?|#)(\d+)/i', $log_message, $matches);
+    return array_unique($matches[1]);
+}
+
+function find_kolab_tickets($log_message) {
+    preg_match_all('/(?:(?:kolab\/issue))(\d+)/i', $log_message, $matches);
     return array_unique($matches[1]);
 }
 
