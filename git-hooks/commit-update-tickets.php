@@ -117,6 +117,9 @@ function find_tickets($log_message) {
     return array_unique($matches[1]);
 }
 
+/**
+ * Locate kolab tickets with kolab/issue1234
+ */
 function find_kolab_tickets($log_message) {
     preg_match_all('/(?:(?:kolab\/issue))(\d+)/i', $log_message, $matches);
     return array_unique($matches[1]);
