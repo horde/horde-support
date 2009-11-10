@@ -85,7 +85,7 @@ if (!empty($log_message)) {
     $kolab_tickets = find_kolab_tickets($log_message);
 
     foreach ($kolab_tickets as $ticket) {
-        $log_message .= "\n\nThis ticket also references kolab issue: http://issues.kolab.org/issue$ticket";
+        $log_message .= "\nThis ticket also references kolab issue: http://issues.kolab.org/issue$ticket\n\n";
     }
 
     if (count($tickets)) {
