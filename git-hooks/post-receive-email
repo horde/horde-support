@@ -430,6 +430,8 @@ $url"
 #
 generate_delete_branch_email()
 {
+    # bash functions cannot be empty
+    :echo "not implemented"
 }
 
 # --------------- Annotated tags
