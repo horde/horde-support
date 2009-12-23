@@ -14,7 +14,7 @@ $days = 7;
 $md5_path = '/sbin/md5';
 
 // Location of git binary
-$git_path = '/usr/bin/git';
+$git_dir = '/usr/bin/git';
 
 // Path to git repos (this is the location of the .git data files)
 $git_horde = '/horde.git';
@@ -104,8 +104,7 @@ system("ln -sfh $dir latest");
  */
 function tarballGit($dir, $module, $repo, $name)
 {
-    // TODO: Not activated
-    return;
+    global $git_dir;
 
     $filename = $module . '-' . $name . '.tar.gz';
     system('cd ' . $dir . '; ' . $git_dir . ' --git-dir=' . escapeshellarg($repo) . ' archive --format=tar --prefix=' . $module . '/ HEAD:' . $module . '/ | gzip -9 > ' . $filename);
