@@ -13,12 +13,26 @@ $days = 7;
 // Location of MD5 binary.
 $md5_path = '/sbin/md5';
 
+// Location of git binary
+$git_path = '/usr/bin/git';
+
+// Path to git repos (this is the location of the .git data files)
+$git_horde = '/horde.git';
+$git_hatchery = '/horde-hatchery.git';
+
 // Apps to build.
 $apps = array(
+    // Apps in git:horde
+    'git' => array(
+        'framework',
+        'horde'
+    ),
+
     // Apps in git:horde-hatchery
     'hatchery' => array(
         'ansel',
         'chora',
+        'framework',
         'gollem',
         'imp',
         'ingo',
@@ -27,35 +41,6 @@ $apps = array(
         'nag',
         'skeleton',
         'turba'
-    ),
-
-    // Apps in CVS HEAD
-    'cvs' => array(
-        'agora',
-        'forwards',
-        'framework',
-        'genie',
-        'hermes',
-        'horde',
-        'jonah',
-        'juno',
-        'klutz',
-        'luxor',
-        'merk',
-        'midas',
-        'mnemo',
-        'mottle',
-        'nic',
-        'passwd',
-        'sam',
-        'scry',
-        'sesha',
-        'trean',
-        'ulaform',
-        'vacation',
-        'vilma',
-        'whups',
-        'wicked',
     ),
 
     // Apps in FRAMEWORK_3 CVS
@@ -98,15 +83,14 @@ if (!is_dir($dir)) {
 prune($days);
 
 // Do git stuff
+foreach ($apps['git'] as $val) {
+    tarballGit($dir, $val, $git_horde, 'horde-git');
+}
 foreach ($apps['hatchery'] as $val) {
-    tarballGit($dir, $val, 'horde-hatchery');
+    tarballGit($dir, $val, $git_hatchery, 'horde-hatchery');
 }
 
 // Do CVS stuff
-foreach ($apps['cvs'] as $val) {
-    tarballCVS($dir, $val, 'HEAD');
-}
-
 foreach ($apps['fw3'] as $val) {
     tarballCVS($dir, $val, 'FRAMEWORK_3');
 }
@@ -118,16 +102,22 @@ system("ln -sfh $dir latest");
 /**
  * Functions
  */
-function tarballGit($dir, $module, $repo)
+function tarballGit($dir, $module, $repo, $name)
 {
-    // git archive --format=tar --prefix=imp/ HEAD:imp/ | gzip -9 > imp.tar.gz
+    // TODO: Not activated
+    return;
+
+    $filename = $module . '-' . $name . '.tar.gz';
+    system('cd ' . $dir . '; ' . $git_dir . ' --git-dir=' . escapeshellarg($repo) . ' archive --format=tar --prefix=' . $module . '/ HEAD:' . $module . '/ | gzip -9 > ' . $filename);
+    system('cd ' . $dir . '; ' . $GLOBALS['md5_path'] . ' ' . $filename . ' > ' . $filename . '.md5sum');
 }
 
 function tarballCVS($dir, $module, $tag)
 {
+    $filename = $module . '-' . $tag . '-' . $dir . '.tar.gz';
     system('cd ' . $dir . '; cvs -Q export -r ' . $tag . ' -d ' . $module . '-' . $tag . ' ' . $module . ' > /dev/null');
-    system('cd ' . $dir . '; tar -zcf ' . $module . '-' . $tag . '-' . $dir . '.tar.gz ' . $module . '-' . $tag);
-    system('cd ' . $dir . '; ' . $GLOBALS['md5_path'] . ' ' . $module . '-' . $tag . '-' . $dir . '.tar.gz > ' . $module . '-' . $tag . '-' . $dir . '.tar.gz.md5sum');
+    system('cd ' . $dir . '; tar -zcf ' . $filename . ' ' . $module . '-' . $tag);
+    system('cd ' . $dir . '; ' . $GLOBALS['md5_path'] . ' ' . $filename . ' > ' . $filename . '.md5sum');
     system('rm -rf ' . $dir . '/' . $module . '-' . $tag);
 }
 
