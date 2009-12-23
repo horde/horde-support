@@ -13,7 +13,7 @@ $days = 7;
 // Location of MD5 binary.
 $md5_path = '/sbin/md5';
 
-// Location of git binary
+// Location of git binary.
 $git_dir = '/usr/bin/git';
 
 // Path to git repos (this is the location of the .git data files)
