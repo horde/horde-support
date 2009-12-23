@@ -527,6 +527,7 @@ generate_atag_email()
 #
 generate_delete_atag_email()
 {
+    :echo "noop"
 }
 
 # --------------- General references
