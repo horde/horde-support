@@ -1,23 +1,21 @@
 #!@php_bin@
 <?php
 /**
- * Script to find all PNG's in a horde installation, and attempt to max
+ * Script to recursively find all PNG's in a directory and attempt to max
  * compress them.
  *
- * Usage: horde-compress-pngs.php -h [horde_base] -a [advpng binary]
- *                                -o [optipng binary]
+ * Usage: horde-compress-pngs.php -a [advpng binary] -o [optipng binary]
  *
  * @category Horde
- * @package devtools
+ * @package  maintainer_tools
  */
 
-require 'File/Find.php';
 require 'Console/Getopt.php';
 
 $c = new Console_Getopt();
 $argv = $c->readPHPArgv();
 array_shift($argv);
-$options = $c->getopt2($argv, 'h:a:o:');
+$options = $c->getopt2($argv, 'a:o:');
 if (PEAR::isError($options)) {
     print "Invalid arguments.\n";
     exit;
@@ -25,10 +23,6 @@ if (PEAR::isError($options)) {
 
 foreach ($options[0] as $val) {
     switch ($val[0]) {
-    case 'h':
-        $horde_base = $val[1];
-        break;
-
     case 'a':
         $advpng_binary = $val[1];
         break;
@@ -39,19 +33,21 @@ foreach ($options[0] as $val) {
     }
 }
 
-if (empty($horde_base) || empty($advpng_binary) || empty($optipng_binary)) {
-    print "Invalid arguments.\n";
-    exit;
+if (empty($advpng_binary) || empty($optipng_binary)) {
+    exit("Invalid arguments.\n");
 }
 
-$f = new File_Find();
-$a = $f->search('/.png$/', $horde_base, 'perl', false, 'files');
+$processed = array();
 
-foreach ($a as $val) {
-    if (strpos($val, '/hordeweb/') === false) {
-        system($advpng_binary . ' -z4 ' . $val);
-        system($optipng_binary . ' -o7 ' . $val);
+$it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(getcwd(), RecursiveIteratorIterator::SELF_FIRST));
+while ($it->valid()) {
+    if ($it->isFile() &&
+        (strcasecmp('.png', substr($it->key(), -4)) === 0)) {
+        system($advpng_binary . ' -z4 ' . $it->key());
+        system($optipng_binary . ' -o7 ' . $it->key());
+        $processed[] = $it->key();
     }
+    $it->next();
 }
 
-file_put_contents('png-compress.txt', implode(' ', $a));
+file_put_contents('png-compress.txt', implode("\n", $processed));
