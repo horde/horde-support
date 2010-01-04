@@ -14,18 +14,19 @@ $days = 7;
 $md5_path = '/sbin/md5';
 
 // Location of git binary
-$git_dir = '/usr/bin/git';
+$git_dir = '/usr/local/bin/git';
 
 // Path to git repos (this is the location of the .git data files)
-$git_horde = '/horde.git';
-$git_hatchery = '/horde-hatchery.git';
+$git_horde = '/home/horde/git/horde/.git';
+$git_hatchery = '/home/horde/git/horde-hatchery/.git';
 
 // Apps to build.
 $apps = array(
     // Apps in git:horde
     'git' => array(
         'framework',
-        'horde'
+        'horde',
+        'imp'
     ),
 
     // Apps in git:horde-hatchery
@@ -34,7 +35,6 @@ $apps = array(
         'chora',
         'framework',
         'gollem',
-        'imp',
         'ingo',
         'jeta',
         'kronolith',
@@ -105,7 +105,7 @@ system("ln -sfh $dir latest");
 function tarballGit($dir, $module, $repo, $name)
 {
     global $git_dir;
-
+    
     $filename = $module . '-' . $name . '.tar.gz';
     system('cd ' . $dir . '; ' . $git_dir . ' --git-dir=' . escapeshellarg($repo) . ' archive --format=tar --prefix=' . $module . '/ HEAD:' . $module . '/ | gzip -9 > ' . $filename);
     system('cd ' . $dir . '; ' . $GLOBALS['md5_path'] . ' ' . $filename . ' > ' . $filename . '.md5sum');
