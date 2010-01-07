@@ -308,8 +308,8 @@ generate_update_branch_email()
 	rev=""
 	for rev in $(git rev-list $newrev..$oldrev)
 	do
-		revtype=$(git cat-file -t "$rev")
-		echo "  discards  $rev ($revtype)"
+        revtype=$(git cat-file -t "$rev")
+        echo "  discards  $rev ($revtype)"
 	done
 	if [ -z "$rev" ]; then
 		fast_forward=1
@@ -388,6 +388,26 @@ generate_update_branch_email()
 
         for rev in $(git rev-list --reverse $oldrev..$newrev)
         do
+            # Check if any of these revisions are changes that were already
+            # commited on master. This keeps the commit email clean for
+            # commits from branches that have been rebased to master.
+            skip=0
+            for cherry in $(git cherry master)
+            do
+                if [ $skip == 0 ]; then
+                    if [ `expr $cherry : -` == 1 ]; then
+                        skip=1
+                    fi
+                else
+                    # Last match was a '-', see if we need to skip this
+                    if [ $rev == $cherry ]; then
+                        ## skip
+                        continue 2
+                    else
+                        skip=0
+                    fi
+                fi
+            done
 		    echo $LOGBEGIN
             echo ""
             git show --stat=,999 --summary --no-color $rev
