@@ -380,11 +380,39 @@ generate_update_branch_email()
 
         # Print brief summary of commits
         # Print oldest commits first - more natural when reading e-mail
-        # TODO: Provide chora link to all diffs in e-mail?
         echo "from: $oldrev"
         echo ""
-        git log --abbrev-commit --no-color --pretty=oneline --reverse $oldrev..$newrev
+
+        for rev in $(git rev-list --reverse $oldrev..$newrev)
+        do
+            # Check if any of these revisions are changes that were already
+            # commited on master. This keeps the commit email clean for
+            # commits from branches that have been rebased to master.
+            if [ $short_refname != "master" ]; then
+                skip=0
+                for cherry in $(git cherry master)
+                do
+                    if [ $skip == 0 ]; then
+                        if [ `expr $cherry : -` == 1 ]; then
+                            skip=1
+                        fi
+                    else
+                        # Last match was a '-', see if we need to skip this
+                        if [ $rev == $cherry ]; then
+                            ## skip
+                            continue 2
+                        else
+                            skip=0
+                        fi
+                    fi
+                done
+            fi
+
+            # Output the summary commit line
+            git log --abbrev-commit --no-color --pretty=oneline -1 $rev
+        done
         echo ""
+
         for rev in $(git rev-list --reverse $oldrev..$newrev)
         do
             # Check if any of these revisions are changes that were already
