@@ -18,23 +18,17 @@ $git_dir = '/usr/local/bin/git';
 
 // Path to git repos (this is the location of the .git data files)
 $git_horde = '/home/horde/git/horde/.git';
-$git_hatchery = '/home/horde/git/horde-hatchery/.git';
 
 // Apps to build.
 $apps = array(
-    // Apps in git:horde
+    // Apps in horde-git
     'git' => array(
-        'framework',
-        'horde',
-        'imp'
-    ),
-
-    // Apps in git:horde-hatchery
-    'hatchery' => array(
         'ansel',
         'chora',
         'framework',
         'gollem',
+        'horde',
+        'imp'
         'ingo',
         'jeta',
         'kronolith',
@@ -85,9 +79,6 @@ prune($days);
 // Do git stuff
 foreach ($apps['git'] as $val) {
     tarballGit($dir, $val, $git_horde, 'horde-git');
-}
-foreach ($apps['hatchery'] as $val) {
-    tarballGit($dir, $val, $git_hatchery, 'horde-hatchery');
 }
 
 // Do CVS stuff
