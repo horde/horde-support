@@ -480,7 +480,7 @@ $url"
 generate_delete_branch_email()
 {
     # bash functions cannot be empty
-    :echo "not implemented"
+    : # noop
 }
 
 # --------------- Annotated tags
