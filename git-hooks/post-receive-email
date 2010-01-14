@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Copyright (c) 2007 Andy Parkins
 # Additional Revisions (c) 2008-2009 The Horde Project
@@ -382,18 +382,19 @@ generate_update_branch_email()
         # Print oldest commits first - more natural when reading e-mail
         echo "from: $oldrev"
         echo ""
-
+        
         for rev in $(git rev-list --reverse $oldrev..$newrev)
         do
             # Check if any of these revisions are changes that were already
             # commited on master. This keeps the commit email clean for
             # commits from branches that have been rebased to master.
-            if [ $short_refname != "master" ]; then
+            if [ "$short_refname" != "master" ]; then
                 skip=0
-                for cherry in $(git cherry master)
+                for cherry in $(git cherry master $short_refname)
                 do
                     if [ $skip == 0 ]; then
-                        if [ `expr $cherry : -` == 1 ]; then
+                        expr=`expr "$cherry " : -`
+                        if [ $expr == 1 ]; then
                             skip=1
                         fi
                     else
@@ -418,12 +419,13 @@ generate_update_branch_email()
             # Check if any of these revisions are changes that were already
             # commited on master. This keeps the commit email clean for
             # commits from branches that have been rebased to master.
-            if [ $short_refname != "master" ]; then
+            if [ "$short_refname" != "master" ]; then
                 skip=0
-                for cherry in $(git cherry master)
+                for cherry in $(git cherry master $short_refname)
                 do
                     if [ $skip == 0 ]; then
-                        if [ `expr $cherry : -` == 1 ]; then
+                        expr=`expr "$cherry " : -`
+                        if [ $expr == 1 ]; then
                             skip=1
                         fi
                     else
