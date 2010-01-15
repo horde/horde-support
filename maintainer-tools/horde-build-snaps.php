@@ -24,6 +24,8 @@ $apps = array(
     // Apps in horde-git
     'git' => array(
         'ansel',
+        'babel',
+        'beatnik',
         'chora',
         'framework',
         'gollem',
@@ -33,8 +35,12 @@ $apps = array(
         'jeta',
         'kronolith',
         'nag',
+        'operator',
+        'shout',
         'skeleton',
-        'turba'
+        'turba',
+        'whups',
+        'wicked'
     ),
 
     // Apps in FRAMEWORK_3 CVS
