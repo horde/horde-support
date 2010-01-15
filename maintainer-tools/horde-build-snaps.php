@@ -4,7 +4,7 @@
  * Script to build snapshot tarballs.
  *
  * @category Horde
- * @package devtools
+ * @package  maintainer_tools
  */
 
 // How many days to keep snapshots for.

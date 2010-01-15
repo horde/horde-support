@@ -1,10 +1,6 @@
 #!/bin/bash
-
 #
 # Usage: horde-build-website-docs.sh [module [/path/to/modules /path/to/HEAD]]
-#
-# $Horde: framework/devtools/horde-build-website-docs.sh,v 1.7 2008/12/23 10:04:54 jan Exp $
-#
 
 SOURCEDIR=${2:-`pwd`}
 HEADDIR=${3:-`pwd`}
@@ -51,7 +47,7 @@ for DOC_DIR in $DOC_DIRS; do
 <h3>Documentation</h3>
 
 <p>These are the documentation files as distributed with the application's
-tarballs and CVS checkouts.</p>
+tarballs and Git checkouts.</p>
 
 <ul>
 EOF
@@ -80,10 +76,10 @@ EOF
             echo -n .
             if [ `basename \`dirname $FILE\`` = "po" ]; then
                 TO=po_README.html
-                SRC=http://cvs.horde.org/co.php/horde/po/README
+                SRC=http://git.horde.org/co.php/horde/po/README
             else
                 TO=`basename $FILE .txt`.html
-                SRC="http://cvs.horde.org/co.php/$APP/docs/"`basename $FILE`
+                SRC="http://git.horde.org/co.php/$APP/docs/"`basename $FILE`
             fi
             OUTPUT=`$GENERATOR \
                 --generator \

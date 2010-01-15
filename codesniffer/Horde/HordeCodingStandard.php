@@ -5,8 +5,7 @@
  * Requires PHP_CodeSnifer 1.2.0RC3+
  * Usage: phpcs --standard=[path_to_this file_directory] [files]
  *
- * @category  PHP
- * @package   PHP_CodeSniffer
+ * @package   maintainer_tools
  * @author    Michael Slusarz <slusarz@horde.org>
  * @license   LGPLv2
  */

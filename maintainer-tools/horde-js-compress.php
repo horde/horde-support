@@ -20,7 +20,7 @@
  *   http://dojotoolkit.org/docs/shrinksafe
  *
  * @category Horde
- * @package  devtools
+ * @package  maintainer_tools
  */
 
 ob_implicit_flush(1);

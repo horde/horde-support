@@ -1,6 +1,6 @@
 <?php
 /**
- * $Horde: framework/devtools/mime_mapping/convert.php,v 1.10 2009/01/06 17:50:02 jan Exp $
+ * Create MIME mapping file from data sources.
  *
  * Copyright 2001-2009 The Horde Project (http://www.horde.org/)
  *
@@ -8,7 +8,7 @@
  * did not receive this file, see http://www.fsf.org/copyleft/gpl.html.
  *
  * @author  Anil Madhavapeddy <avsm@horde.org>
- * @package devtools
+ * @package maintainer_tools
  */
 
 /* Files containing MIME extensions (Apache format). */

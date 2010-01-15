@@ -2,17 +2,18 @@
 <?php
 /**
  * Script to run a Horde_LoginTasks task and/or system task.
- * This script needs to be run from the base Horde directory.
+ *
+ * ** This script needs to be run from the base Horde directory. **
  *
  * Usage: horde-run-task.php -a [app] -t [taskname] -u [username]
  *   Taskname is the name of the file in the SystemTask/Task directory - this
  *   script will automatically build the full class name.
  *
  * @category Horde
- * @package  devtools
+ * @package  maintainer_tools
  */
 
-require_once getcwd() . '/lib/core.php';
+require_once getcwd() . '/lib/Application.php';
 
 // Make sure no one runs this from the web.
 if (!Horde_Cli::runningFromCli()) {

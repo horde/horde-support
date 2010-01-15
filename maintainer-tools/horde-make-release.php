@@ -29,7 +29,7 @@
  * Licensed under LGPL, please see the file COPYING for details on licensing.
  *
  * @category Horde
- * @package  devtools
+ * @package  maintainer_tools
  */
 
 require dirname(__FILE__) . '/horde-make-release-conf.php';

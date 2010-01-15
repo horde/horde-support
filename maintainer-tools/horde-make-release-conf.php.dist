@@ -1,8 +1,6 @@
 <?php
 /**
  * Configuration for the make-release.php script.
- *
- * $Horde: framework/devtools/horde-make-release-conf.php.dist,v 1.2 2007/11/27 19:33:11 mrubinsk Exp $
  */
 
 /* Uncomment and set this if you haven't installed the Horde framework in your

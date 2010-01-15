@@ -13,7 +13,7 @@
  * ====================================================================
  *
  * @category Horde
- * @package  devtools
+ * @package  maintainer_tools
  */
 
 
