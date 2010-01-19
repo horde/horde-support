@@ -1,0 +1,3 @@
+GENERATOR=/usr/local/horde/i18n/HEAD/hordedoc/docutils/html.py
+CONFIG=/usr/local/horde/i18n/HEAD/hordedoc/docutils/docutils.conf
+WEBROOT=/horde/checkout/horde-web

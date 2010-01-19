@@ -12,3 +12,4 @@ maintainer-tools/jsmin/jsmin.o
 # Ignore local config files
 git-hooks/commit-update-tickets-conf.php
 maintainer-tools/horde-make-release-conf.php
+maintainer-tools/horde-build-website-docs.conf
