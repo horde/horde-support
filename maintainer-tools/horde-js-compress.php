@@ -24,10 +24,6 @@
  */
 
 ob_implicit_flush(1);
-if (!function_exists('file_put_contents')) {
-    require 'PHP/Compat.php';
-    PHP_Compat::loadFunction('file_put_contents');
-}
 require 'Console/Getopt.php';
 
 $c = new Console_Getopt();
