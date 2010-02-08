@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Copyright (c) 2007 Andy Parkins
 # Additional Revisions (c) 2008-2009 The Horde Project
@@ -308,8 +308,8 @@ generate_update_branch_email()
 	rev=""
 	for rev in $(git rev-list $newrev..$oldrev)
 	do
-		revtype=$(git cat-file -t "$rev")
-		echo "  discards  $rev ($revtype)"
+        revtype=$(git cat-file -t "$rev")
+        echo "  discards  $rev ($revtype)"
 	done
 	if [ -z "$rev" ]; then
 		fast_forward=1
@@ -373,36 +373,95 @@ generate_update_branch_email()
 	fi
 
 	if [ -z "$rewind_only" ]; then
-        reponame=$(sed -ne '1p' "$GIT_DIR/chora-reponame")
+        reponame=$(git config hooks.reponame)
 
         echo "The following is a summary of the commits."
         echo ""
 
         # Print brief summary of commits
         # Print oldest commits first - more natural when reading e-mail
-        # TODO: Provide chora link to all diffs in e-mail?
         echo "from: $oldrev"
         echo ""
-        git log --abbrev-commit --no-color --pretty=oneline --reverse $oldrev..$newrev
+        
+        for rev in $(git rev-list --reverse $oldrev..$newrev)
+        do
+            # Check if any of these revisions are changes that were already
+            # commited on master. This keeps the commit email clean for
+            # commits from branches that have been rebased to master.
+            if [ "$short_refname" != "master" ]; then
+                skip=0
+                for cherry in $(git cherry master $short_refname)
+                do
+                    if [ $skip == 0 ]; then
+                        expr=`expr "$cherry " : -`
+                        if [ $expr == 1 ]; then
+                            skip=1
+                        fi
+                    else
+                        # Last match was a '-', see if we need to skip this
+                        if [ $rev == $cherry ]; then
+                            ## skip
+                            continue 2
+                        else
+                            skip=0
+                        fi
+                    fi
+                done
+            fi
+
+            # Output the summary commit line
+            git log --abbrev-commit --no-color --pretty=oneline -1 $rev
+        done
         echo ""
 
         for rev in $(git rev-list --reverse $oldrev..$newrev)
         do
+            # Check if any of these revisions are changes that were already
+            # commited on master. This keeps the commit email clean for
+            # commits from branches that have been rebased to master.
+            if [ "$short_refname" != "master" ]; then
+                skip=0
+                for cherry in $(git cherry master $short_refname)
+                do
+                    if [ $skip == 0 ]; then
+                        expr=`expr "$cherry " : -`
+                        if [ $expr == 1 ]; then
+                            skip=1
+                        fi
+                    else
+                        # Last match was a '-', see if we need to skip this
+                        if [ $rev == $cherry ]; then
+                            ## skip
+                            continue 2
+                        else
+                            skip=0
+                        fi
+                    fi
+                done
+            fi
 		    echo $LOGBEGIN
             echo ""
-            git log --stat=,999 --summary --no-color $rev^..$rev
+            git show --stat=,999 --summary --no-color $rev
             echo ""
 
+            links=""
+            #links="$GIT_WEB_URL/patchsets.php/$fname?rt=$reponame&ps=$rev"
+            #echo $links
             for fname in $(git diff --name-only $rev^..$rev)
             do
                 prevrev=$(git rev-list --max-count=1 $rev^ -- $fname)
-	            if [ "$prevrev" ]; then
+                if [ "$prevrev" ]; then
                     # TODO: Provide chora link to patchset page?
-                    echo "$GIT_WEB_URL/diff.php/$fname?rt=$reponame&r1=$prevrev&r2=$rev"
+                    url="$GIT_WEB_URL/diff.php/$fname?rt=$reponame&r1=$prevrev&r2=$rev"
                 else
-                    echo "$GIT_WEB_URL/co.php/$fname?rt=$reponame&r=$rev"
+                    url="$GIT_WEB_URL/co.php/$fname?rt=$reponame&r=$rev"
                 fi
+                echo $url
+                links="$links
+$url"
             done
+	    
+            whups_update $rev "$links"
 
             echo ""
         done
@@ -422,11 +481,8 @@ generate_update_branch_email()
 #
 generate_delete_branch_email()
 {
-	echo "       was  $oldrev"
-	echo ""
-	echo $LOGEND
-	git show -s --pretty=oneline $oldrev
-	echo $LOGEND
+    # bash functions cannot be empty
+    : # noop
 }
 
 # --------------- Annotated tags
@@ -522,11 +578,7 @@ generate_atag_email()
 #
 generate_delete_atag_email()
 {
-	echo "       was  $oldrev"
-	echo ""
-	echo $LOGEND
-	git show -s --pretty=oneline $oldrev
-	echo $LOGEND
+    :echo "noop"
 }
 
 # --------------- General references
@@ -600,6 +652,11 @@ send_mail()
     /usr/sbin/sendmail -t -f "$envelopesender"
 }
 
+whups_update()
+{
+    $(dirname $(readlink -f $0))/commit-update-tickets.php $GIT_DIR $1 $2
+}
+
 # ---------------------------- main()
 
 # --- Constants
@@ -616,7 +673,7 @@ if [ -z "$GIT_DIR" ]; then
 fi
 
 # Location of Horde web server (Chora) - no trailing slash
-GIT_WEB_URL="http://git.horde.org"
+GIT_WEB_URL=$(git config hooks.weburl || echo 'http://git.horde.org')
 
 projectdesc=$(sed -ne '1p' "$GIT_DIR/description")
 # Check if the description is unchanged from it's default, and shorten it to

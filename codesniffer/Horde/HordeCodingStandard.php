@@ -5,8 +5,7 @@
  * Requires PHP_CodeSnifer 1.2.0RC3+
  * Usage: phpcs --standard=[path_to_this file_directory] [files]
  *
- * @category  PHP
- * @package   PHP_CodeSniffer
+ * @package   maintainer_tools
  * @author    Michael Slusarz <slusarz@horde.org>
  * @license   LGPLv2
  */
@@ -64,7 +63,7 @@ class PHP_CodeSniffer_Standards_Horde_HordeCodingStandard extends PHP_CodeSniffe
             'Squiz/Sniffs/PHP/LowercasePHPFunctionsSniff.php',
             'Squiz/Sniffs/PHP/NonExecutableCodeSniff.php',
             'Squiz/Sniffs/Scope',
-            'Squiz/Sniffs/Strings/DoubleQuoteUsageSniff.php',
+//            'Squiz/Sniffs/Strings/DoubleQuoteUsageSniff.php',
             'Squiz/Sniffs/Strings/EchoedStringsSniff.php',
             'Squiz/Sniffs/WhiteSpace/SemicolonSpacingSniff.php',
             'Squiz/Sniffs/WhiteSpace/SuperfluousWhitespaceSniff.php',

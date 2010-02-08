@@ -2,8 +2,6 @@
 # mime.types file from the Apache webserver. All additions to the
 # mime.mapping.php file should be made here also or else they will be
 # lost when the convert.php script is regenerated.
-#
-# $Horde: framework/devtools/mime_mapping/mime.types.horde,v 1.3 2008/10/31 17:59:41 slusarz Exp $
 
 # MIME type                                      Extension
 application/vnd.oasis.opendocument.database      odb

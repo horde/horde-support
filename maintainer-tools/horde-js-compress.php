@@ -3,9 +3,9 @@
 /**
  * Compress JavaScript file(s).
  *
- * Usage: horde-js-maxcompress.php [--file=filename] [--noyui] [--noshrinksafe]
- *                                 [--nojsmin] [--noeolstrip]
- *                                 [--debug] [file1] [file2] [file3] ...
+ * Usage: horde-js-compress.php [--file=filename] [--noyui] [--noshrinksafe]
+ *                              [--nojsmin] [--noeolstrip]
+ *                              [--debug] [file1] [file2] [file3] ...
  *
  * By default, all files in the current working directory are compressed.
  *
@@ -19,17 +19,11 @@
  * More information at:
  *   http://dojotoolkit.org/docs/shrinksafe
  *
- * $Horde: framework/devtools/horde-js-compress.php,v 1.15 2008/05/14 01:20:59 slusarz Exp $
- *
  * @category Horde
- * @package devtools
+ * @package  maintainer_tools
  */
 
 ob_implicit_flush(1);
-if (!function_exists('file_put_contents')) {
-    require 'PHP/Compat.php';
-    PHP_Compat::loadFunction('file_put_contents');
-}
 require 'Console/Getopt.php';
 
 $c = new Console_Getopt();

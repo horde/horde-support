@@ -1,8 +1,6 @@
 <?php
 /**
  * Configuration for the make-release.php script.
- *
- * $Horde: framework/devtools/horde-make-release-conf.php.dist,v 1.2 2007/11/27 19:33:11 mrubinsk Exp $
  */
 
 /* Uncomment and set this if you haven't installed the Horde framework in your
@@ -25,13 +23,8 @@ $options['cvs']['cvs_rsh'] = '';
 /* From: address for announcements. */
 $options['ml']['from'] = '';
 
-/* Username for freshmeat.net.
- * Make sure you are a project admin there for the modules
- * you want to release. */
-$options['fm']['user'] = '';
-
-/* Password for freshmeat.net. */
-$options['fm']['password'] = '';
+/* This should be set to the developer's API token */
+$options['fm']['user_token'] = '';
 
 /* Local MD5 command. */
 $options['md5'] = '/usr/bin/md5sum';

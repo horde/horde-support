@@ -23,15 +23,13 @@
  * 8) The release notes are in:
  *         <module>/docs/RELEASE_NOTES
  *
- * $Horde: framework/devtools/horde-make-release.php,v 1.9 2009/01/06 17:50:01 jan Exp $
- *
  * Copyright 1999 Mike Hardy
  * Copyright 2004-2009 The Horde Project (http://www.horde.org/)
  *
  * Licensed under LGPL, please see the file COPYING for details on licensing.
  *
  * @category Horde
- * @package  devtools
+ * @package  maintainer_tools
  */
 
 require dirname(__FILE__) . '/horde-make-release-conf.php';

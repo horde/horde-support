@@ -1,7 +1,6 @@
 #!/usr/bin/env php
 <?php
 /**
- * ====================================================================
  * commit-update-tickets.php: scan commit logs for ticket numbers
  * (denoted by a flexible regular expression and post the log message
  * and a link to the changeset diff in a comment to those tickets.
@@ -9,7 +8,7 @@
  * Usage: commit-update-tickets.php REPOS REVISION
  *
  * @category Horde
- * @package  devtools
+ * @package  maintainer_tools
  */
 
 
