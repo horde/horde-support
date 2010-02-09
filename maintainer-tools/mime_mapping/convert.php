@@ -15,7 +15,7 @@
 $files = array('mime.types', 'mime.types.horde');
 
 /* Files contating MIME extensions (freedesktop.org format).
-   http://www.freedesktop.org/Standards/shared-mime-info-spec */
+ * http://www.freedesktop.org/wiki/Specifications/shared-mime-info-spec */
 $od_files = array('mime.globs');
 
 $exts = array();
@@ -77,6 +77,8 @@ foreach ($od_files as $val) {
 /* Assemble/sort the extensions into an output array. */
 $output = array();
 $output[] = "'__MAXPERIOD__'" . str_repeat(' ', $maxlength - strlen('__MAXPERIOD__')) . " => '$maxperiod'";
+
+ksort($exts);
 foreach ($exts as $key => $val) {
     $output[] = "'$key'" . str_repeat(' ', $maxlength - strlen($key)) . " => '$val'";
 }
@@ -87,22 +89,21 @@ print <<<HEADER
 /**
  * This file contains a mapping of common file extensions to
  * MIME types. It has been automatically generated from the
- * framework/devtools/mime_mapping directory.
+ * horde-support/maintainer-tools/mime_mapping directory.
  *
- * ALL changes should be made to framework/devtools/mime_mapping/mime.types.horde
- * or else they will be lost when this file is regenerated.
+ * ALL changes should be made to
+ * horde-support/maintainer-tools/mime_mapping/mime.types.horde or else they
+ * they will be lost when this file is regenerated.
  *
  * Any unknown file extensions will automatically be mapped to
  * 'x-extension/<ext>' where <ext> is the unknown file extension.
  *
- * @package Horde_MIME
+ * @category Horde
+ * @package  Horde_Mime
  *
 HEADER;
 
 /* Add the generated information. */
-
-print "\n * \$" . "Horde" . "\$\n";
-print " *\n";
-print " * Generated: " . strftime('%D %T') . " by " . $_SERVER['USER'] . " on " . $_SERVER['HOST'] . "\n";
+print "\n * Generated: " . strftime('%D %T') . " by " . $_SERVER['USER'] . " on " . $_SERVER['HOST'] . "\n";
 print " */\n";
 print "\$mime_extension_map = array(\n    " . implode(",\n    ", $output) . "\n);";
