@@ -49,9 +49,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config"/>
    </file>
    <file name="horde-patch-config.sh" role="script"/>
-   <file name="horde-run-task.php" role="script">
-    <tasks:replace from="@php_bin@" to="php_bin" type="pear-config"/>
-   </file>
   </dir> <!-- / -->
  </contents>
  <dependencies>
