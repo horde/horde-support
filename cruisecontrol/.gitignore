@@ -1,0 +1,17 @@
+/README.txt
+/antBuilderOutput.log
+/apache-ant-1.7.0
+/artifacts
+/cc.pid
+/cruisecontrol.bat
+/cruisecontrol.log*
+/cruisecontrol.sh
+/dashboard-config.xml
+/etc
+/horde-framework.ser
+/lib
+/logs
+/phpuc
+/share
+/tmp
+/webapps

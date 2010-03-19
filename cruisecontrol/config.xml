@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cruisecontrol>
+  <project name="horde-framework"
+	   buildafterfailed="false"
+	   >
+
+    <bootstrappers>
+      <gitbootstrapper localWorkingCopy="projects/${project.name}/source/horde" />
+    </bootstrappers>
+
+     <modificationset quietperiod="60">
+       <git localWorkingCopy="projects/${project.name}/source/horde"/>
+     </modificationset> 
+
+     <schedule interval="120"> 
+       <ant anthome="apache-ant-1.7.0"
+	    buildfile="projects/${project.name}/build.xml"
+	    />
+     </schedule> 
+
+     <listeners>
+       <currentbuildstatuslistener file="logs/${project.name}/status.txt"
+				   />
+     </listeners> 
+
+     <log dir="logs/${project.name}"> 
+       <merge dir="projects/${project.name}/build/logs/"/> 
+     </log> 
+
+
+     <publishers> 
+       <artifactspublisher dir="projects/${project.name}/build/coverage"
+			   dest="artifacts/${project.name}"
+			   subdirectory="coverage"
+			   />
+     </publishers> 
+  </project>
+</cruisecontrol>
