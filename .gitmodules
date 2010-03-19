@@ -1,0 +1,3 @@
+[submodule "cruisecontrol/phpUnderControl"]
+	path = cruisecontrol/phpUnderControl
+	url = git://github.com/manuelpichler/phpUnderControl.git
