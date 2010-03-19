@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit>
+  <filter>
+    <whitelist>
+      <directory suffix=".php">.</directory>
+      <exclude>
+	<directory suffix=".php">bin</directory>
+	<directory suffix=".php">admintools</directory>
+	<directory suffix=".php">devtools</directory>
+      </exclude>
+    </whitelist>
+  </filter>
+</phpunit>
