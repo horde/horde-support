@@ -382,7 +382,7 @@ generate_update_branch_email()
         # Print oldest commits first - more natural when reading e-mail
         echo "from: $oldrev"
         echo ""
-        
+
         for rev in $(git rev-list --reverse $oldrev..$newrev)
         do
             # Check if any of these revisions are changes that were already
@@ -460,8 +460,11 @@ generate_update_branch_email()
                 links="$links
 $url"
             done
-	    
-            whups_update $rev "$links"
+
+            # Only link tickets in master
+            if [ "$short_refname" = "master" ]; then
+                whups_update $rev "$links"
+            fi
 
             echo ""
         done
