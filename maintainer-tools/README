@@ -16,6 +16,9 @@ horde-build-snaps.php
 horde-build-website-docs.sh
     Converts reST documentation into HTML for the website.
 
+horde-ckeditor.php
+    Updates CKeditor for packaging with Horde.
+
 horde-compress-pngs.php
     Runs advpng and optipng on PNG images to reduce their size as much as
     possible.
