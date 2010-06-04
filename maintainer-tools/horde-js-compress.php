@@ -4,7 +4,7 @@
  * Compress JavaScript file(s).
  *
  * Usage: horde-js-compress.php [--file=filename] [--noyui] [--noshrinksafe]
- *                              [--nojsmin] [--noeolstrip]
+ *                              [--nojsmin] [--noeolstrip] [--overwrite]
  *                              [--debug] [file1] [file2] [file3] ...
  *
  * By default, all files in the current working directory are compressed.
@@ -29,7 +29,7 @@ require 'Console/Getopt.php';
 $c = new Console_Getopt();
 $argv = $c->readPHPArgv();
 array_shift($argv);
-$options = $c->getopt2($argv, '', array('file=', 'noyui', 'noshrinksafe', 'nojsmin', 'noeolstrip', 'debug'));
+$options = $c->getopt2($argv, '', array('file=', 'noyui', 'noshrinksafe', 'nojsmin', 'noeolstrip', 'overwrite', 'debug'));
 if (PEAR::isError($options)) {
     print "Invalid arguments.\n";
     exit;
@@ -43,7 +43,7 @@ if (empty($jsmin)) {
 }
 $yui = dirname(__FILE__) . '/yuicompressor.jar';
 
-$debug = $file = $noeolstrip = false;
+$debug = $file = $noeolstrip = $overwrite = false;
 foreach ($options[0] as $val) {
     switch ($val[0]) {
     case '--file':
@@ -66,39 +66,51 @@ foreach ($options[0] as $val) {
         $noeolstrip = true;
         break;
 
+    case '--overwrite':
+        // Overwrite the current JS files?
+        $overwrite = true;
+        break;
+
     case '--debug':
         $debug = true;
         break;
     }
 }
 
-$files = array();
+$files = $tmp = array();
 if (empty($file)) {
     if (!empty($options[1])) {
-        $files = $options[1];
+        $tmp = $options[1];
     } else {
         $d = dir(getcwd());
         while (($entry = $d->read()) !== false) {
             if (preg_match("/(\.js|\.js\.php)$/", $entry)) {
-                $files[] = $entry;
+                $tmp[] = $entry;
             }
         }
     }
 } else {
     if (file_exists(getcwd() . '/' . $file)) {
-        $files[] = $file;
+        $tmp[] = $file;
     }
 }
 
-$mode = $jsmin_source = '';
+foreach ($tmp as $val) {
+    if ($overwrite) {
+        $files[$val] = $val;
+    } else {
+        $dir = dirname($val);
+        $files[$dir . '/../' . $val] = $val;
+    }
+}
+
+$mode = '';
 if (!empty($yui) && file_exists($yui)) {
     print "[Using YUI.]\n";
     $mode = 'yui';
-    $jsmin_source = '../';
 } elseif (!empty($rhino) && file_exists($rhino)) {
     print "[Using ShrinkSafe.]\n";
     $mode = 'rhino';
-    $jsmin_source = '../';
 }
 
 if (!empty($jsmin) && file_exists($jsmin)) {
@@ -118,38 +130,38 @@ if (empty($mode)) {
     exit;
 }
 
-foreach ($files as $file) {
+foreach ($files as $dest => $file) {
     print "$file: ";
 
     switch ($mode) {
     case 'yui':
         if (preg_match("/\.js$/", $file)) {
-            system("java -jar " . $yui . ' ' . (($debug) ? '-v' : '') . ' -o ../' . $file . ' ' . $file);
+            system("java -jar " . $yui . ' ' . (($debug) ? '-v' : '') . ' -o ' . $dest . ' ' . $file);
             print ' YUI';
-        } elseif (!file_exists('../' . $file)) {
-            copy($file, '../' . $file);
+        } elseif (!file_exists($dest)) {
+            copy($file, $dest);
         }
         break;
 
     case 'rhino':
         if (preg_match("/\.js$/", $file)) {
-            system("java -jar " . $rhino . ' -c ' . $file . ' > ../' . $file);
+            system("java -jar " . $rhino . ' -c ' . $file . ' > ' . $dest);
             print ' ShrinkSafe';
-        } elseif (!file_exists('../' . $file)) {
-            copy($file, '../' . $file);
+        } elseif (!file_exists($dest)) {
+            copy($file, $dest);
         }
     }
 
     if (!empty($jsmin)) {
-        system($jsmin . ' < ' . $jsmin_source . $file . ' > ../' . $file . '.new');
-        rename('../' . $file . '.new', '../' . $file);
+        system($jsmin . ' < ' . (in_array($mode, array('rhino', 'yui')) ? $dest : $file) . ' > ' . $dest . '.new');
+        rename($dest . '.new', $dest);
         print ' jsmin';
     }
 
     if (!$noeolstrip) {
-        $f = file_get_contents('../' . $file);
+        $f = file_get_contents($dest);
         $f = strtr($f, array("\n" => '', "\r" => ''));
-        $f = file_put_contents('../' . $file, trim($f));
+        $f = file_put_contents($dest, trim($f));
         print ' EOL-strip';
     }
 
