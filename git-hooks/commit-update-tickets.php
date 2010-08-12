@@ -16,7 +16,7 @@
  ** Includes
  **/
 
-require_once 'Horde/Autoloader.php';
+require_once 'Horde/Core/Autoloader.php';
 
 
 /**
