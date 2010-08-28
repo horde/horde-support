@@ -1,0 +1,176 @@
+#!/bin/bash
+# /etc/init.d/hudson
+# debian-compatible hudson startup script.
+# Amelia A Lewis <alewis@ibco.com>
+#
+### BEGIN INIT INFO
+# Provides:          hudson
+# Required-Start:    $remote_fs $syslog $network
+# Required-Stop:     $remote_fs $syslog $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start hudson at boot time
+# Description:       Controls the hudson continuous integration engine.
+### END INIT INFO
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+
+DESC="Hudson Continuous Integration Server"
+NAME=hudson
+SUBDIR=$HOME/horde-support/ci-hudson
+SCRIPTNAME=$SUBDIR/init.d/$NAME
+
+[ -r $SUBDIR/etc/$NAME ] && . $SUBDIR/etc/$NAME
+
+# Exit if not supposed to run standalone
+[ "$RUN_STANDALONE" = "false" ] && exit 0
+
+# load environments
+if [ -r /etc/default/locale ]; then
+  . /etc/default/locale
+  export LANG LANGUAGE
+elif [ -r /etc/environment ]; then
+  . /etc/environment
+  export LANG LANGUAGE
+fi
+
+# Load the VERBOSE setting and other rcS variables
+. /lib/init/vars.sh
+
+# Define LSB log_* functions.
+# Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
+. /lib/lsb/init-functions
+
+check_tcp_port() {
+    local service=$1
+    local assigned=$2
+    local default=$3
+
+    if [ -n "$assigned" ]; then 
+        port=$assigned
+    else
+        port=$default
+    fi
+    
+    count=`netstat --listen --numeric-ports | grep \:$port | grep -c . `
+    
+    if [ $count -ne 0 ]; then
+        echo "The selected $service port ($port) seems to be in use by another program "
+        echo "Please select another port to use for $NAME"
+        return 1
+    fi
+}
+
+#
+# Function that starts the daemon/service
+#
+do_start()
+{
+    # the default location is /var/run/hudson/hudson.pid but the parent directory needs to be created
+    mkdir `dirname $PIDFILE` > /dev/null 2>&1 || true
+    chown $HUDSON_USER `dirname $PIDFILE`
+
+    # Verify that the hudson port is not already in use, winstone does not exit
+    # even for BindException
+    check_tcp_port "http" "$HTTP_PORT" "8080" || return 1
+
+    HUDSON_HOME=$HUDSON_HOME exec setsid $JAVA $JAVA_ARGS -jar $HUDSON_WAR $HUDSON_ARGS < /dev/null >> $HUDSON_LOG 2>&1 & \
+                echo \$! > $PIDFILE & \
+                disown \$!
+}
+
+
+#
+# Verify that all hudson processes have been shutdown
+# and if not, then do killall for them
+# 
+get_running() 
+{
+    return `ps -U $HUDSON_USER --no-headers -f | egrep -e '(java|daemon)' | grep -c . `
+}
+
+force_stop() 
+{
+    get_running
+    if [ $? -ne 0 ]; then 
+	killall -u $HUDSON_USER java || return 3
+    fi
+}
+
+#
+# Function that stops the daemon/service
+#
+do_stop()
+{
+    get_running
+    procs=$?
+    if [ $procs -eq 0 ]; then 
+	return 0;
+    else
+	force_stop;
+    fi
+    # Many daemons don't delete their pidfiles when they exit.
+    rm -f $PIDFILE
+    return 0
+}
+
+case "$1" in
+  start)
+    [ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
+    do_start
+    case "$?" in
+        0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+        2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+    esac
+    ;;
+  stop)
+    [ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"
+    do_stop
+    case "$?" in
+        0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+        2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+    esac
+    ;;
+  restart|force-reload)
+    #
+    # If the "reload" option is implemented then remove the
+    # 'force-reload' alias
+    #
+    do_stop
+    case "$?" in
+      0|1)
+        do_start
+        case "$?" in
+          0) log_end_msg 0 ;;
+          1) log_end_msg 1 ;; # Old process is still running
+          *) log_end_msg 1 ;; # Failed to start
+        esac
+        ;;
+      *)
+  	# Failed to stop
+	log_end_msg 1
+	;;
+    esac
+    ;;
+  status)
+      get_running
+      procs=$?
+      if [ $procs -eq 0 ]; then 
+	  echo -n "Hudson is not running"
+	  if [ -f $PIDFILE ]; then 
+	      echo ", but the pidfile ($PIDFILE) still exists"
+	  else 
+	      echo
+	  fi
+      else 
+	  echo "$procs instances of hudson are running at the moment"
+	  echo "but the pidfile $PIDFILE is missing"
+      fi
+    ;;
+  *)
+    echo "Usage: $SCRIPTNAME {start|stop|status|restart|force-reload}" >&2
+    exit 3
+    ;;
+esac
+
+exit 0
