@@ -1,5 +1,8 @@
 hudson.model.UpdateCenter.xml
 nodeMonitors.xml
+hudson.plugins.git.GitTool.xml
 queue.xml
+queue.xml.bak
 secret.key
 plugins
+updates
