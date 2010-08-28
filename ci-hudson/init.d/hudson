@@ -75,7 +75,7 @@ do_start()
     check_tcp_port "http" "$HTTP_PORT" "8080" || return 1
 
     HUDSON_HOME=$HUDSON_HOME exec setsid $JAVA $JAVA_ARGS -jar $HUDSON_WAR $HUDSON_ARGS < /dev/null >> $HUDSON_LOG 2>&1 & \
-                echo \$! > $PIDFILE & \
+                echo \$! > $PIDFILE \
                 disown \$!
 }
 
