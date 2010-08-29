@@ -11,11 +11,6 @@
  * @package  maintainer_tools
  */
 
-
-/**
- ** Includes
- **/
-
 require_once 'Horde/Autoloader/Default.php';
 
 
@@ -27,7 +22,7 @@ require_once 'Horde/Autoloader/Default.php';
 $git = $rpc_endpoint = $rpc_method = null;
 $rpc_options = array();
 
-include dirname(__FILE__) . '/commit-update-tickets-conf.php';
+require dirname(__FILE__) . '/commit-update-tickets-conf.php';
 
 
 /**
