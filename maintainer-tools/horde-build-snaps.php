@@ -10,14 +10,20 @@
 // How many days to keep snapshots for.
 $days = 7;
 
+// Path to git repos (this is the location of the public Horde git repository)
+$github_url = 'git://github.com/horde/horde.git';
+
 // Location of MD5 binary.
-$md5_path = '/sbin/md5';
+$md5_cmd = trim(`which md5`);
+if (!$md5_cmd) {
+    die("md5 not in \$PATH\n");
+}
 
 // Location of git binary
-$git_dir = '/usr/local/bin/git';
-
-// Path to git repos (this is the location of the .git data files)
-$git_horde = '/home/horde/git/horde/.git';
+$git_cmd = trim(`which git`);
+if (!$git_cmd) {
+    die("git not in \$PATH\n");
+}
 
 // Apps to build.
 $apps = array(
@@ -40,7 +46,7 @@ $apps = array(
         'skeleton',
         'turba',
         'whups',
-        'wicked'
+        'wicked',
     ),
 
     // Apps in FRAMEWORK_3 CVS
@@ -70,7 +76,7 @@ $apps = array(
         'vacation',
         'whups',
         'wicked',
-    )
+    ),
 );
 
 // Create directory for current day
@@ -83,9 +89,12 @@ if (!is_dir($dir)) {
 prune($days);
 
 // Do git stuff
+system("git clone -q --depth=1 $github_url horde_clone");
 foreach ($apps['git'] as $val) {
-    tarballGit($dir, $val, $git_horde, 'horde-git');
+    tarballGit($dir, $val, dirname(__FILE__) . '/horde_clone/.git/', 'horde-git');
+    break;
 }
+system('rm -rf horde_clone');
 
 // Do CVS stuff
 foreach ($apps['fw3'] as $val) {
@@ -101,19 +110,21 @@ system("ln -sfh $dir latest");
  */
 function tarballGit($dir, $module, $repo, $name)
 {
-    global $git_dir;
+    global $git_cmd, $md5_cmd;
 
     $filename = $module . '-' . $name . '.tar.gz';
-    system('cd ' . $dir . '; ' . $git_dir . ' --git-dir=' . escapeshellarg($repo) . ' archive --format=tar --prefix=' . $module . '/ HEAD:' . $module . '/ | gzip -9 > ' . $filename);
-    system('cd ' . $dir . '; ' . $GLOBALS['md5_path'] . ' ' . $filename . ' > ' . $filename . '.md5sum');
+    system('cd ' . $dir . '; ' . $git_cmd . ' --git-dir=' . escapeshellarg($repo) . ' archive --format=tar --prefix=' . $module . '/ HEAD:' . $module . '/ | gzip -9 > ' . $filename);
+    system('cd ' . $dir . '; ' . $md5_cmd . ' ' . $filename . ' > ' . $filename . '.md5sum');
 }
 
 function tarballCVS($dir, $module, $tag)
 {
+    global $md5_cmd;
+
     $filename = $module . '-' . $tag . '-' . $dir . '.tar.gz';
     system('cd ' . $dir . '; cvs -Q export -r ' . $tag . ' -d ' . $module . '-' . $tag . ' ' . $module . ' > /dev/null');
     system('cd ' . $dir . '; tar -zcf ' . $filename . ' ' . $module . '-' . $tag);
-    system('cd ' . $dir . '; ' . $GLOBALS['md5_path'] . ' ' . $filename . ' > ' . $filename . '.md5sum');
+    system('cd ' . $dir . '; ' . $md5_cmd . ' ' . $filename . ' > ' . $filename . '.md5sum');
     system('rm -rf ' . $dir . '/' . $module . '-' . $tag);
 }
 
