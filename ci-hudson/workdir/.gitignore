@@ -1,8 +1,21 @@
+/.owner
+/Fingerprint cleanup.log
+/Workspace clean-up.log
+/hudson.maven.MavenModuleSet.xml
+/hudson.plugins.clover.CloverBuildWrapper.xml
+/hudson.scm.CVSSCM.xml
+/hudson.scm.SubversionSCM.xml
+/hudson.tasks.Ant.xml
+/hudson.tasks.Mailer.xml
+/hudson.tasks.Maven.xml
+/hudson.tasks.Shell.xml
+/hudson.triggers.SCMTrigger.xml
+/users
 hudson.model.UpdateCenter.xml
-nodeMonitors.xml
 hudson.plugins.git.GitTool.xml
+nodeMonitors.xml
+plugins
 queue.xml
 queue.xml.bak
 secret.key
-plugins
 updates
