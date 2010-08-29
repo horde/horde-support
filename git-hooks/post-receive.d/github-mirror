@@ -1,0 +1,4 @@
+#!/bin/bash
+
+git fetch mirror
+git push --mirror mirror
