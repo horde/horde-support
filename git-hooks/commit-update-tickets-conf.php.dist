@@ -1,7 +1,7 @@
 <?php
 /**
- ** commit-update-tickets.php configuration
- **/
+ * commit-update-tickets.php configuration
+ */
 // Path to git
 $git = '/usr/bin/git';
 
