@@ -33,6 +33,7 @@ $apps = array(
         'babel',
         'beatnik',
         'chora',
+        'content',
         'framework',
         'gollem',
         'horde',
