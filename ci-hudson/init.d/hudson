@@ -17,7 +17,12 @@ PATH=/bin:/usr/bin:/sbin:/usr/sbin
 
 DESC="Hudson Continuous Integration Server"
 NAME=hudson
-SUBDIR=$HOME/horde-support/ci-hudson
+
+if [ "x$SUBDIR" == "x" ]; then
+  SUBDIR=$HOME/horde-support/ci-hudson
+fi
+
+# defaults for hudson continuous integration server
 SCRIPTNAME=$SUBDIR/init.d/$NAME
 
 [ -r $SUBDIR/etc/$NAME ] && . $SUBDIR/etc/$NAME

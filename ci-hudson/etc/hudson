@@ -1,6 +1,3 @@
-# defaults for hudson continuous integration server
-SUBDIR=$HOME/horde-support/ci-hudson
-
 # pulled in from the init script; makes things easier.
 NAME=hudson
 

@@ -17,7 +17,7 @@
         <string>uploadpack</string>
         <string>git-upload-pack</string>
         <string>url</string>
-        <string>/usr/local/horde/git/horde.git</string>
+        <string>git://github.com/horde/horde.git</string>
         <string>tagopt</string>
         <string></string>
       </org.spearce.jgit.transport.RemoteConfig>
@@ -50,6 +50,15 @@
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders/>
-  <publishers/>
+  <publishers>
+   <hudson.tasks.BuildTrigger>
+     <childProjects>Autoloader, Itip</childProjects>
+     <threshold>
+       <name>SUCCESS</name>
+       <ordinal>0</ordinal>
+       <color>BLUE</color>
+     </threshold>
+   </hudson.tasks.BuildTrigger>
+  </publishers>
   <buildWrappers/>
 </project>
