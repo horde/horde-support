@@ -1,6 +1,6 @@
 <?php
 /**
- * commit-update-tickets.php configuration
+ * whups-git-hook.php configuration
  */
 // Path to git
 $git = '/usr/bin/git';

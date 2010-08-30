@@ -1,17 +1,22 @@
 #!/usr/bin/env php
 <?php
 /**
- * commit-update-tickets.php: scan commit logs for ticket numbers
+ * whups-git-hook.php: scan commit logs for ticket numbers
  * denoted by a flexible regular expression and post the log message
  * and a link to the changeset diff in a comment to those tickets.
  *
- * Usage: commit-update-tickets.php PATH_TO_REPO REVISION
+ * Usage: whups-git-hook.php PATH_TO_REPO REVISION
  *
  * @category Horde
  * @package  maintainer_tools
  */
 
-require_once 'Horde/Autoloader/Default.php';
+
+/**
+ ** Autoloader
+ **/
+
+require 'Horde/Autoloader/Default.php';
 
 
 /**
@@ -22,7 +27,7 @@ require_once 'Horde/Autoloader/Default.php';
 $git = $rpc_endpoint = $rpc_method = null;
 $rpc_options = array();
 
-require dirname(__FILE__) . '/commit-update-tickets-conf.php';
+require dirname(__FILE__) . '/whups-git-hook-conf.php';
 
 
 /**
@@ -103,7 +108,7 @@ function abort($msg) {
 }
 
 function usage() {
-    abort("usage: commit-update-tickets.php PATH_TO_REPO REVISION LINKS");
+    abort("usage: whups-git-hook.php PATH_TO_REPO REVISION LINKS");
 }
 
 function find_tickets($log_message) {
