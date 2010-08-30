@@ -13,14 +13,14 @@ if [ -z "$GIT_DIR" ]; then
 fi
 
 if [ -n "$1" -a -n "$2" -a -n "$3" ]; then
-    for script in `find $PWD/hooks/post-receive.d -perm -100 ! -type d`
+    for script in `find $PWD/hooks/post-receive.d/ -perm -100 ! -type d`
     do 
         $script "$1" "$2" "$3"
     done
 else
     while read oldrev newrev refname
     do
-        for script in `find $PWD/hooks/post-receive.d -perm -100 ! -type d`
+        for script in `find $PWD/hooks/post-receive.d/ -perm -100 ! -type d`
         do
             $script "$refname" "$oldrev" "$newrev"
         done
