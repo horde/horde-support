@@ -2,7 +2,7 @@
 /**
  * Ckeditor copy script - copies files used for Horde.
  *
- * Usage: horde-ckeditor.php [source] [destination]
+ * Usage: horde-ckeditor.php [source] [destination (horde/Editor base)]
  *
  * Copyright 1999-2010 The Horde Project (http://www.horde.org/)
  *
@@ -232,8 +232,9 @@ $strip = array(
 
 $source = rtrim($argv[1], '/ ');
 $dest = rtrim($argv[2], '/ ');
+$dest_js = $dest . '/js';
 
-$not_copy = array();
+$installed = $not_copy = array();
 
 $di = new RecursiveIteratorIterator(new IgnoreFilterIterator(new RecursiveDirectoryIterator($source)), RecursiveIteratorIterator::SELF_FIRST);
 foreach ($di as $val) {
@@ -243,8 +244,8 @@ foreach ($di as $val) {
         if (in_array($pathname, $files)) {
             $ext = pathinfo($val->getFileName(), PATHINFO_EXTENSION);
 
-            if (!file_exists($dest . '/' . $di->getSubPath())) {
-                @mkdir($dest . '/' . $di->getSubPath(), 0777, true);
+            if (!file_exists($dest_js . '/' . $di->getSubPath())) {
+                @mkdir($dest_js . '/' . $di->getSubPath(), 0777, true);
             }
 
             $data = file_get_contents($val->getPathname());
@@ -254,18 +255,57 @@ foreach ($di as $val) {
                 $data = preg_replace(array("/^\xEF\xBB\xBF/", "/\r\n/"), array('', "\n"), $data);
             }
 
-            file_put_contents($dest . '/' . $pathname, $data);
+            file_put_contents($dest_js . '/' . $pathname, $data);
 
             switch ($ext) {
             case 'js':
                 /* Compress javascript files. */
-                system('php ' . dirname(__FILE__) . '/horde-js-compress.php --nojsmin --overwrite ' . escapeshellcmd($dest . '/' . $pathname));
+                //system('php ' . dirname(__FILE__) . '/horde-js-compress.php --nojsmin --overwrite ' . escapeshellcmd($dest_js . '/' . $pathname));
                 break;
             }
+
+            $installed[] = $pathname;
         } else {
             $not_copy[] = $pathname;
         }
     }
+}
+
+print "\npackage.xml data:\n" .
+      "=================\n";
+
+$xml = new SimpleXMLElement('<dir name="/" />');
+$dirs['.'] = $xml;
+
+foreach ($installed as $val) {
+    $dname = dirname($val);
+    $pos = -1;
+
+    if (!isset($dirs[$dname])) {
+        $dirlist = array();
+        while (($pos = strpos($dname, '/', $pos + 1)) !== false) {
+            $dirlist[] = substr($dname, 0, $pos);
+        }
+        $dirlist[] = $dname;
+
+        foreach ($dirlist as $dir) {
+            if (!isset($dirs[$dir])) {
+                $dirs[$dir] = $dirs[dirname($dir)]->addChild('dir', '');
+                $dirs[$dir]->addAttribute('name', basename($dir));
+            }
+        }
+    }
+
+    $tmp = $dirs[$dname]->addChild('file', '');
+    $tmp->addAttribute('name', basename($val));
+    $tmp->addAttribute('role', 'horde');
+}
+
+print str_replace(array('></file>', '</dir>', '><dir', '><file'), array("/>\n", "</dir>\n", ">\n<dir", ">\n<file"), $xml->asXML());
+
+print "\n";
+foreach ($installed as $val) {
+    print '<install name="js/' . $val . '" as="js/ckeditor/' . $val ."\" />\n";
 }
 
 print "\nNot copied:\n" .
@@ -276,7 +316,7 @@ print "\nNot copied:\n" .
 /* List of tasks that need to be manually done. */
 print "\nTODO:\n" .
       "=====\n" .
-      "1. Edit config.js file (disable spell check as you type)\n".
+      "1. Edit config.js file (disable spell check as you type)\n" .
       "2. Compress PNGs\n";
 
 class IgnoreFilterIterator extends RecursiveFilterIterator
