@@ -19,7 +19,8 @@ PLUGINS=analysis-collector.hpi \
         xunit.hpi
 
 JOBS=Autoloader \
-     Itip
+     Itip \
+     Kolab_Session
 
 .PHONY:install
 install: hudson-war hudson-plugins hudson-jobs
@@ -31,7 +32,7 @@ hudson-war: war/hudson.war
 hudson-plugins: workdir/plugins/.keep $(PLUGINS)
 
 .PHONY:hudson-jobs
-hudson-jobs: $(JOBS:%=horde-%)
+hudson-jobs: $(JOBS:%=job-%)
 
 war/.keep:
 	mkdir -p war
@@ -83,10 +84,10 @@ violations.hpi: workdir/plugins/.keep
 xunit.hpi: workdir/plugins/.keep
 	cd workdir/plugins && wget https://hudson.dev.java.net/files/documents/2402/152453/xunit.hpi
 
-.PHONY:$(JOBS:%=horde-%)
-$(JOBS:%=horde-%):
-	mkdir -p workdir/jobs/$(@:horde-%=%)
-	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-element -c workdir/jobs/$(@:horde-%=%) $(HORDE_FRAMEWORK)/$(@:horde-%=%)
+.PHONY:$(JOBS:%=job-%)
+$(JOBS:%=job-%):
+	mkdir -p workdir/jobs/$(@:job-%=%)
+	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-element -c workdir/jobs/$(@:job-%=%) $(HORDE_FRAMEWORK)/$(@:job-%=%)
 
 .PHONY:start
 start:
