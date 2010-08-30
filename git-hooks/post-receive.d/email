@@ -657,7 +657,7 @@ send_mail()
 
 whups_update()
 {
-    $GIT_DIR/hooks/commit-update-tickets.php $GIT_DIR $1 $2
+    $GIT_DIR/hooks/whups-git-hook.php $GIT_DIR $1 $2
 }
 
 # ---------------------------- main()
