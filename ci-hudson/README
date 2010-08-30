@@ -1,0 +1,39 @@
+====================================================
+Horde continuous integration setup (based on Hudson)
+====================================================
+
+Introduction
+~~~~~~~~~~~~
+
+This provides the Horde continuous integration setup.
+
+Requirements
+~~~~~~~~~~~~
+
+Before installing this you need to have the following software
+installed:
+
+ - Make
+ - PHP with the xdebug extension
+ - PEAR
+ - Java (Sun JDK)
+ - Ant
+
+Installation
+~~~~~~~~~~~~
+
+Simply run
+
+ make install
+
+Usage
+~~~~~
+
+Simply run
+
+ make start
+
+Notes
+~~~~~
+
+
