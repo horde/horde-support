@@ -88,9 +88,8 @@ prune($days);
 system("git clone -q --depth=1 $github_url $gitclone_path");
 foreach ($apps['git'] as $val) {
     tarballGit($dir, $val, $gitclone_path . '/.git/', 'horde-git');
-    break;
 }
-system('rm -rf horde_clone');
+system('rm -rf '. $gitclone_path);
 
 // Do CVS stuff
 foreach ($apps['fw3'] as $val) {
@@ -110,7 +109,7 @@ function tarballGit($dir, $module, $repo, $name)
     system('cd ' . $dir . '; ' . $GLOBALS['git_cmd'] . ' --git-dir=' . escapeshellarg($repo) . ' archive --format=tar --prefix=' . $module . '/ HEAD:' . $module . '/ | gzip -9 > ' . $filename);
 
     foreach (array('md5', 'sha1', 'sha256') as $val) {
-        file_put_contents($dir . '/' . $filename . '.' . $val, hash_file($val, $filename));
+        file_put_contents($dir . '/' . $filename . '.' . $val, hash_file($val, $dir . '/' . $filename));
     }
 }
 
@@ -121,7 +120,7 @@ function tarballCVS($dir, $module, $tag)
     system('cd ' . $dir . '; tar -zcf ' . $filename . ' ' . $module . '-' . $tag);
 
     foreach (array('md5', 'sha1', 'sha256') as $val) {
-        file_put_contents($dir . '/' . $filename . '.' . $val, hash_file($val, $filename));
+        file_put_contents($dir . '/' . $filename . '.' . $val, hash_file($val, $dir . '/' . $filename));
     }
 
     system('rm -rf ' . $dir . '/' . $module . '-' . $tag);
