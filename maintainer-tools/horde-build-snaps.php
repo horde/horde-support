@@ -13,12 +13,6 @@ $days = 7;
 // Path to git repos (this is the location of the public Horde git repository)
 $github_url = 'git://github.com/horde/horde.git';
 
-// Location of MD5 binary.
-$md5_cmd = trim(`which md5`);
-if (!$md5_cmd) {
-    die("md5 not in \$PATH\n");
-}
-
 // Location of git binary
 $git_cmd = trim(`which git`);
 if (!$git_cmd) {
@@ -111,21 +105,24 @@ system("ln -sfh $dir latest");
  */
 function tarballGit($dir, $module, $repo, $name)
 {
-    global $git_cmd, $md5_cmd;
-
     $filename = $module . '-' . $name . '.tar.gz';
-    system('cd ' . $dir . '; ' . $git_cmd . ' --git-dir=' . escapeshellarg($repo) . ' archive --format=tar --prefix=' . $module . '/ HEAD:' . $module . '/ | gzip -9 > ' . $filename);
-    system('cd ' . $dir . '; ' . $md5_cmd . ' ' . $filename . ' > ' . $filename . '.md5sum');
+    system('cd ' . $dir . '; ' . $GLOBALS['git_cmd'] . ' --git-dir=' . escapeshellarg($repo) . ' archive --format=tar --prefix=' . $module . '/ HEAD:' . $module . '/ | gzip -9 > ' . $filename);
+
+    foreach (array('md5', 'sha1', 'sha256') as $val) {
+        file_put_contents($dir . '/' . $filename . '.' . $val, hash_file($val, $filename));
+    }
 }
 
 function tarballCVS($dir, $module, $tag)
 {
-    global $md5_cmd;
-
     $filename = $module . '-' . $tag . '-' . $dir . '.tar.gz';
     system('cd ' . $dir . '; cvs -Q export -r ' . $tag . ' -d ' . $module . '-' . $tag . ' ' . $module . ' > /dev/null');
     system('cd ' . $dir . '; tar -zcf ' . $filename . ' ' . $module . '-' . $tag);
-    system('cd ' . $dir . '; ' . $md5_cmd . ' ' . $filename . ' > ' . $filename . '.md5sum');
+
+    foreach (array('md5', 'sha1', 'sha256') as $val) {
+        file_put_contents($dir . '/' . $filename . '.' . $val, hash_file($val, $filename));
+    }
+
     system('rm -rf ' . $dir . '/' . $module . '-' . $tag);
 }
 
