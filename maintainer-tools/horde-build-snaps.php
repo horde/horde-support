@@ -12,6 +12,7 @@ $days = 7;
 
 // Path to git repos (this is the location of the public Horde git repository)
 $github_url = 'git://github.com/horde/horde.git';
+$gitclone_path = dirname(__FILE__) . '/horde_clone';
 
 // Location of git binary
 $git_cmd = trim(`which git`);
@@ -84,9 +85,9 @@ if (!is_dir($dir)) {
 prune($days);
 
 // Do git stuff
-system("git clone -q --depth=1 $github_url horde_clone");
+system("git clone -q --depth=1 $github_url $gitclone_path");
 foreach ($apps['git'] as $val) {
-    tarballGit($dir, $val, dirname(__FILE__) . '/horde_clone/.git/', 'horde-git');
+    tarballGit($dir, $val, $gitclone_path . '/.git/', 'horde-git');
     break;
 }
 system('rm -rf horde_clone');
