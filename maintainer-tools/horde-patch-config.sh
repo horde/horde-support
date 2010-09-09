@@ -21,6 +21,7 @@ echo "${file//\$Id\$/\$Id: $from \$}" > "patch$from"
 file=$(git cat-file blob "$to")
 echo "${file//\$Id\$/\$Id: $to \$}" > "patch$to"
 
+cp "$1" "$1".bak
 diff -u "patch$from" "patch$to" | patch "$1"
 
 rm  "patch$from" "patch$to"
