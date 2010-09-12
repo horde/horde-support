@@ -19,8 +19,12 @@ PLUGINS=analysis-collector.hpi \
         xunit.hpi
 
 JOBS=Autoloader \
+     Controller \
+     Date \
      Itip \
-     Kolab_Session
+     Kolab_Config \
+     Kolab_Session \
+     Url
 
 .PHONY:install
 install: hudson-war hudson-plugins hudson-jobs
