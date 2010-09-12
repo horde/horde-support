@@ -52,7 +52,7 @@
   <builders/>
   <publishers>
    <hudson.tasks.BuildTrigger>
-     <childProjects>Autoloader, Itip</childProjects>
+     <childProjects>Autoloader, Controller, Date, Itip, Kolab_Config, Kolab_Session, Url</childProjects>
      <threshold>
        <name>SUCCESS</name>
        <ordinal>0</ordinal>

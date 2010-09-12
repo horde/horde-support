@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Autoload implementation and class loading manager for Horde.</description>
+  <description>This package reads the various Kolab server
+ configuration files. It should also support retrieving configuration
+ parameters from LDAP but this is not yet implemented.</description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
     <numToKeep>10</numToKeep>
@@ -18,11 +20,11 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cp -r ${WORKSPACE}/../../horde/workspace/framework/Autoloader/* ${WORKSPACE}/
+      <command>cp -r ${WORKSPACE}/../../horde/workspace/framework/Kolab_Config/* ${WORKSPACE}/
 rm -rf ${WORKSPACE}/deps
 mkdir ${WORKSPACE}/deps
-php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps ${WORKSPACE}/../../horde/workspace/framework/Autoloader
-php  -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --ciprebuild=${WORKSPACE} ${WORKSPACE}/../../horde/workspace/framework/Autoloader
+php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps ${WORKSPACE}/../../horde/workspace/framework/Kolab_Config
+php  -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --ciprebuild=${WORKSPACE} ${WORKSPACE}/../../horde/workspace/framework/Kolab_Config
     </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Ant>

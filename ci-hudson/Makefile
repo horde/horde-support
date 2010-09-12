@@ -91,7 +91,7 @@ xunit.hpi: workdir/plugins/.keep
 .PHONY:$(JOBS:%=job-%)
 $(JOBS:%=job-%):
 	mkdir -p workdir/jobs/$(@:job-%=%)
-	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-element -c workdir/jobs/$(@:job-%=%) $(HORDE_FRAMEWORK)/$(@:job-%=%)
+	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -c workdir/jobs/$(@:job-%=%) $(HORDE_FRAMEWORK)/$(@:job-%=%)
 
 .PHONY:start
 start:

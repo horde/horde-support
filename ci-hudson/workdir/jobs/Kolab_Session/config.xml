@@ -20,12 +20,10 @@
   <builders>
     <hudson.tasks.Shell>
       <command>cp -r ${WORKSPACE}/../../horde/workspace/framework/Kolab_Session/* ${WORKSPACE}/
-echo &quot;include_path = \&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php\&quot;&quot; &gt; ${WORKSPACE}/php.ini
 rm -rf ${WORKSPACE}/deps
 mkdir ${WORKSPACE}/deps
-php -c php.ini ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-element --install=${WORKSPACE}/deps ${WORKSPACE}/../../horde/workspace/framework/Kolab_Session
-php -c php.ini ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-element --ciprebuild=${WORKSPACE} ${WORKSPACE}/../../horde/workspace/framework/Kolab_Session
-echo &quot;include_path = \&quot;.:${WORKSPACE}/lib:${WORKSPACE}/deps/pear/php:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php\&quot;&quot; &gt; ${WORKSPACE}/php.ini
+php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps ${WORKSPACE}/../../horde/workspace/framework/Kolab_Session
+php  -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --ciprebuild=${WORKSPACE} ${WORKSPACE}/../../horde/workspace/framework/Kolab_Session
     </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Ant>
