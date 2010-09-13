@@ -26,12 +26,17 @@ Simply run
 
  make install
 
-Usage
-~~~~~
-
-Simply run
+followed by
 
  make start
+
+Now you should be able to connect to http://localhost:8080. Once
+Hudson started register yourself as user "hordeadmin". And finally you
+need to trigger the build on both the "horde" and the
+"php-hudson-tools" jobs.
+
+Usage
+~~~~~
 
 Notes
 ~~~~~

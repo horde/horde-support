@@ -27,7 +27,7 @@ JOBS=Autoloader \
      Url
 
 .PHONY:install
-install: hudson-war hudson-plugins hudson-jobs
+install: hudson-war hudson-plugins
 
 .PHONY:hudson-war
 hudson-war: war/hudson.war
