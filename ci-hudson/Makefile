@@ -3,20 +3,36 @@ include settings.mk
 HORDE_FRAMEWORK=workdir/jobs/horde/workspace/framework
 TOOLSDIR=workdir/jobs/php-hudson-tools/workspace/pear/pear
 
-URL_WAR=http://hudson-ci.org/latest/hudson.war
-PLUGINS=analysis-collector.hpi \
-        analysis-core.hpi \
-        checkstyle.hpi \
-        clover.hpi \
-        dashboard-view.hpi \
-        dry.hpi \
-        git.hpi \
-        greenballs.hpi \
-        htmlpublisher.hpi \
-        jdepend.hpi \
-        pmd.hpi \
-        violations.hpi \
-        xunit.hpi
+URL_WAR=http://updates.hudson-labs.org/download/war/1.379/hudson.war
+PLUGINS=analysis-collector.hpi.1.8 \
+        analysis-core.hpi.1.14 \
+        checkstyle.hpi.3.10 \
+        clover.hpi.3.0.2 \
+        dashboard-view.hpi.1.8.1 \
+        dry.hpi.2.10 \
+        git.hpi.1.1 \
+        greenballs.hpi.1.6 \
+        htmlpublisher.hpi.0.4 \
+        jdepend.hpi.1.2.2 \
+        pmd.hpi.3.10 \
+        violations.hpi.0.7.6 \
+        xunit.hpi.1.8
+
+PLUGINS_LATEST=analysis-collector.hpi \
+               analysis-core.hpi \
+               checkstyle.hpi \
+               clover.hpi \
+               dashboard-view.hpi \
+               dry.hpi \
+               git.hpi \
+               greenballs.hpi \
+               htmlpublisher.hpi \
+               jdepend.hpi \
+               pmd.hpi \
+               violations.hpi \
+               xunit.hpi
+URL_WAR_LATEST=http://hudson-ci.org/latest/hudson.war
+
 
 JOBS=Autoloader \
      Controller \
@@ -24,10 +40,14 @@ JOBS=Autoloader \
      Itip \
      Kolab_Config \
      Kolab_Session \
+     LoginTasks \
      Url
 
 .PHONY:install
 install: hudson-war hudson-plugins
+
+.PHONY:install-latest
+install-latest: hudson-war-latest hudson-plugins-latest
 
 .PHONY:hudson-war
 hudson-war: war/hudson.war
@@ -45,48 +65,26 @@ war/.keep:
 war/hudson.war: war/.keep
 	cd war && wget $(URL_WAR)
 
+PHONY:hudson-war-latest
+hudson-war-latest: war/.keep
+	cd war && wget $(URL_WAR_LATEST)
+
 workdir/plugins/.keep:
 	mkdir -p workdir/plugins
 	touch $@
 
-analysis-collector.hpi: workdir/plugins/.keep
-	cd workdir/plugins && wget https://hudson.dev.java.net/files/documents/2402/151982/analysis-collector.hpi
+PHONY: hudson-plugins-latest
+hudson-plugins-latest: $(PLUGINS_LATEST)
 
-analysis-core.hpi: workdir/plugins/.keep
-	cd workdir/plugins && wget https://hudson.dev.java.net/files/documents/2402/152325/analysis-core.hpi
+PHONY:$(PLUGINS_LATEST)
+$(PLUGINS_LATEST): workdir/plugins/.keep
+	cd workdir/plugins && wget http://hudson-ci.org/latest/$(@)
 
-checkstyle.hpi: workdir/plugins/.keep
-	cd workdir/plugins && wget https://hudson.dev.java.net/files/documents/2402/151962/checkstyle.hpi
-
-clover.hpi: workdir/plugins/.keep
-	cd workdir/plugins && wget https://hudson.dev.java.net/files/documents/2402/151372/clover.hpi
-
-dashboard-view.hpi: workdir/plugins/.keep
-	cd workdir/plugins && wget https://hudson.dev.java.net/files/documents/2402/152172/dashboard-view.hpi
-
-dry.hpi: workdir/plugins/.keep
-	cd workdir/plugins && wget https://hudson.dev.java.net/files/documents/2402/151963/dry.hpi
-
-git.hpi: workdir/plugins/.keep
-	cd workdir/plugins && wget https://hudson.dev.java.net/files/documents/2402/152113/git.hpi
-
-greenballs.hpi: workdir/plugins/.keep
-	cd workdir/plugins && wget https://hudson.dev.java.net/files/documents/2402/147476/greenballs.hpi
-
-htmlpublisher.hpi: workdir/plugins/.keep
-	cd workdir/plugins && wget https://hudson.dev.java.net/files/documents/2402/150456/htmlpublisher.hpi
-
-jdepend.hpi: workdir/plugins/.keep
-	cd workdir/plugins && wget https://hudson.dev.java.net/files/documents/2402/143113/jdepend.hpi
-
-pmd.hpi: workdir/plugins/.keep
-	cd workdir/plugins && wget https://hudson.dev.java.net/files/documents/2402/151965/pmd.hpi
-
-violations.hpi: workdir/plugins/.keep
-	cd workdir/plugins && wget https://hudson.dev.java.net/files/documents/2402/151939/violations.hpi
-
-xunit.hpi: workdir/plugins/.keep
-	cd workdir/plugins && wget https://hudson.dev.java.net/files/documents/2402/152453/xunit.hpi
+PHONY: $(PLUGINS)
+$(PLUGINS): workdir/plugins/.keep
+	NAME=$(shell echo $(@) | sed -e 's/\.hpi\..*//'); \
+	  VERSION=$(shell echo $(@) | sed -e 's/.*\.hpi\.//'); \
+	  cd workdir/plugins && wget http://hudson-ci.org/download/plugins/$$NAME/$$VERSION/$$NAME.hpi
 
 .PHONY:$(JOBS:%=job-%)
 $(JOBS:%=job-%):
@@ -96,3 +94,14 @@ $(JOBS:%=job-%):
 .PHONY:start
 start:
 	export SUBDIR=$(SUBDIR) && init.d/hudson start
+
+.PHONY:stop
+stop:
+	export SUBDIR=$(SUBDIR) && init.d/hudson stop
+
+clean:
+	rm -f log/hudson.log
+	rm -f run/hudson.pid
+	rm -rf run/hudson
+	rm -f war/hudson.war
+	rm -rf workdir/plugins

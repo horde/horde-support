@@ -51,14 +51,14 @@
   <concurrentBuild>false</concurrentBuild>
   <builders/>
   <publishers>
-   <hudson.tasks.BuildTrigger>
-     <childProjects>Autoloader, Controller, Date, Itip, Kolab_Config, Kolab_Session, Url</childProjects>
-     <threshold>
-       <name>SUCCESS</name>
-       <ordinal>0</ordinal>
-       <color>BLUE</color>
-     </threshold>
-   </hudson.tasks.BuildTrigger>
+    <hudson.tasks.BuildTrigger>
+      <childProjects>Autoloader, Controller, Date, Itip, Kolab_Config, Kolab_Session, Url, LoginTasks</childProjects>
+      <threshold>
+        <name>SUCCESS</name>
+        <ordinal>0</ordinal>
+        <color>BLUE</color>
+      </threshold>
+    </hudson.tasks.BuildTrigger>
   </publishers>
   <buildWrappers/>
 </project>
