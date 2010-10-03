@@ -18,11 +18,10 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cp -r ${WORKSPACE}/../../horde/workspace/framework/Autoloader/* ${WORKSPACE}/
-rm -rf ${WORKSPACE}/deps
-mkdir ${WORKSPACE}/deps
-php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps ${WORKSPACE}/../../horde/workspace/framework/Autoloader
-php  -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --ciprebuild=${WORKSPACE} ${WORKSPACE}/../../horde/workspace/framework/Autoloader
+      <command>rsync -avz --exclude="build.xml" --delete-after ${WORKSPACE}/../../horde/workspace/framework/Autoloader/* ${WORKSPACE}/
+mkdir -p ${WORKSPACE}/deps
+php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps -N ${WORKSPACE}/../../horde/workspace/framework/Autoloader
+php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/../.pearrc ${WORKSPACE}/../../horde/workspace/framework/Autoloader
     </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Ant>
