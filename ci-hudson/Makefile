@@ -35,6 +35,7 @@ URL_WAR_LATEST=http://hudson-ci.org/latest/hudson.war
 
 
 JOBS=Autoloader \
+     Argv \
      Controller \
      Date \
      Itip \
