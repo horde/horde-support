@@ -3,7 +3,7 @@ include settings.mk
 HORDE_FRAMEWORK=workdir/jobs/horde/workspace/framework
 TOOLSDIR=workdir/jobs/php-hudson-tools/workspace/pear/pear
 
-URL_WAR=http://updates.hudson-labs.org/download/war/1.379/hudson.war
+URL_WAR=http://updates.hudson-labs.org/download/war/1.381/hudson.war
 PLUGINS=analysis-collector.hpi.1.8 \
         analysis-core.hpi.1.14 \
         checkstyle.hpi.3.10 \
@@ -15,8 +15,8 @@ PLUGINS=analysis-collector.hpi.1.8 \
         htmlpublisher.hpi.0.4 \
         jdepend.hpi.1.2.2 \
         pmd.hpi.3.10 \
-        violations.hpi.0.7.6 \
-        xunit.hpi.1.8
+        violations.hpi.0.7.7 \
+        xunit.hpi.1.10
 
 PLUGINS_LATEST=analysis-collector.hpi \
                analysis-core.hpi \
@@ -36,8 +36,10 @@ URL_WAR_LATEST=http://hudson-ci.org/latest/hudson.war
 
 JOBS=Autoloader \
      Argv \
+     Constraint \
      Controller \
      Date \
+     Db \
      Itip \
      Kolab_Config \
      Kolab_Session \
