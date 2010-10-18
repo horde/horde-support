@@ -23,7 +23,7 @@ rsync -avz --exclude="build.xml" --delete-after ${WORKSPACE}/../../%2$s/workspac
 mkdir -p ${WORKSPACE}/deps
 php -d include_path=&quot;.:${WORKSPACE}/../../%3$s/php&quot; ${WORKSPACE}/../../%3$s/horde-components --install=${WORKSPACE}/deps/.pearrc -N ${WORKSPACE}/../../%2$s/workspace/%1$s
 php -d include_path=&quot;.:${WORKSPACE}/../../%3$s/php&quot; ${WORKSPACE}/../../%3$s/horde-components -t ../../../../templates -T ../../%3$s --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../%3$s/../.pearrc ${WORKSPACE}/../../%2$s/workspace/%1$s
-    </command>
+    </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Ant>
       <targets></targets>
@@ -250,13 +250,18 @@ php -d include_path=&quot;.:${WORKSPACE}/../../%3$s/php&quot; ${WORKSPACE}/../..
     </htmlpublisher.HtmlPublisher>
     <com.thalesgroup.hudson.plugins.xunit.XUnitPublisher>
       <types>
-        <com.thalesgroup.dtkit.metrics.hudson.model.PHPUnitHudsonTestType>
+        <com.thalesgroup.dtkit.metrics.hudson.model.PHPUnitJunitHudsonTestType>
           <pattern>build/logs/junit.xml</pattern>
           <faildedIfNotNew>true</faildedIfNotNew>
           <deleteOutputFiles>true</deleteOutputFiles>
-        </com.thalesgroup.dtkit.metrics.hudson.model.PHPUnitHudsonTestType>
+        </com.thalesgroup.dtkit.metrics.hudson.model.PHPUnitJunitHudsonTestType>
       </types>
     </com.thalesgroup.hudson.plugins.xunit.XUnitPublisher>
+    <hudson.tasks.Mailer>
+      <recipients>commits@horde.org</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers/>
 </project>
