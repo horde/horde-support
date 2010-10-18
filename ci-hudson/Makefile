@@ -40,10 +40,12 @@ JOBS=Autoloader \
      Controller \
      Date \
      Db \
+     Exception \
      Itip \
      Kolab_Config \
      Kolab_Session \
      LoginTasks \
+     Translation \
      Url
 
 .PHONY:install
@@ -92,7 +94,7 @@ $(PLUGINS): workdir/plugins/.keep
 .PHONY:$(JOBS:%=job-%)
 $(JOBS:%=job-%):
 	mkdir -p workdir/jobs/$(@:job-%=%)
-	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -c workdir/jobs/$(@:job-%=%) --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_FRAMEWORK)/$(@:job-%=%)
+	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -T php-hudson-tools/workspace/pear/pear -t templates -c workdir/jobs/$(@:job-%=%) --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_FRAMEWORK)/$(@:job-%=%)
 
 .PHONY:start
 start:

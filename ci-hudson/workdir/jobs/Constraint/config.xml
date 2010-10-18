@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>This class represents a single URL and provides methods for manipulating URLs.</description>
+  <description>This package provides a programmatic way of building constraints that evaluate to true or false</description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
     <numToKeep>10</numToKeep>
@@ -19,10 +19,10 @@
   <builders>
     <hudson.tasks.Shell>
       <command>rm -rf ${WORKSPACE}/deps
-rsync -avz --exclude="build.xml" --delete-after ${WORKSPACE}/../../horde/workspace/framework/Url/* ${WORKSPACE}/
+rsync -avz --exclude="build.xml" --delete-after ${WORKSPACE}/../../horde/workspace/framework/Constraint/* ${WORKSPACE}/
 mkdir -p ${WORKSPACE}/deps
-php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps/.pearrc -N ${WORKSPACE}/../../horde/workspace/framework/Url
-php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components -t ../../../../templates -T ../../php-hudson-tools/workspace/pear/pear --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/../.pearrc ${WORKSPACE}/../../horde/workspace/framework/Url
+php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps/.pearrc -N ${WORKSPACE}/../../horde/workspace/framework/Constraint
+php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components -t ../../../../templates -T ../../php-hudson-tools/workspace/pear/pear --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/../.pearrc ${WORKSPACE}/../../horde/workspace/framework/Constraint
     </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Ant>

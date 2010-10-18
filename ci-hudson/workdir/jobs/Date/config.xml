@@ -18,11 +18,12 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>rsync -avz --exclude="build.xml" --delete-after ${WORKSPACE}/../../horde/workspace/framework/Date/* ${WORKSPACE}/
+      <command>rm -rf ${WORKSPACE}/deps
+rsync -avz --exclude="build.xml" --delete-after ${WORKSPACE}/../../horde/workspace/framework/Date/* ${WORKSPACE}/
 mkdir -p ${WORKSPACE}/deps
-php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps -N ${WORKSPACE}/../../horde/workspace/framework/Date
-php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/../.pearrc ${WORKSPACE}/../../horde/workspace/framework/Date
-    </command>
+php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps/.pearrc -N ${WORKSPACE}/../../horde/workspace/framework/Date
+php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components -t ../../../../templates -T ../../php-hudson-tools/workspace/pear/pear --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/../.pearrc ${WORKSPACE}/../../horde/workspace/framework/Date
+    </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Ant>
       <targets></targets>
