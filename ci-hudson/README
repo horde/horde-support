@@ -30,10 +30,9 @@ followed by
 
  make start
 
-Now you should be able to connect to http://localhost:8080. Once
-Hudson started register yourself as user "hordeadmin". And finally you
-need to trigger the build on both the "horde" and the
-"php-hudson-tools" jobs.
+Now you should be able to connect to http://localhost:8080. You should
+now be able to login as a local user on your system. Finally you need
+to trigger the build on the "php-hudson-tools" jobs.
 
 Usage
 ~~~~~
