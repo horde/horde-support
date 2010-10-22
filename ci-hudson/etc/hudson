@@ -10,8 +10,7 @@ JAVA=/usr/bin/java
 PIDFILE=$SUBDIR/run/hudson.pid
 
 # user id to be invoked as (otherwise will run as root; not wise!)
-#HUDSON_USER=hudson
-HUDSON_USER=wrobel
+HUDSON_USER=hudson
 
 # location of the hudson war file
 HUDSON_WAR=$SUBDIR/war/hudson.war
