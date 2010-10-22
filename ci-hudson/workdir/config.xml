@@ -1,50 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
-  <version>1.374</version>
+  <version>1.381</version>
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
-  <useSecurity>true</useSecurity>
-  <authorizationStrategy class="hudson.security.GlobalMatrixAuthorizationStrategy">
-    <permission>hudson.model.Computer.Configure:Admins</permission>
-    <permission>hudson.model.Computer.Delete:Admins</permission>
-    <permission>hudson.model.Hudson.Administer:Admins</permission>
-    <permission>hudson.model.Hudson.Read:Admins</permission>
-    <permission>hudson.model.Hudson.Read:anonymous</permission>
-    <permission>hudson.model.Item.Build:Admins</permission>
-    <permission>hudson.model.Item.Configure:Admins</permission>
-    <permission>hudson.model.Item.Create:Admins</permission>
-    <permission>hudson.model.Item.Delete:Admins</permission>
-    <permission>hudson.model.Item.Read:Admins</permission>
-    <permission>hudson.model.Item.Read:anonymous</permission>
-    <permission>hudson.model.Item.Workspace:Admins</permission>
-    <permission>hudson.model.Item.Workspace:anonymous</permission>
-    <permission>hudson.model.Run.Delete:Admins</permission>
-    <permission>hudson.model.Run.Update:Admins</permission>
-    <permission>hudson.model.View.Configure:Admins</permission>
-    <permission>hudson.model.View.Create:Admins</permission>
-    <permission>hudson.model.View.Delete:Admins</permission>
-    <permission>hudson.scm.SCM.Tag:Admins</permission>
-    <permission>hudson.model.Computer.Configure:hordeadmin</permission>
-    <permission>hudson.model.Computer.Delete:hordeadmin</permission>
-    <permission>hudson.model.Hudson.Administer:hordeadmin</permission>
-    <permission>hudson.model.Hudson.Read:hordeadmin</permission>
-    <permission>hudson.model.Item.Build:hordeadmin</permission>
-    <permission>hudson.model.Item.Configure:hordeadmin</permission>
-    <permission>hudson.model.Item.Create:hordeadmin</permission>
-    <permission>hudson.model.Item.Delete:hordeadmin</permission>
-    <permission>hudson.model.Item.Read:hordeadmin</permission>
-    <permission>hudson.model.Item.Workspace:hordeadmin</permission>
-    <permission>hudson.model.Run.Delete:hordeadmin</permission>
-    <permission>hudson.model.Run.Update:hordeadmin</permission>
-    <permission>hudson.model.View.Configure:hordeadmin</permission>
-    <permission>hudson.model.View.Create:hordeadmin</permission>
-    <permission>hudson.model.View.Delete:hordeadmin</permission>
-    <permission>hudson.scm.SCM.Tag:hordeadmin</permission>
-  </authorizationStrategy>
-  <securityRealm class="hudson.security.HudsonPrivateSecurityRealm">
-    <disableSignup>false</disableSignup>
-  </securityRealm>
+  <authorizationStrategy class="hudson.security.AuthorizationStrategy$Unsecured"/>
+  <securityRealm class="hudson.security.SecurityRealm$None"/>
   <jdks/>
+  <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
+  <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds/>
   <slaves/>
   <quietPeriod>5</quietPeriod>
