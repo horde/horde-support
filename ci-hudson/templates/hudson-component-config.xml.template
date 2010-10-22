@@ -258,7 +258,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../%3$s/php&quot; ${WORKSPACE}/../..
       </types>
     </com.thalesgroup.hudson.plugins.xunit.XUnitPublisher>
     <hudson.tasks.Mailer>
-      <recipients>commits@horde.org</recipients>
+      <recipients>commits@lists.horde.org</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
