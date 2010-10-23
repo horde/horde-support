@@ -35,7 +35,7 @@
 require dirname(__FILE__) . '/horde-make-release-conf.php';
 
 /* Horde autoloader. */
-include_once 'Horde/Autoloader.php';
+include_once 'Horde/Autoloader/Default.php';
 
 // Create a class instance
 $tarball = new Horde_Release($options);
