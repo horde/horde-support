@@ -1,0 +1,66 @@
+#!/usr/bin/env php
+<?php
+
+function detectNewBranch($old_sha1, $new_sha1)
+{
+    if ($old_sha1 == '0000000000000000000000000000000000000000') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function parseDiff($old_sha1, $new_sha1, $diffcmd, $regex)
+{
+    $diff = array();
+
+    exec($diffcmd, $diff, $diffrcval);
+    if ($diffrcval != 0) {
+        echo "Syntax checker hook is malfunctioning.  Can't execute git ls-tree.  Failing gracefully and allowing this push.\n";
+        exit(0);
+    }
+
+    foreach ($diff as $diffline) {
+        preg_match($regex, $diffline, $matches);
+        $blob = $matches[1];
+        $filename = $matches[2];
+        SyntaxCheckFile($blob, $filename);
+    }
+}
+
+function syntaxCheckFile($blob, $filename)
+{
+    $needle = '/(\.php)$/';
+    if (preg_match($needle, $filename)) {
+        $dummy = array();
+        exec("git show $blob|/usr/bin/env php -l", $dummy, $checkrcval);
+        if ($checkrcval != 0) {
+            echo "There was a syntax error in '$filename'. Rejecting this attempted merge.\n";
+            exit(1);
+        }
+    }
+}
+
+function parseCommit($old_sha1, $new_sha1)
+{
+    // If this is the first commit on a new branch, $old_sha1 will be a bunch of
+    // zeroes, and so git diff --raw will fail, since there's no old ref to
+    // compare against.  So we parse the results of git diff-tree -root=$new_sha1
+    // instead to get the blob and filename we'll need.
+    if (detectNewBranch($old_sha1, $new_sha1)) {
+        $diffcmd = "git diff-tree --root $new_sha1";
+        $regex = "/\:\w+ \w+ \w+ (\w+) \w (.+)/";
+    } else {
+        $diffcmd = "git diff --raw $old_sha1 $new_sha1";
+        $regex = "/\:\d+ \d+ \w+... (\w+)... \w\t(.+)/";
+    }
+    parseDiff($old_sha1, $new_sha1, $diffcmd, $regex);
+}
+
+// This pre-receive git hook gets passed the ref before the push, and the ref
+// that would be created if the push succeeds.
+$old_sha1 = $_SERVER['argv'][1];
+$new_sha1 = $_SERVER['argv'][2];
+$refname = $_SERVER['argv'][3];
+parseCommit($old_sha1, $new_sha1);
+exit(0);
