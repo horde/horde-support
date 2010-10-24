@@ -1,16 +1,16 @@
 #!/usr/bin/env php
 <?php
 
-function detectNewBranch($old_sha1, $new_sha1)
+function detectNewBranch($oldrev, $newrev)
 {
-    if ($old_sha1 == '0000000000000000000000000000000000000000') {
+    if ($oldrev == '0000000000000000000000000000000000000000') {
         return true;
     } else {
         return false;
     }
 }
 
-function parseDiff($old_sha1, $new_sha1, $diffcmd, $regex)
+function parseDiff($oldrev, $newrev, $diffcmd, $regex)
 {
     $diff = array();
 
@@ -41,26 +41,26 @@ function syntaxCheckFile($blob, $filename)
     }
 }
 
-function parseCommit($old_sha1, $new_sha1)
+function parseCommit($oldrev, $newrev)
 {
-    // If this is the first commit on a new branch, $old_sha1 will be a bunch of
+    // If this is the first commit on a new branch, $oldrev will be a bunch of
     // zeroes, and so git diff --raw will fail, since there's no old ref to
-    // compare against.  So we parse the results of git diff-tree -root=$new_sha1
+    // compare against.  So we parse the results of git diff-tree -root=$newrev
     // instead to get the blob and filename we'll need.
-    if (detectNewBranch($old_sha1, $new_sha1)) {
-        $diffcmd = "git diff-tree --root $new_sha1";
+    if (detectNewBranch($oldrev, $newrev)) {
+        $diffcmd = "git diff-tree --root $newrev";
         $regex = "/\:\w+ \w+ \w+ (\w+) \w (.+)/";
     } else {
-        $diffcmd = "git diff --raw $old_sha1 $new_sha1";
+        $diffcmd = "git diff --raw $oldrev $newrev";
         $regex = "/\:\d+ \d+ \w+... (\w+)... \w\t(.+)/";
     }
-    parseDiff($old_sha1, $new_sha1, $diffcmd, $regex);
+    parseDiff($oldrev, $newrev, $diffcmd, $regex);
 }
 
 // This pre-receive git hook gets passed the ref before the push, and the ref
 // that would be created if the push succeeds.
-$old_sha1 = $_SERVER['argv'][1];
-$new_sha1 = $_SERVER['argv'][2];
+$oldrev = $_SERVER['argv'][1];
+$newrev = $_SERVER['argv'][2];
 $refname = $_SERVER['argv'][3];
-parseCommit($old_sha1, $new_sha1);
+parseCommit($oldrev, $newrev);
 exit(0);

@@ -8,7 +8,7 @@ refname="$3"
 if [ -z "$GIT_DIR" ]; then
     echo "Don't run this script from the command line." >&2
     echo " (if you want, you could supply GIT_DIR then run" >&2
-    echo "  $0 <ref> <oldrev> <newrev>)" >&2
+    echo "  $0 <oldrev> <newrev> <ref>)" >&2
     exit 1
 fi
 
@@ -22,7 +22,7 @@ else
     do
         for script in `find $PWD/hooks/pre-receive.d/ -perm -100 ! -type d`
         do
-            $script "$refname" "$oldrev" "$newrev"
+            $script "$oldrev" "$newrev" "$refname"
         done
     done
 fi
