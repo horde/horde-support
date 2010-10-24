@@ -16,7 +16,7 @@ function parseDiff($oldrev, $newrev, $diffcmd, $regex)
 
     exec($diffcmd, $diff, $diffrcval);
     if ($diffrcval != 0) {
-        echo "Syntax checker hook is malfunctioning.  Can't execute git ls-tree.  Failing gracefully and allowing this push.\n";
+        echo "Syntax checker hook is malfunctioning - can't execute git ls-tree. Failing gracefully and allowing this push.\n";
         exit(0);
     }
 
@@ -33,9 +33,12 @@ function syntaxCheckFile($blob, $filename)
     $needle = '/(\.php)$/';
     if (preg_match($needle, $filename)) {
         $dummy = array();
-        exec("git show $blob|/usr/bin/env php -l", $dummy, $checkrcval);
-        if ($checkrcval != 0) {
-            echo "There was a syntax error in '$filename'. Rejecting this attempted merge.\n";
+        exec("git show $blob | /usr/bin/env php -l", $output, $returnCode);
+        if ($returnCode != 0) {
+            $output = trim(implode("\n", $output));
+            $output = str_replace('in - on', "in $filename on", $output);
+            $output = str_replace('Errors parsing -', "Errors parsing $filename", $output);
+            echo "$output\nRejecting this merge.\n";
             exit(1);
         }
     }
@@ -62,5 +65,7 @@ function parseCommit($oldrev, $newrev)
 $oldrev = $_SERVER['argv'][1];
 $newrev = $_SERVER['argv'][2];
 $refname = $_SERVER['argv'][3];
+
 parseCommit($oldrev, $newrev);
+
 exit(0);
