@@ -690,4 +690,4 @@ recipients=$(git config hooks.mailinglist)
 announcerecipients=$(git config hooks.announcelist)
 emailprefix=$(git config hooks.emailprefix || echo '[SCM] ')
 
-generate_email $2 $3 $1 | send_mail
+generate_email $1 $2 $3 | send_mail
