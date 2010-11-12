@@ -110,3 +110,10 @@ clean:
 	rm -rf run/hudson
 	rm -f war/hudson.war
 	rm -rf workdir/plugins
+
+.PHONY:clean-jobs
+clean-jobs: $(JOBS:%=clean-job-%)
+
+.PHONY:$(JOBS:%=clean-job-%)
+$(JOBS:%=clean-job-%):
+	rm -rf workdir/jobs/$(@:clean-job-%=%)/{builds,htmreports,lastStable,lastSuccessful,nextBuildNumber,workspace}
