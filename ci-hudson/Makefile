@@ -39,6 +39,7 @@ JOBS=Autoloader \
      Constraint \
      Controller \
      Date \
+     Date_Parser \
      Db \
      Exception \
      Itip \
@@ -94,7 +95,7 @@ $(PLUGINS): workdir/plugins/.keep
 .PHONY:$(JOBS:%=job-%)
 $(JOBS:%=job-%):
 	mkdir -p workdir/jobs/$(@:job-%=%)
-	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -T php-hudson-tools/workspace/pear/pear -t templates -c workdir/jobs/$(@:job-%=%) --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_FRAMEWORK)/$(@:job-%=%)
+	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -T php-hudson-tools/workspace/pear/pear -t $(SUBDIR)/templates -c workdir/jobs/$(@:job-%=%) --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_FRAMEWORK)/$(@:job-%=%)
 
 .PHONY:start
 start:
@@ -104,11 +105,15 @@ start:
 stop:
 	export SUBDIR=$(SUBDIR) && init.d/hudson stop
 
+PHONY:clean-all
+clean-all: clean clean-jobs
+
+PHONY:clean
 clean:
 	rm -f log/hudson.log
 	rm -f run/hudson.pid
 	rm -rf run/hudson
-	rm -f war/hudson.war
+	rm -f war/hudson.war war/hudson.tmp war/hudson.bak
 	rm -rf workdir/plugins
 
 .PHONY:clean-jobs
