@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Library for natural-language date parsing, with support for multiple languages and locales.</description>
+  <description>Library for natural-language date parsing, with support for multiple languages and locales</description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
     <numToKeep>10</numToKeep>
@@ -19,9 +19,9 @@
   <builders>
     <hudson.tasks.Shell>
       <command>rm -rf ${WORKSPACE}/deps
-rsync -avz --exclude="build.xml" --delete-after ${WORKSPACE}/../../horde/workspace/framework/Date_Parser/* ${WORKSPACE}/
+rsync -avz --exclude=&quot;build.xml&quot; --delete-after ${WORKSPACE}/../../horde/workspace/framework/Date_Parser/* ${WORKSPACE}/
 mkdir -p ${WORKSPACE}/deps
-php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps/.pearrc -N ${WORKSPACE}/../../horde/workspace/framework/Date_Parser
+php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps/.pearrc --channelxmlpath=${WORKSPACE}/../../horde-pear-dependencies/workspace/channels --sourcepath=${WORKSPACE}/../../horde-pear-dependencies/workspace/packages --exclude=&quot;pear.php.net/PEAR_Frontend_Web,pear.php.net/PEAR_Frontend_Gtk,channel:pecl.php.net,Test&quot; -N ${WORKSPACE}/../../horde/workspace/framework/Date_Parser
 php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components -t ../../../../templates -T ../../php-hudson-tools/workspace/pear/pear --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/../.pearrc ${WORKSPACE}/../../horde/workspace/framework/Date_Parser
     </command>
     </hudson.tasks.Shell>
@@ -250,13 +250,18 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/p
     </htmlpublisher.HtmlPublisher>
     <com.thalesgroup.hudson.plugins.xunit.XUnitPublisher>
       <types>
-        <com.thalesgroup.dtkit.metrics.hudson.model.PHPUnitHudsonTestType>
+        <com.thalesgroup.dtkit.metrics.hudson.model.PHPUnitJunitHudsonTestType>
           <pattern>build/logs/junit.xml</pattern>
           <faildedIfNotNew>true</faildedIfNotNew>
           <deleteOutputFiles>true</deleteOutputFiles>
-        </com.thalesgroup.dtkit.metrics.hudson.model.PHPUnitHudsonTestType>
+        </com.thalesgroup.dtkit.metrics.hudson.model.PHPUnitJunitHudsonTestType>
       </types>
     </com.thalesgroup.hudson.plugins.xunit.XUnitPublisher>
+    <hudson.tasks.Mailer>
+      <recipients>commits@lists.horde.org</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers/>
 </project>
