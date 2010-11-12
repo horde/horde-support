@@ -25,7 +25,10 @@ fi
 # defaults for hudson continuous integration server
 SCRIPTNAME=$SUBDIR/init.d/$NAME
 
+# Load the configuration
 [ -r $SUBDIR/etc/$NAME ] && . $SUBDIR/etc/$NAME
+# Load the local configuration overrides
+[ -r $SUBDIR/etc/$NAME.local ] && . $SUBDIR/etc/$NAME.local
 
 # Exit if not supposed to run standalone
 [ "$RUN_STANDALONE" = "false" ] && exit 0

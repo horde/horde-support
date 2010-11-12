@@ -1,0 +1,5 @@
+# Copy this file to "hudson.local" to override values from the default
+# configuration in "hudson"
+
+# Override the default hudson user here if required.
+#HUDSON_USER=ubuntu
