@@ -1,10 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
-  <version>1.381</version>
+  <version>1.384</version>
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
-  <authorizationStrategy class="hudson.security.AuthorizationStrategy$Unsecured"/>
-  <securityRealm class="hudson.security.SecurityRealm$None"/>
+  <useSecurity>true</useSecurity>
+  <authorizationStrategy class="hudson.security.FullControlOnceLoggedInAuthorizationStrategy"/>
+  <securityRealm class="hudson.security.PAMSecurityRealm">
+    <serviceName>sshd</serviceName>
+  </securityRealm>
   <jdks/>
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
