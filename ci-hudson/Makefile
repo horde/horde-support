@@ -42,12 +42,23 @@ JOBS=Autoloader \
      Date_Parser \
      Db \
      Exception \
+     Http \
      Itip \
      Kolab_Config \
      Kolab_Session \
+     Ldap \
+     Log \
      LoginTasks \
+     Mail \
+     Mime \
+     Nonce \
+     Stream_Filter \
+     Support \
+     Text_Flowed \
      Translation \
-     Url
+     Url \
+     Xml_Element \
+     Yaml
 
 .PHONY:install
 install: hudson-war hudson-plugins
