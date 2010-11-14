@@ -3,3 +3,7 @@
 
 # Override the default hudson user here if required.
 #HUDSON_USER=ubuntu
+
+# Disable checking for an open port
+#CHECK_PORT=0
+

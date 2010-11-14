@@ -37,6 +37,9 @@ MAXOPENFILES=8192
 # port for HTTP connector (default 8080; disable with -1)
 HTTP_PORT=8080
 
+# Check for an open port
+CHECK_PORT=1
+
 # port for AJP connector (disabled by default)
 AJP_PORT=-1
 

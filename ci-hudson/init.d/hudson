@@ -80,7 +80,9 @@ do_start()
 
     # Verify that the hudson port is not already in use, winstone does not exit
     # even for BindException
-    check_tcp_port "http" "$HTTP_PORT" "8080" || return 1
+    if [ "x$CHECK_PORT" == "x1" ]; then
+	check_tcp_port "http" "$HTTP_PORT" "8080" || return 1
+    fi
 
     HUDSON_HOME=$HUDSON_HOME exec setsid $JAVA $JAVA_ARGS -jar $HUDSON_WAR $HUDSON_ARGS < /dev/null >> $HUDSON_LOG 2>&1 & \
                 echo \$! > $PIDFILE \
