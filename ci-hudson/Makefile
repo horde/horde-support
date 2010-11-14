@@ -132,4 +132,9 @@ clean-jobs: $(JOBS:%=clean-job-%)
 
 .PHONY:$(JOBS:%=clean-job-%)
 $(JOBS:%=clean-job-%):
-	rm -rf workdir/jobs/$(@:clean-job-%=%)/{builds,htmreports,lastStable,lastSuccessful,nextBuildNumber,workspace}
+	rm -rf workdir/jobs/$(@:clean-job-%=%)/builds
+	rm -rf workdir/jobs/$(@:clean-job-%=%)/htmlreports
+	rm -rf workdir/jobs/$(@:clean-job-%=%)/lastStable
+	rm -rf workdir/jobs/$(@:clean-job-%=%)/lastSuccessful
+	rm -rf workdir/jobs/$(@:clean-job-%=%)/nextBuildNumber
+	rm -rf workdir/jobs/$(@:clean-job-%=%)/workspace
