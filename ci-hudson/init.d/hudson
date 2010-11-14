@@ -31,7 +31,7 @@ SCRIPTNAME=$SUBDIR/init.d/$NAME
 [ -r $SUBDIR/etc/$NAME.local ] && . $SUBDIR/etc/$NAME.local
 
 if [ "x$HTTP_LISTEN_ADDRESS" != "x" ]; then
-    HUDSON_ARGS=$HUDSON_ARGS  --httpListenAddress=$HTTP_LISTEN_ADDRESS
+    HUDSON_ARGS="$HUDSON_ARGS --httpListenAddress=$HTTP_LISTEN_ADDRESS"
 fi
 
 # Exit if not supposed to run standalone
