@@ -30,6 +30,10 @@ SCRIPTNAME=$SUBDIR/init.d/$NAME
 # Load the local configuration overrides
 [ -r $SUBDIR/etc/$NAME.local ] && . $SUBDIR/etc/$NAME.local
 
+if [ "x$HTTP_LISTEN_ADDRESS" != "x" ]; then
+    HUDSON_ARGS=$HUDSON_ARGS  --httpListenAddress=$HTTP_LISTEN_ADDRESS
+fi
+
 # Exit if not supposed to run standalone
 [ "$RUN_STANDALONE" = "false" ] && exit 0
 
