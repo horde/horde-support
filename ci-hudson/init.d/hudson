@@ -13,8 +13,6 @@
 # Description:       Controls the hudson continuous integration engine.
 ### END INIT INFO
 
-PATH=/bin:/usr/bin:/sbin:/usr/sbin
-
 DESC="Hudson Continuous Integration Server"
 NAME=hudson
 
@@ -29,6 +27,8 @@ SCRIPTNAME=$SUBDIR/init.d/$NAME
 [ -r $SUBDIR/etc/$NAME ] && . $SUBDIR/etc/$NAME
 # Load the local configuration overrides
 [ -r $SUBDIR/etc/$NAME.local ] && . $SUBDIR/etc/$NAME.local
+
+PATH=$ADDITIONAL_PATH/bin:/usr/bin:/sbin:/usr/sbin
 
 if [ "x$HTTP_LISTEN_ADDRESS" != "x" ]; then
     HUDSON_ARGS="$HUDSON_ARGS --httpListenAddress=$HTTP_LISTEN_ADDRESS"
