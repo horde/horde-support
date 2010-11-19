@@ -7,6 +7,10 @@
  * base include path. */
 //ini_set('include_path', '/horde/libs' . PATH_SEPARATOR . ini_get('include_path'));
 
+/* Uncomment this (replacing with correct username) to set the CVSROOT
+ * environment variable. */
+//putenv('CVSROOT=foo@cvs.horde.org:/repository');
+
 /* Username for horde.org.
  * Make sure you belong to the "horde" group there. */
 $options['horde']['user'] = '';
