@@ -100,7 +100,7 @@ do_start()
 # 
 get_running() 
 {
-    return `ps -U $HUDSON_USER --no-headers -f | egrep -e '(java|daemon)' | grep -c . `
+    return `ps -U $HUDSON_USER --no-headers -f | egrep -e '(java|daemon)' | grep -v egrep | grep -c . `
 }
 
 force_stop() 
@@ -178,7 +178,9 @@ case "$1" in
 	  fi
       else 
 	  echo "$procs instances of hudson are running at the moment"
-	  echo "but the pidfile $PIDFILE is missing"
+	  if [ ! -f $PIDFILE ]; then 
+	      echo "but the pidfile $PIDFILE is missing"
+	  fi
       fi
     ;;
   *)
