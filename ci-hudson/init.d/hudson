@@ -37,14 +37,8 @@ fi
 # Exit if not supposed to run standalone
 [ "$RUN_STANDALONE" = "false" ] && exit 0
 
-# load environments
-if [ -r /etc/default/locale ]; then
-  . /etc/default/locale
-  export LANG LANGUAGE
-elif [ -r /etc/environment ]; then
-  . /etc/environment
-  export LANG LANGUAGE
-fi
+# Set C locale
+export LANG=C LANGUAGE=C
 
 # Load the VERBOSE setting and other rcS variables
 . /lib/init/vars.sh
