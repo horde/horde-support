@@ -51,7 +51,6 @@ JOBS=Autoloader \
      LoginTasks \
      Mail \
      Mime \
-     Nonce \
      Stream_Filter \
      Support \
      Text_Flowed \
