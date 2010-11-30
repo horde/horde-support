@@ -43,6 +43,7 @@ JOBS=Autoloader \
      Db \
      Exception \
      Http \
+     Injector \
      Itip \
      Kolab_Config \
      Kolab_Session \
@@ -51,9 +52,11 @@ JOBS=Autoloader \
      LoginTasks \
      Mail \
      Mime \
+     Secret \
      Stream_Filter \
      Support \
      Text_Flowed \
+     Token \
      Translation \
      Url \
      Xml_Element \
