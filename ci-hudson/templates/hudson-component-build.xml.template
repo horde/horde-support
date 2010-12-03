@@ -17,6 +17,11 @@
  <!-- Run unit tests and generate junit.xml and clover.xml -->
  <target name="phpunit">
   <exec executable="php" failonerror="true">
+    <env key="DB_ADAPTER_MYSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
+    <env key="DB_ADAPTER_MYSQLI_TEST_CONFIG" value="${basedir}/../conf.php"/>
+    <env key="DB_ADAPTER_PDO_MYSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
+    <env key="DB_ADAPTER_PDO_MYSQLI_TEST_CONFIG" value="${basedir}/../conf.php"/>
+    <env key="DB_ADAPTER_PDO_PGSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
     <arg line="-d include_path=${incdirs} ${tooldir}/phpunit" />
   </exec>
  </target>
