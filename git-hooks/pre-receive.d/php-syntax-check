@@ -24,6 +24,12 @@ function parseDiff($oldrev, $newrev, $diffcmd, $regex)
         preg_match($regex, $diffline, $matches);
         $blob = $matches[1];
         $filename = $matches[2];
+
+        if ($blob == '0000000000000000000000000000000000000000') {
+            // Deletion
+            continue;
+        }
+
         SyntaxCheckFile($blob, $filename);
     }
 }
@@ -51,10 +57,10 @@ function parseCommit($oldrev, $newrev)
     // compare against.  So we parse the results of git diff-tree -root=$newrev
     // instead to get the blob and filename we'll need.
     if (detectNewBranch($oldrev, $newrev)) {
-        $diffcmd = "git diff-tree --root $newrev";
+        $diffcmd = "git diff-tree --root --abbrev=40 $newrev";
         $regex = "/\:\w+ \w+ \w+ (\w+) \w (.+)/";
     } else {
-        $diffcmd = "git diff --raw $oldrev $newrev";
+        $diffcmd = "git diff --raw --abbrev=40 $oldrev $newrev";
         $regex = "/\:\d+ \d+ \w+... (\w+)... \w\t(.+)/";
     }
     parseDiff($oldrev, $newrev, $diffcmd, $regex);
