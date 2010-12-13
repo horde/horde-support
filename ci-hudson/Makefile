@@ -34,7 +34,8 @@ PLUGINS_LATEST=analysis-collector.hpi \
 URL_WAR_LATEST=http://hudson-ci.org/latest/hudson.war
 
 
-JOBS=Autoloader \
+JOBS=Auth \
+     Autoloader \
      Argv \
      Constraint \
      Controller \
@@ -46,6 +47,7 @@ JOBS=Autoloader \
      Injector \
      Itip \
      Kolab_Config \
+     Kolab_Format \
      Kolab_Session \
      Ldap \
      Log \
