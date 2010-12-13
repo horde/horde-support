@@ -37,6 +37,76 @@ to trigger the build on the "php-hudson-tools" jobs.
 Usage
 ~~~~~
 
+1. Starting / Stopping the server
+
+ make start
+
+should fire the server up
+
+ make stop
+
+should kill the server.
+
+
+2. Adding new jobs
+
+Before adding any new jobs on ci.horde.org you should pull a local
+copy, setup the system and check that your new job does not fail.
+
+You can add the new job by adding the name to the "JOBS" variable in
+the Makefile. You can currently only add framework packages there.
+
+In addition you need to add the job name manually in two configuration
+files:
+
+ workdir/jobs/horde/config.xml
+
+and
+
+ workdir/jobs/php-hudson-tools/config.xml
+
+Both have a long list of dependent packages and you will need to add
+your new job name there.
+
+No you should be able to create the job directory by running
+
+ make NEWJOBNAME
+
+with NEWJOBNAME being the name of your new job.
+
+Copy a .gitignore file from one of the other framework jobs over to
+the new workdir/jobs/NEWJOBNAME directory.
+
+You should ensure that all old job state from the other framework
+packages gets deleted before you restart your hudson server. This is
+not strictly necessary but is something you should do when working on
+ci.horde.org. It can happen that Hudson looses information on a
+restart and will report failing builds which can be avoided by
+cleaning up before restarting. You need to run
+
+ make clean-jobs
+
+in order to clean the system.
+
+Issue
+
+ make stop
+
+followed by
+
+ make start
+
+to restart Hudson and make it note the new job. Trigger the "horde"
+build and ensure the new job is green.
+
+Commit and push the new job now, connect to ci.horde.org, pull there, run
+
+ make clean-jobs
+ make stop
+ make start
+
+to update ci.horde.org
+
 Notes
 ~~~~~
 
