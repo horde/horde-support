@@ -52,7 +52,7 @@
   <builders/>
   <publishers>
     <hudson.tasks.BuildTrigger>
-      <childProjects>Autoloader, Argv, Auth, Constraint, Controller, Date, Date_Parser, Db, Exception, Http, Injector, Itip, Kolab_Config, Kolab_Format, Kolab_Session, Ldap, Log, LoginTasks, Mail, Mime, Secret, Stream_Filter, Support, Text_Flowed, Token, Translation, Url, Xml_Element, Yaml</childProjects>
+      <childProjects>Autoloader, Argv, Auth, Constraint, Controller, Core, Date, Date_Parser, Db, Exception, Http, Injector, Itip, Kolab_Config, Kolab_Format, Kolab_Session, Ldap, Log, LoginTasks, Mail, Mime, Secret, Share, Stream_Filter, Support, Text_Flowed, Token, Translation, Url, Util, Xml_Element, Yaml</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>

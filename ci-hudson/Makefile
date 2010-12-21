@@ -39,6 +39,7 @@ JOBS=Auth \
      Argv \
      Constraint \
      Controller \
+     Core \
      Date \
      Date_Parser \
      Db \
@@ -55,12 +56,14 @@ JOBS=Auth \
      Mail \
      Mime \
      Secret \
+     Share \
      Stream_Filter \
      Support \
      Text_Flowed \
      Token \
      Translation \
      Url \
+     Util \
      Xml_Element \
      Yaml
 
