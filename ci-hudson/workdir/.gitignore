@@ -1,4 +1,5 @@
 /.owner
+/Connection Activity monitoring to slaves.log
 /Fingerprint cleanup.log
 /Workspace clean-up.log
 /hudson.maven.MavenModuleSet.xml
