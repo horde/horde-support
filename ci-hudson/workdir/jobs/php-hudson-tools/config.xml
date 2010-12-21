@@ -29,6 +29,7 @@
     </branches>
     <localBranch></localBranch>
     <mergeOptions/>
+    <recursiveSubmodules>false</recursiveSubmodules>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <authorOrCommitter>false</authorOrCommitter>
     <clean>false</clean>

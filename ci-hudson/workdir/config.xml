@@ -28,5 +28,7 @@
   <label></label>
   <nodeProperties/>
   <globalNodeProperties/>
-  <disabledAdministrativeMonitors/>
+  <disabledAdministrativeMonitors>
+    <string>hudson.diagnosis.TooManyJobsButNoView</string>
+  </disabledAdministrativeMonitors>
 </hudson>
