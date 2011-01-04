@@ -2,7 +2,10 @@
 /**
  * Ckeditor copy script - copies files used for Horde.
  *
- * Usage: horde-ckeditor.php [source] [destination (horde/Editor base)]
+ * Usage: horde-ckeditor.php -a [advpng binary]
+ *                           -d [destination (horde/Editor base)]
+ *                           -o [optipng binary]
+ *                           -s [source]
  *
  * Copyright 1999-2010 The Horde Project (http://www.horde.org/)
  *
@@ -236,9 +239,46 @@ $strip = array(
     'js'
 );
 
-$source = rtrim($argv[1], '/ ');
-$dest = rtrim($argv[2], '/ ');
-$dest_js = $dest . '/js';
+require 'Console/Getopt.php';
+
+$c = new Console_Getopt();
+$argv = $c->readPHPArgv();
+array_shift($argv);
+$options = $c->getopt2($argv, 'a:d:o:s:');
+if (PEAR::isError($options)) {
+    print "Invalid arguments.\n";
+    exit;
+}
+
+$advpng = $dest = $optipng = $source = null;
+
+foreach ($options[0] as $val) {
+    switch ($val[0]) {
+    case 'a':
+        $advpng = $val[1];
+        break;
+
+    case 'd':
+        $dest = rtrim($val[1], '/ ');
+        $dest_js = $dest . '/js';
+        break;
+
+    case 'o':
+        $optipng = $val[1];
+        break;
+
+    case 's':
+        $source = rtrim($val[1], '/ ');
+        break;
+    }
+}
+
+if (is_null($advpng) ||
+    is_null($dest) ||
+    is_null($optipng) ||
+    is_null($source)) {
+    exit("Invalid arguments.\n");
+}
 
 $installed = $not_copy = array();
 
@@ -319,11 +359,17 @@ print "\nNot copied:\n" .
       implode("\n", $not_copy) .
       "\n";
 
-/* List of tasks that need to be manually done. */
-print "\nTODO:\n" .
-      "=====\n" .
-      "1. Edit config.js file (disable spell check as you type)\n" .
-      "2. Compress PNGs\n";
+print "\nCopy config file... ";
+copy(dirname(__FILE__) . '/ckeditor/config.js', $dest_js . '/config.js');
+print "DONE.\n";
+
+print "\nCompressing PNGs...\n";
+system('php ' . dirname(__FILE__) . '/horde-compress-pngs.php -a ' . escapeshellarg($advpng) . ' -d ' . escapeshellarg($dest) . ' -o ' . escapeshellarg($optipng));
+print "DONE.\n";
+
+print "\nUpdating package.xml...\n";
+system(escapeshellcmd(dirname($dest) . '/../components/bin/horde-components') . ' -u ' . escapeshellarg($dest));
+print "DONE.\n";
 
 class IgnoreFilterIterator extends RecursiveFilterIterator
 {
