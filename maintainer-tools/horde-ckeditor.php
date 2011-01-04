@@ -91,6 +91,7 @@ $files = array(
     'plugins/a11yhelp/lang/he.js',
     'plugins/about/dialogs/about.js',
     'plugins/about/dialogs/logo_ckeditor.png',
+    'plugins/autogrow/plugin.js',
     'plugins/clipboard/dialogs/paste.js',
     'plugins/colordialog/dialogs/colordialog.js',
     'plugins/dialog/dialogDefinition.js',
@@ -156,6 +157,7 @@ $files = array(
     'plugins/styles/styles/default.js',
     'plugins/stylescombo/styles/default.js',
     'plugins/table/dialogs/table.js',
+    'plugins/tableresize/plugin.js',
     'plugins/tabletools/dialogs/tableCell.js',
     'plugins/templates/dialogs/templates.js',
     'plugins/templates/templates/default.js',
@@ -164,6 +166,7 @@ $files = array(
     'plugins/templates/templates/images/template3.gif',
     'plugins/uicolor/dialogs/uicolor.js',
     'plugins/uicolor/lang/en.js',
+    'plugins/uicolor/lang/he.js',
     'plugins/uicolor/plugin.js',
     'plugins/uicolor/uicolor.gif',
     'plugins/uicolor/yui/assets/hue_bg.png',
@@ -179,6 +182,7 @@ $files = array(
     'skins/kama/dialog.css',
     'skins/kama/editor.css',
     'skins/kama/icons.png',
+    'skins/kama/icons_rtl.png',
     'skins/kama/images/dialog_sides.gif',
     'skins/kama/images/dialog_sides.png',
     'skins/kama/images/dialog_sides_rtl.png',
@@ -192,6 +196,7 @@ $files = array(
     'skins/office2003/dialog.css',
     'skins/office2003/editor.css',
     'skins/office2003/icons.png',
+    'skins/office2003/icons_rtl.png',
     'skins/office2003/images/dialog_sides.gif',
     'skins/office2003/images/dialog_sides.png',
     'skins/office2003/images/dialog_sides_rtl.png',
@@ -204,6 +209,7 @@ $files = array(
     'skins/v2/dialog.css',
     'skins/v2/editor.css',
     'skins/v2/icons.png',
+    'skins/v2/icons_rtl.png',
     'skins/v2/images/dialog_sides.gif',
     'skins/v2/images/dialog_sides.png',
     'skins/v2/images/dialog_sides_rtl.png',
@@ -260,7 +266,7 @@ foreach ($di as $val) {
             switch ($ext) {
             case 'js':
                 /* Compress javascript files. */
-                //system('php ' . dirname(__FILE__) . '/horde-js-compress.php --nojsmin --overwrite ' . escapeshellcmd($dest_js . '/' . $pathname));
+                system('php ' . dirname(__FILE__) . '/horde-js-compress.php --nojsmin --overwrite ' . escapeshellcmd($dest_js . '/' . $pathname));
                 break;
             }
 
