@@ -22,6 +22,11 @@
     <env key="DB_ADAPTER_PDO_MYSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
     <env key="DB_ADAPTER_PDO_MYSQLI_TEST_CONFIG" value="${basedir}/../conf.php"/>
     <env key="DB_ADAPTER_PDO_PGSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
+    <env key="SHARE_SQL_MYSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
+    <env key="SHARE_SQL_MYSQLI_TEST_CONFIG" value="${basedir}/../conf.php"/>
+    <env key="SHARE_SQL_PDO_MYSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
+    <env key="SHARE_SQL_PDO_MYSQLI_TEST_CONFIG" value="${basedir}/../conf.php"/
+    <env key="SHARE_SQL_PDO_PGSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
     <arg line="-d include_path=${incdirs} ${tooldir}/phpunit" />
   </exec>
  </target>
