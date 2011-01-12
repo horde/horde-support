@@ -13,7 +13,7 @@ if (!CVSUSERS) {
 }
 
 while (<CVSUSERS>) {
-    if (m/^(\w+)\s+(.+\w)\s+(.*@[\w-\.]+)\s+(.*)$/) {
+    if (m/^(\w+)\s+(.+\w)\s+(.*@[-\w\.]+)\s+(.*)$/) {
         if ($1 eq $login) {
             $mailfrom = $3;
             $mailname = $2;
