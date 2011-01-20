@@ -40,6 +40,7 @@ JOBS=Auth \
      Constraint \
      Controller \
      Core \
+     Crypt \
      Date \
      Date_Parser \
      Db \
