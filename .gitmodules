@@ -1,0 +1,3 @@
+[submodule "ci-hudson/hudson"]
+	path = ci-hudson/hudson
+	url = git://github.com/wrobel/hudson-install.git
