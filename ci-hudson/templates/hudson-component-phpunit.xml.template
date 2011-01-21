@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?php echo '<?xml version=\'1.0\' encoding=\'UTF-8\'?>' . "\n"; ?>
 
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
          syntaxCheck="false"
          bootstrap="../../php-hudson-tools/workspace/pear/pear/php/Horde/Test/AllTests.php">
   <testsuites>
-    <testsuite name="Horde_%1$s_AllTests">
-      <directory suffix="AllTests.php">test/Horde/%2$s</directory>
+    <testsuite name="Horde_<?php echo $testclass; ?>_AllTests">
+      <directory suffix="AllTests.php">test/Horde/<?php echo $testpath; ?></directory>
     </testsuite>
   </testsuites>
 

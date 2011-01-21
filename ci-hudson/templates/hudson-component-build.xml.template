@@ -1,5 +1,6 @@
+<?php ?>
 <project name="Kolab_Config" default="build" basedir=".">
- <property name="tooldir" location="%1$s"/>
+ <property name="tooldir" location="<?php echo $toolsdir; ?>"/>
  <property name="incdirs" location="${basedir}/lib:${basedir}/deps/pear/php:${tooldir}/php"/>
 
  <target name="clean">
