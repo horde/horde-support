@@ -43,7 +43,8 @@
     <excludedUsers></excludedUsers>
   </scm>
   <canRoam>true</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector">
     <hudson.triggers.SCMTrigger>
@@ -54,7 +55,7 @@
   <builders/>
   <publishers>
     <hudson.tasks.BuildTrigger>
-      <childProjects>Autoloader, Argv, Auth, Constraint, Controller, Core, Crypt, Date, Date_Parser, Db, Exception, Http, Injector, Itip, Kolab_Config, Kolab_Format, Kolab_Session, Ldap, Log, LoginTasks, Mail, Mime, Secret, Share, Stream_Filter, Support, Text_Flowed, Token, Translation, Url, Util, Xml_Element, Yaml</childProjects>
+      <childProjects>Alarm, Autoloader, Argv, Auth, Cli_Modular, Constraint, Controller, Core, Crypt, Date, Date_Parser, Db, Exception, Http, Injector, Itip, Kolab_Config, Kolab_Format, Kolab_Session, Ldap, Log, LoginTasks, Mail, Mime, Pdf, Prefs, Secret, Share, Stream_Filter, Support, Text_Flowed, Token, Translation, Url, Util, Xml_Element, Yaml</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>

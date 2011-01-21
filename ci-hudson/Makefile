@@ -4,9 +4,11 @@ include hudson/hudson.mk
 HORDE_FRAMEWORK=workdir/jobs/horde/workspace/framework
 TOOLSDIR=workdir/jobs/php-hudson-tools/workspace/pear/pear
 
-JOBS=Auth \
+JOBS=Alarm \
+     Auth \
      Autoloader \
      Argv \
+     Cli_Modular \
      Constraint \
      Controller \
      Core \
@@ -26,6 +28,8 @@ JOBS=Auth \
      LoginTasks \
      Mail \
      Mime \
+     Pdf \
+     Prefs \
      Secret \
      Share \
      Stream_Filter \
