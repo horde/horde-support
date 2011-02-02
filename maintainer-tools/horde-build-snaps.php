@@ -87,7 +87,7 @@ prune($days);
 // Do git stuff
 system("git clone -q --depth=1 $github_url $gitclone_path");
 foreach ($apps['git'] as $val) {
-    tarballGit($dir, $val, $gitclone_path . '/.git/', 'horde-git');
+    tarballGit($dir, $val, $gitclone_path . '/.git/', 'git');
 }
 system('rm -rf '. $gitclone_path);
 
@@ -131,7 +131,7 @@ function prune($keep)
     if ($cwd = opendir(getcwd())) {
         $dirs = array();
 
-        # Build a list of all the YYYY-MM-DD directories in this directory.
+        // Build a list of all the YYYY-MM-DD directories in this directory.
         while (false !== ($entry = readdir($cwd))) {
             if (is_dir($entry) && preg_match('/^\d+\-\d+\-\d+/', $entry)) {
                 $dirs[] = $entry;
@@ -139,12 +139,12 @@ function prune($keep)
         }
         closedir($cwd);
 
-        # Reverse-sort the list and remove the number of directories that we
-        # want to keep (which will be the first $keep number of elements).
+        // Reverse-sort the list and remove the number of directories that we
+        // want to keep (which will be the first $keep number of elements).
         rsort($dirs);
         $dirs = array_slice($dirs, $keep);
 
-        # Prune (recursively delete) the rest of the directories in the list.
+        // Prune (recursively delete) the rest of the directories in the list.
         foreach ($dirs as $dir) {
             system("rm -rf $dir");
         }
