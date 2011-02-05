@@ -281,7 +281,9 @@ foreach ($options[0] as $val) {
     }
 }
 
-if (is_null($dest) ||
+if (is_null($advpng) ||
+    is_null($dest) ||
+    is_null($optipng) ||
     is_null($source)) {
     exit("Invalid arguments.\n");
 }
@@ -391,7 +393,7 @@ copy(dirname(__FILE__) . '/ckeditor/config.js', $dest_js . '/config.js');
 print "DONE.\n";
 
 print "\nCompressing PNGs...\n";
-//system('php ' . dirname(__FILE__) . '/horde-compress-pngs.php -a ' . escapeshellarg($advpng) . ' -d ' . escapeshellarg($dest) . ' -o ' . escapeshellarg($optipng));
+system('php ' . dirname(__FILE__) . '/horde-compress-pngs.php -a ' . escapeshellarg($advpng) . ' -d ' . escapeshellarg($dest) . ' -o ' . escapeshellarg($optipng));
 print "DONE.\n";
 
 print "\nUpdating package.xml...\n";
