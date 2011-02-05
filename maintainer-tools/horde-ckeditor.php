@@ -226,6 +226,14 @@ $files = array(
     'themes/default/theme.js'
 );
 
+/* custom plugins not part of official distribution */
+$custom = array(
+    'plugins/syntaxhighlight/dialogs/syntaxhighlight.js',
+    'plugins/syntaxhighlight/images/syntaxhighlight.gif',
+    'plugins/syntaxhighlight/lang/en.js',
+    'plugins/syntaxhighlight/plugin.js'
+);
+
 /* Ignore these directories. */
 $ignore = array(
     '_samples',
@@ -273,9 +281,7 @@ foreach ($options[0] as $val) {
     }
 }
 
-if (is_null($advpng) ||
-    is_null($dest) ||
-    is_null($optipng) ||
+if (is_null($dest) ||
     is_null($source)) {
     exit("Invalid arguments.\n");
 }
@@ -315,6 +321,27 @@ foreach ($di as $val) {
             $not_copy[] = $pathname;
         }
     }
+}
+
+/* Copy custom plugins, add to the installed list */
+foreach ($custom as $file) {
+    $ext = pathinfo($file, PATHINFO_EXTENSION);
+    if (!file_exists($dest_js . '/' . pathinfo($file, PATHINFO_DIRNAME))) {
+        @mkdir($dest_js . '/' . pathinfo($file, PATHINFO_DIRNAME), 0777, true);
+    }
+    $data = file_get_contents(dirname(__FILE__) . '/ckeditor/' . $file);
+    // Remove BOM & DOS linebreaks
+    if (in_array($ext, $strip)) {
+        $data = preg_replace(array("/^\xEF\xBB\xBF/", "/\r\n/"), array('', "\n"), $data);
+    }
+    file_put_contents($dest_js . '/' . $file, $data);
+    switch ($ext) {
+    case 'js':
+        /* Compress javascript files. */
+        system('php ' . dirname(__FILE__) . '/horde-js-compress.php --nojsmin --overwrite ' . escapeshellcmd($dest_js . '/' . $file));
+        break;
+    }
+    $installed[] = $file;
 }
 
 print "\npackage.xml data:\n" .
@@ -364,7 +391,7 @@ copy(dirname(__FILE__) . '/ckeditor/config.js', $dest_js . '/config.js');
 print "DONE.\n";
 
 print "\nCompressing PNGs...\n";
-system('php ' . dirname(__FILE__) . '/horde-compress-pngs.php -a ' . escapeshellarg($advpng) . ' -d ' . escapeshellarg($dest) . ' -o ' . escapeshellarg($optipng));
+//system('php ' . dirname(__FILE__) . '/horde-compress-pngs.php -a ' . escapeshellarg($advpng) . ' -d ' . escapeshellarg($dest) . ' -o ' . escapeshellarg($optipng));
 print "DONE.\n";
 
 print "\nUpdating package.xml...\n";
