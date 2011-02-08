@@ -296,27 +296,13 @@ foreach ($di as $val) {
         $pathname = $di->getSubPathname();
 
         if (in_array($pathname, $files)) {
-            $ext = pathinfo($val->getFileName(), PATHINFO_EXTENSION);
-
-            if (!file_exists($dest_js . '/' . $di->getSubPath())) {
-                @mkdir($dest_js . '/' . $di->getSubPath(), 0777, true);
-            }
-
-            $data = file_get_contents($val->getPathname());
-
-            // Remove BOM & DOS linebreaks
-            if (in_array($ext, $strip)) {
-                $data = preg_replace(array("/^\xEF\xBB\xBF/", "/\r\n/"), array('', "\n"), $data);
-            }
-
-            file_put_contents($dest_js . '/' . $pathname, $data);
-
-            switch ($ext) {
-            case 'js':
-                /* Compress javascript files. */
-                system('php ' . dirname(__FILE__) . '/horde-js-compress.php --nojsmin --overwrite ' . escapeshellcmd($dest_js . '/' . $pathname));
-                break;
-            }
+            _installFile(
+                $pathname,
+                $dest_js,
+                $di->getSubPath(),
+                $val->getPathname(),
+                pathinfo($val->getFileName(), PATHINFO_EXTENSION)
+            );
 
             $installed[] = $pathname;
         } else {
@@ -327,22 +313,14 @@ foreach ($di as $val) {
 
 /* Copy custom plugins, add to the installed list */
 foreach ($custom as $file) {
-    $ext = pathinfo($file, PATHINFO_EXTENSION);
-    if (!file_exists($dest_js . '/' . pathinfo($file, PATHINFO_DIRNAME))) {
-        @mkdir($dest_js . '/' . pathinfo($file, PATHINFO_DIRNAME), 0777, true);
-    }
-    $data = file_get_contents(dirname(__FILE__) . '/ckeditor/' . $file);
-    // Remove BOM & DOS linebreaks
-    if (in_array($ext, $strip)) {
-        $data = preg_replace(array("/^\xEF\xBB\xBF/", "/\r\n/"), array('', "\n"), $data);
-    }
-    file_put_contents($dest_js . '/' . $file, $data);
-    switch ($ext) {
-    case 'js':
-        /* Compress javascript files. */
-        system('php ' . dirname(__FILE__) . '/horde-js-compress.php --nojsmin --overwrite ' . escapeshellcmd($dest_js . '/' . $file));
-        break;
-    }
+    _installFile(
+        $file,
+        $dest_js,
+        pathinfo($file, PATHINFO_DIRNAME),
+        dirname(__FILE__) . '/ckeditor/' . $file,
+        pathinfo($file, PATHINFO_EXTENSION)
+    );
+
     $installed[] = $file;
 }
 
@@ -405,5 +383,28 @@ class IgnoreFilterIterator extends RecursiveFilterIterator
     public function accept()
     {
         return !in_array($this->getInnerIterator()->getSubPath(), $GLOBALS['ignore']);
+    }
+}
+
+function _installFile($file, $dest_js, $subpath, $orig_file, $ext)
+{
+    if (!file_exists($dest_js . '/' . $subpath)) {
+        @mkdir($dest_js . '/' . $subpath, 0777, true);
+    }
+
+    $data = file_get_contents($orig_file);
+
+    // Remove BOM & DOS linebreaks
+    if (in_array($ext, $strip)) {
+        $data = preg_replace(array("/^\xEF\xBB\xBF/", "/\r\n/"), array('', "\n"), $data);
+    }
+
+    file_put_contents($dest_js . '/' . $file, $data);
+
+    switch ($ext) {
+    case 'js':
+        /* Compress javascript files. */
+        system('php ' . dirname(__FILE__) . '/horde-js-compress.php --nojsmin --overwrite ' . escapeshellcmd($dest_js . '/' . $file));
+        break;
     }
 }
