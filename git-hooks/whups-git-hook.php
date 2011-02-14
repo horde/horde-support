@@ -74,7 +74,7 @@ $log_message = shell_exec(implode(' ', array(
     escapeshellcmd($git),
     '--git-dir=' . escapeshellarg($repo),
     'show',
-    '--summary',
+    '--shortstat',
     '--pretty=format:%s%n%b',
     escapeshellarg($rev)
 )));
