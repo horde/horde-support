@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties/>
-  <scm class="jenkins.plugins.git.GitSCM">
+  <scm class="hudson.plugins.git.GitSCM">
     <configVersion>1</configVersion>
     <remoteRepositories>
       <org.spearce.jgit.transport.RemoteConfig>
@@ -23,9 +23,9 @@
       </org.spearce.jgit.transport.RemoteConfig>
     </remoteRepositories>
     <branches>
-      <jenkins.plugins.git.BranchSpec>
+      <hudson.plugins.git.BranchSpec>
         <name>**</name>
-      </jenkins.plugins.git.BranchSpec>
+      </hudson.plugins.git.BranchSpec>
     </branches>
     <localBranch></localBranch>
     <mergeOptions/>
@@ -34,7 +34,7 @@
     <authorOrCommitter>false</authorOrCommitter>
     <clean>false</clean>
     <wipeOutWorkspace>false</wipeOutWorkspace>
-    <buildChooser class="jenkins.plugins.git.util.DefaultBuildChooser"/>
+    <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
     <gitTool>Default</gitTool>
     <submoduleCfg class="list"/>
     <relativeTargetDir></relativeTargetDir>
@@ -47,19 +47,19 @@
   <triggers class="vector"/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
-    <jenkins.tasks.Ant>
+    <hudson.tasks.Ant>
       <targets>horde</targets>
-    </jenkins.tasks.Ant>
+    </hudson.tasks.Ant>
   </builders>
   <publishers>
-    <jenkins.tasks.BuildTrigger>
+    <hudson.tasks.BuildTrigger>
       <childProjects>horde</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>
         <color>BLUE</color>
       </threshold>
-    </jenkins.tasks.BuildTrigger>
+    </hudson.tasks.BuildTrigger>
   </publishers>
   <buildWrappers/>
 </project>

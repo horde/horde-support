@@ -19,11 +19,11 @@
   <builders>
     <hudson.tasks.Shell>
       <command>rm -rf ${WORKSPACE}/deps
-rsync -avz --exclude=&quot;build.xml&quot; --delete-after ${WORKSPACE}/../../<?php echo $sourcejob; ?>/workspace/<?php echo $sourcepath; ?>/* ${WORKSPACE}/
+rsync -avz --exclude=&quot;build.xml&quot; --delete-after ${WORKSPACE}/../../horde-git/workspace/<?php echo $sourcepath; ?>/* ${WORKSPACE}/
 mkdir -p ${WORKSPACE}/deps
-php -d include_path=&quot;.:${WORKSPACE}/../../<?php echo $toolsdir; ?>/php&quot; ${WORKSPACE}/../../<?php echo $toolsdir; ?>/horde-components --install=${WORKSPACE}/deps/.pearrc --channelxmlpath=${WORKSPACE}/../../horde-pear-dependencies/workspace/channels --sourcepath=${WORKSPACE}/../../horde-pear-dependencies/workspace/packages --exclude=&quot;pear.php.net/PEAR_Frontend_Web,pear.php.net/PEAR_Frontend_Gtk,channel:pecl.php.net,Test&quot; -N ${WORKSPACE}/../../<?php echo $sourcejob; ?>/workspace/<?php echo $sourcepath; ?>
+php -d include_path=&quot;.:${WORKSPACE}/../../<?php echo $toolsdir; ?>/php&quot; ${WORKSPACE}/../../<?php echo $toolsdir; ?>/horde-components --install=${WORKSPACE}/deps/.pearrc --channelxmlpath=${WORKSPACE}/../../horde-pear-dependencies/workspace/channels --sourcepath=${WORKSPACE}/../../horde-pear-dependencies/workspace/packages --exclude=&quot;pear.php.net/PEAR_Frontend_Web,pear.php.net/PEAR_Frontend_Gtk,channel:pecl.php.net,Horde_Test&quot; -N ${WORKSPACE}/../../horde-git/workspace/<?php echo $sourcepath; ?>
 
-php -d include_path=&quot;.:${WORKSPACE}/../../<?php echo $toolsdir; ?>/php&quot; ${WORKSPACE}/../../<?php echo $toolsdir; ?>/horde-components -t ../../../../templates -T ../../<?php echo $toolsdir; ?> --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../<?php echo $toolsdir; ?>/../.pearrc ${WORKSPACE}/../../<?php echo $sourcejob; ?>/workspace/<?php echo $sourcepath; ?>
+php -d include_path=&quot;.:${WORKSPACE}/../../<?php echo $toolsdir; ?>/php&quot; ${WORKSPACE}/../../<?php echo $toolsdir; ?>/horde-components -t ../../../../templates -T ../../<?php echo $toolsdir; ?> --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../<?php echo $toolsdir; ?>/../.pearrc ${WORKSPACE}/../../horde-git/workspace/<?php echo $sourcepath; ?>
 
     </command>
     </hudson.tasks.Shell>

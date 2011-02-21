@@ -1,7 +1,7 @@
 include settings.mk
 include jenkins/jenkins.mk
 
-HORDE_FRAMEWORK=workdir/jobs/horde/workspace/framework
+HORDE_FRAMEWORK=workdir/jobs/horde-git/workspace/framework
 TOOLSDIR=workdir/jobs/php-ci-tools/workspace/pear/pear
 
 JOBS=Alarm \

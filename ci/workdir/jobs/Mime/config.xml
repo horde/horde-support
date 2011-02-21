@@ -19,10 +19,10 @@
   <builders>
     <hudson.tasks.Shell>
       <command>rm -rf ${WORKSPACE}/deps
-rsync -avz --exclude=&quot;build.xml&quot; --delete-after ${WORKSPACE}/../../horde/workspace/framework/Mime/* ${WORKSPACE}/
+rsync -avz --exclude=&quot;build.xml&quot; --delete-after ${WORKSPACE}/../../horde-git/workspace/framework/Mime/* ${WORKSPACE}/
 mkdir -p ${WORKSPACE}/deps
-php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps/.pearrc --channelxmlpath=${WORKSPACE}/../../horde-pear-dependencies/workspace/channels --sourcepath=${WORKSPACE}/../../horde-pear-dependencies/workspace/packages --exclude=&quot;pear.php.net/PEAR_Frontend_Web,pear.php.net/PEAR_Frontend_Gtk,channel:pecl.php.net,Test&quot; -N ${WORKSPACE}/../../horde/workspace/framework/Mime
-php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components -t ../../../../templates -T ../../php-hudson-tools/workspace/pear/pear --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/../.pearrc ${WORKSPACE}/../../horde/workspace/framework/Mime
+php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps/.pearrc --channelxmlpath=${WORKSPACE}/../../horde-pear-dependencies/workspace/channels --sourcepath=${WORKSPACE}/../../horde-pear-dependencies/workspace/packages --exclude=&quot;pear.php.net/PEAR_Frontend_Web,pear.php.net/PEAR_Frontend_Gtk,channel:pecl.php.net,Horde_Test&quot; -N ${WORKSPACE}/../../horde-git/workspace/framework/Mime
+php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/horde-components -t ../../../../templates -T ../../php-ci-tools/workspace/pear/pear --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/../.pearrc ${WORKSPACE}/../../horde-git/workspace/framework/Mime
     </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Ant>
