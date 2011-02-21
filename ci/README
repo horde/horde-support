@@ -1,11 +1,15 @@
 ====================================================
-Horde continuous integration setup (based on Hudson)
+Horde continuous integration setup (based on Jenkins)
 ====================================================
 
 Introduction
 ~~~~~~~~~~~~
 
-This provides the Horde continuous integration setup.
+This repository allows you to install the Horde continuous integration
+setup. The setup has currently only been tested with Ubuntu 10.04
+though. The provided toolset is certainly not applicable in all
+situations but it may help the one or the other to generate your own
+set of copy of http://ci.horde.org.
 
 Requirements
 ~~~~~~~~~~~~
@@ -22,7 +26,19 @@ installed:
 Installation
 ~~~~~~~~~~~~
 
-Simply run
+In order to allow for local configuration settings you need to copy
+the distributed configuration file first:
+
+cp ./etc/jenkins.local.dist ./etc/jenkins.local
+
+Now you can edit ./etc/jenkins.local and override any settings from
+./jenkins/etc/jenkins in there. You will find some suggestions in
+./etc/jenkins.local. It is most likely that you would want to fix the
+user name used to run the jenkins server. The default is "jenkins" which
+might not exist on your system. Especially for test installations you
+should simply set JENKINS_USER to your own user name.
+
+Once the configuration has been set you can simply run
 
  make install
 
@@ -30,9 +46,9 @@ followed by
 
  make start
 
-Now you should be able to connect to http://localhost:8080. You should
-now be able to login as a local user on your system. Finally you need
-to trigger the build on the "php-hudson-tools" jobs.
+You should be able to connect to http://localhost:8080 now. Login as a
+local user on your system. In order to get started you need to trigger
+the build on the "php-ci-tools" job.
 
 Usage
 ~~~~~
@@ -56,31 +72,24 @@ copy, setup the system and check that your new job does not fail.
 You can add the new job by adding the name to the "JOBS" variable in
 the Makefile. You can currently only add framework packages there.
 
-In addition you need to add the job name manually in two configuration
-files:
+In addition you need to add the job name manually in the configuration
+file
 
  workdir/jobs/horde/config.xml
 
-and
-
- workdir/jobs/php-hudson-tools/config.xml
-
-Both have a long list of dependent packages and you will need to add
-your new job name there.
+This one has a long list of dependent packages and you will need to
+add your new job name there.
 
 No you should be able to create the job directory by running
 
- make NEWJOBNAME
+ make job-NEWJOBNAME
 
 with NEWJOBNAME being the name of your new job.
 
-Copy a .gitignore file from one of the other framework jobs over to
-the new workdir/jobs/NEWJOBNAME directory.
-
 You should ensure that all old job state from the other framework
-packages gets deleted before you restart your hudson server. This is
+packages gets deleted before you restart your jenkins server. This is
 not strictly necessary but is something you should do when working on
-ci.horde.org. It can happen that Hudson looses information on a
+ci.horde.org. It can happen that Jenkins looses information on a
 restart and will report failing builds which can be avoided by
 cleaning up before restarting. You need to run
 
@@ -96,18 +105,53 @@ followed by
 
  make start
 
-to restart Hudson and make it note the new job. Trigger the "horde"
+to restart Jenkins and make it note the new job. Trigger the "horde"
 build and ensure the new job is green.
 
 Commit and push the new job now, connect to ci.horde.org, pull there, run
 
- make clean-jobs
  make stop
+ make clean-jobs
  make start
 
 to update ci.horde.org
 
-Notes
-~~~~~
+
+3. Regenerate all jobs
+
+In case you modified the job configuration in
+./templates/hudson-component-config.xml.template you will have to
+regenerate all jobs which can be done by running
+
+ make jenkins-jobs
+
+
+4. Cleanup
+
+If you accumulated too much job data you can cleanup all build data by
+running:
+
+ make clean-jobs
+
+All history will be lost that way!
+
+If you want to get a completely clean work directory you can run
+
+ make clean-all
+
+
+Uninstall
+~~~~~~~~~
+
+Simply run
+
+ make stop
+
+followed by
+
+ make clean-all
+
+This should fully remove the hudson server and cleanup all old build
+data.
 
 

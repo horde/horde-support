@@ -1,8 +1,8 @@
 include settings.mk
-include hudson/hudson.mk
+include jenkins/jenkins.mk
 
 HORDE_FRAMEWORK=workdir/jobs/horde/workspace/framework
-TOOLSDIR=workdir/jobs/php-hudson-tools/workspace/pear/pear
+TOOLSDIR=workdir/jobs/php-ci-tools/workspace/pear/pear
 
 JOBS=Alarm \
      Auth \
@@ -43,24 +43,24 @@ JOBS=Alarm \
      Yaml
 
 .PHONY:install
-install: hudson-install
+install: jenkins-install
 
 .PHONY:install-latest
-install-latest: hudson-install-latest
+install-latest: jenkins-install-latest
 
-.PHONY:hudson-jobs
-hudson-jobs: $(JOBS:%=job-%)
+.PHONY:jenkins-jobs
+jenkins-jobs: $(JOBS:%=job-%)
 
 .PHONY:$(JOBS:%=job-%)
 $(JOBS:%=job-%):
 	mkdir -p workdir/jobs/$(@:job-%=%)
-	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -T php-hudson-tools/workspace/pear/pear -t $(WORKDIR)/templates -c workdir/jobs/$(@:job-%=%) --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_FRAMEWORK)/$(@:job-%=%)
+	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -T php-ci-tools/workspace/pear/pear -t $(WORKDIR)/templates -c workdir/jobs/$(@:job-%=%) --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_FRAMEWORK)/$(@:job-%=%)
 
 PHONY:clean-all
 clean-all: clean clean-jobs
 
 PHONY:clean
-clean: hudson-clean
+clean: jenkins-clean
 
 .PHONY:clean-jobs
 clean-jobs: $(JOBS:%=clean-job-%)

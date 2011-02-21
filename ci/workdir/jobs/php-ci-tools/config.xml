@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties/>
-  <scm class="hudson.plugins.git.GitSCM">
+  <scm class="jenkins.plugins.git.GitSCM">
     <configVersion>1</configVersion>
     <remoteRepositories>
       <org.spearce.jgit.transport.RemoteConfig>
@@ -17,15 +17,15 @@
         <string>uploadpack</string>
         <string>git-upload-pack</string>
         <string>url</string>
-        <string>git://github.com/wrobel/php-hudson-tools.git</string>
+        <string>git://github.com/wrobel/php-ci-tools.git</string>
         <string>tagopt</string>
         <string></string>
       </org.spearce.jgit.transport.RemoteConfig>
     </remoteRepositories>
     <branches>
-      <hudson.plugins.git.BranchSpec>
+      <jenkins.plugins.git.BranchSpec>
         <name>**</name>
-      </hudson.plugins.git.BranchSpec>
+      </jenkins.plugins.git.BranchSpec>
     </branches>
     <localBranch></localBranch>
     <mergeOptions/>
@@ -34,7 +34,7 @@
     <authorOrCommitter>false</authorOrCommitter>
     <clean>false</clean>
     <wipeOutWorkspace>false</wipeOutWorkspace>
-    <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
+    <buildChooser class="jenkins.plugins.git.util.DefaultBuildChooser"/>
     <gitTool>Default</gitTool>
     <submoduleCfg class="list"/>
     <relativeTargetDir></relativeTargetDir>
@@ -47,19 +47,19 @@
   <triggers class="vector"/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
-    <hudson.tasks.Ant>
+    <jenkins.tasks.Ant>
       <targets>horde</targets>
-    </hudson.tasks.Ant>
+    </jenkins.tasks.Ant>
   </builders>
   <publishers>
-    <hudson.tasks.BuildTrigger>
+    <jenkins.tasks.BuildTrigger>
       <childProjects>horde</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>
         <color>BLUE</color>
       </threshold>
-    </hudson.tasks.BuildTrigger>
+    </jenkins.tasks.BuildTrigger>
   </publishers>
   <buildWrappers/>
 </project>

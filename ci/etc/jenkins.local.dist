@@ -1,8 +1,8 @@
-# Copy this file to "hudson.local" to override values from the default
-# configuration in "hudson"
+# Copy this file to "jenkins.local" to override values from the default
+# configuration in "jenkins"
 
-# Override the default hudson user here if required.
-#HUDSON_USER=ubuntu
+# Override the default jenkins user here if required.
+#JENKINS_USER=ubuntu
 
 # Disable checking for an open port
 #CHECK_PORT=0

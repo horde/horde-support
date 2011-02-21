@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties/>
-  <scm class="hudson.plugins.git.GitSCM">
+  <scm class="jenkins.plugins.git.GitSCM">
     <configVersion>1</configVersion>
     <remoteRepositories>
       <org.spearce.jgit.transport.RemoteConfig>
@@ -23,9 +23,9 @@
       </org.spearce.jgit.transport.RemoteConfig>
     </remoteRepositories>
     <branches>
-      <hudson.plugins.git.BranchSpec>
+      <jenkins.plugins.git.BranchSpec>
         <name>master</name>
-      </hudson.plugins.git.BranchSpec>
+      </jenkins.plugins.git.BranchSpec>
     </branches>
     <localBranch></localBranch>
     <mergeOptions/>
@@ -35,7 +35,7 @@
     <clean>false</clean>
     <wipeOutWorkspace>false</wipeOutWorkspace>
     <pruneBranches>false</pruneBranches>
-    <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
+    <buildChooser class="jenkins.plugins.git.util.DefaultBuildChooser"/>
     <gitTool>Default</gitTool>
     <submoduleCfg class="list"/>
     <relativeTargetDir></relativeTargetDir>
@@ -47,21 +47,21 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector">
-    <hudson.triggers.SCMTrigger>
+    <jenkins.triggers.SCMTrigger>
       <spec>* * * * *</spec>
-    </hudson.triggers.SCMTrigger>
+    </jenkins.triggers.SCMTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders/>
   <publishers>
-    <hudson.tasks.BuildTrigger>
+    <jenkins.tasks.BuildTrigger>
       <childProjects>Alarm, Autoloader, Argv, Auth, Cli_Modular, Constraint, Controller, Core, Crypt, Date, Date_Parser, Db, Exception, Http, Injector, Itip, Kolab_Config, Kolab_Format, Kolab_Session, Ldap, Log, LoginTasks, Mail, Mime, Pdf, Prefs, Secret, Share, Stream_Filter, Support, Text_Flowed, Token, Translation, Url, Util, Xml_Element, Yaml</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>
         <color>BLUE</color>
       </threshold>
-    </hudson.tasks.BuildTrigger>
+    </jenkins.tasks.BuildTrigger>
   </publishers>
   <buildWrappers/>
 </project>

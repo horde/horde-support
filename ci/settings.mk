@@ -1,3 +1,3 @@
 # Base directory of the installation
-INSTALLDIR=$(CURDIR)/hudson
+INSTALLDIR=$(CURDIR)/jenkins
 WORKDIR=$(CURDIR)
