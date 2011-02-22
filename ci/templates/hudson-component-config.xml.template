@@ -39,7 +39,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../<?php echo $toolsdir; ?>/php&quot
       <thresholdLimit>low</thresholdLimit>
       <pluginName>[PMD] </pluginName>
       <defaultEncoding></defaultEncoding>
-      <canRunOnFailed>false</canRunOnFailed>
+      <canRunOnFailed>true</canRunOnFailed>
       <useDeltaValues>false</useDeltaValues>
       <thresholds>
         <unstableTotalAll></unstableTotalAll>
@@ -67,7 +67,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../<?php echo $toolsdir; ?>/php&quot
       <thresholdLimit>low</thresholdLimit>
       <pluginName>[CHECKSTYLE] </pluginName>
       <defaultEncoding></defaultEncoding>
-      <canRunOnFailed>false</canRunOnFailed>
+      <canRunOnFailed>true</canRunOnFailed>
       <useDeltaValues>false</useDeltaValues>
       <thresholds>
         <unstableTotalAll></unstableTotalAll>
@@ -95,7 +95,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../<?php echo $toolsdir; ?>/php&quot
       <thresholdLimit>low</thresholdLimit>
       <pluginName>[DRY] </pluginName>
       <defaultEncoding></defaultEncoding>
-      <canRunOnFailed>false</canRunOnFailed>
+      <canRunOnFailed>true</canRunOnFailed>
       <useDeltaValues>false</useDeltaValues>
       <thresholds>
         <unstableTotalAll></unstableTotalAll>
