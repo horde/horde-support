@@ -1,7 +1,7 @@
 <?php echo '<?xml version=\'1.0\' encoding=\'UTF-8\'?>' . "\n"; ?>
 <project>
   <actions/>
-  <description><?php echo htmlspecialchars($description); ?></description>
+  <description><?php echo htmlspecialchars($description); ?>&lt;br/&gt;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/<?php echo basename($sourcepath); ?>/ws/build/pdepend/overview-pyramid.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;&#xd;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/<?php echo basename($sourcepath); ?>/ws/build/pdepend/dependencies.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;</description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
     <numToKeep>10</numToKeep>
