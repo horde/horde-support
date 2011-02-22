@@ -74,8 +74,8 @@
  <!-- Generate phploc.csv -->
  <target name="phploc">
   <exec executable="php">
-   <arg line="-d include_path=${incdirs} ${tooldir}/phpcpd
-              --log-csv ${basedir}/build/logs/phploc.csv Object" />
+   <arg line="-d include_path=${incdirs} ${tooldir}/phploc
+              --log-csv ${basedir}/build/logs/phploc.csv lib" />
   </exec>
  </target>
 
@@ -107,5 +107,5 @@
   </exec>
  </target>
 
- <target name="build" depends="clean,pdepend,phpcpd,phpcs,phpdoc,phpmd,phpunit,phpcb"/>
+ <target name="build" depends="clean,pdepend,phpcpd,phpcs,phploc,phpdoc,phpmd,phpunit,phpcb"/>
 </project>
