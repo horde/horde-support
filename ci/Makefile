@@ -55,6 +55,7 @@ jenkins-jobs: $(JOBS:%=job-%)
 $(JOBS:%=job-%):
 	mkdir -p workdir/jobs/$(@:job-%=%)
 	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -T php-ci-tools/workspace/pear/pear -t $(WORKDIR)/templates -c workdir/jobs/$(@:job-%=%) --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_FRAMEWORK)/$(@:job-%=%)
+	cp templates/job-gitignore workdir/jobs/$(@:job-%=%)/.gitignore
 
 PHONY:clean-all
 clean-all: clean clean-jobs
