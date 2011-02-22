@@ -32,7 +32,7 @@
   </exec>
  </target>
 
- <!-- Run pdepend, phpmd, phpcpd, and phpcs in parallel -->
+ <!-- Run pdepend, phpmd, phpcpd, phpcs, phpdoc and phploc in parallel -->
  <target name="parallelTasks">
   <parallel>
    <antcall target="pdepend"/>
@@ -40,6 +40,7 @@
    <antcall target="phpcpd"/>
    <antcall target="phpcs"/>
    <antcall target="phpdoc"/>
+   <antcall target="phploc"/>
   </parallel>
  </target>
 
@@ -67,6 +68,14 @@
   <exec executable="php">
    <arg line="-d include_path=${incdirs} ${tooldir}/phpcpd
               --log-pmd ${basedir}/build/logs/pmd-cpd.xml lib" />
+  </exec>
+ </target>
+
+ <!-- Generate phploc.csv -->
+ <target name="phploc">
+  <exec executable="php">
+   <arg line="-d include_path=${incdirs} ${tooldir}/phpcpd
+              --log-csv ${basedir}/build/logs/phploc.csv Object" />
   </exec>
  </target>
 
