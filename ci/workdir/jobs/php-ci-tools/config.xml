@@ -55,7 +55,7 @@
   </builders>
   <publishers>
     <hudson.tasks.BuildTrigger>
-      <childProjects>horde</childProjects>
+      <childProjects>horde-git</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>
