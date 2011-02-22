@@ -1,15 +1,14 @@
-====================================================
+=====================================================
 Horde continuous integration setup (based on Jenkins)
-====================================================
+=====================================================
 
 Introduction
 ~~~~~~~~~~~~
 
 This repository allows you to install the Horde continuous integration
-setup. The setup has currently only been tested with Ubuntu 10.04
-though. The provided toolset is certainly not applicable in all
-situations but it may help the one or the other to generate your own
-set of copy of http://ci.horde.org.
+setup. The setup has currently only been tested with Ubuntu 10.04. The
+provided toolset may not be applicable in all situations but it might
+help the one or the other to generate a copy of http://ci.horde.org.
 
 Requirements
 ~~~~~~~~~~~~
