@@ -5,9 +5,9 @@ HORDE_FRAMEWORK=workdir/jobs/horde-git/workspace/framework
 TOOLSDIR=workdir/jobs/php-ci-tools/workspace/pear/pear
 
 JOBS=Alarm \
+     Argv \
      Auth \
      Autoloader \
-     Argv \
      Cli_Modular \
      Constraint \
      Controller \
@@ -17,6 +17,8 @@ JOBS=Alarm \
      Date_Parser \
      Db \
      Exception \
+     Group \
+     History \
      Http \
      Injector \
      Itip \
@@ -29,7 +31,9 @@ JOBS=Alarm \
      Mail \
      Mime \
      Pdf \
+     Perms \
      Prefs \
+     PubSub \
      Secret \
      Share \
      Stream_Filter \
