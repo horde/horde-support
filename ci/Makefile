@@ -45,6 +45,9 @@ JOBS=Alarm \
      Util \
      Xml_Element \
      Yaml
+#    ActiveSync \
+#    Feed \
+#    KolabStorage \
 
 .PHONY:install
 install: jenkins-install
