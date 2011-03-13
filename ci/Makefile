@@ -38,6 +38,7 @@ JOBS=Alarm \
      Share \
      Stream_Filter \
      Support \
+     Text_Diff \
      Text_Flowed \
      Token \
      Translation \
