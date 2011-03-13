@@ -74,7 +74,7 @@ the Makefile. You can currently only add framework packages there.
 In addition you need to add the job name manually in the configuration
 file
 
- workdir/jobs/horde/config.xml
+ workdir/jobs/horde-git/config.xml
 
 This one has a long list of dependent packages and you will need to
 add your new job name there.
