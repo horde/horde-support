@@ -44,6 +44,7 @@ JOBS=Alarm \
      Translation \
      Url \
      Util \
+     View \
      Xml_Element \
      Yaml
 #    ActiveSync \
