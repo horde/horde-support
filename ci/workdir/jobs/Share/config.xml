@@ -305,12 +305,12 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <fileType>csv</fileType>
               <strExclusionSet>
                 <string>Functions</string>
-                <string>Classes</string>
-                <string>Namespaces</string>
                 <string>Files</string>
+                <string>Namespaces</string>
+                <string>Classes</string>
                 <string>Directories</string>
-                <string>Methods</string>
                 <string>Interfaces</string>
+                <string>Methods</string>
                 <string>Constants</string>
                 <string>Anonymous Functions</string>
               </strExclusionSet>
@@ -336,8 +336,8 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <label></label>
               <fileType>csv</fileType>
               <strExclusionSet>
-                <string>Average Method Length (NCLOC)</string>
                 <string>Average Class Length (NCLOC)</string>
+                <string>Average Method Length (NCLOC)</string>
               </strExclusionSet>
               <inclusionFlag>INCLUDE_BY_STRING</inclusionFlag>
               <exclusionValues>Average Class Length (NCLOC),Average Method Length (NCLOC)</exclusionValues>
@@ -413,8 +413,8 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <fileType>csv</fileType>
               <strExclusionSet>
                 <string>Methods</string>
-                <string>Static Methods</string>
                 <string>Non-Static Methods</string>
+                <string>Static Methods</string>
                 <string>Public Methods</string>
                 <string>Non-Public Methods</string>
               </strExclusionSet>
