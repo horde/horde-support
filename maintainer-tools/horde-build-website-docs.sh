@@ -2,7 +2,7 @@
 #
 # Usage: horde-build-website-docs.sh [module [/path/to/modules /path/to/HEAD]]
 
-. $(dirname $0)/horde-build-website-docs.conf
+. $(dirname $0)/horde-build-website-docs.conf || exit
 
 SOURCEDIR=${2:-$(pwd)}
 HEADDIR=${3:-$(pwd)}
