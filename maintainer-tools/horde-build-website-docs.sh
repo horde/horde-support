@@ -38,7 +38,10 @@ for DOC_DIR in $DOC_DIRS; do
         DOCS=$WEBROOT/$APP/docs/docs.html
         FILES=$(find $DOC_DIR -maxdepth 1 -type f -regex .*/[A-Z_]+ | sort)
         FILES="$DOC_DIR/../README $FILES"
-        if [ $APP = "horde" ]; then FILES="$FILES $DOC_DIR/../po/README"; fi
+        if [ $APP = "horde" -a -e "$DOC_DIR/../po/README" ]
+        then
+            FILES="$FILES $DOC_DIR/../po/README"
+        fi
         cat > $DOCS <<EOF
 <h3>Documentation</h3>
 
