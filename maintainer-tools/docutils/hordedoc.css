@@ -1,0 +1,120 @@
+/*
+ * Cascading Style Sheet for Horde Documentation
+ * Jon Parise <jon@horde.org>
+ * $Horde: hordedoc/docutils/hordedoc.css,v 1.2 2004/04/29 15:16:05 jan Exp $
+ */
+
+body, td {
+	background-color: #ffffff;
+	color: #000000;
+	font-family: Tahoma, Verdana, "Myriad Web", Syntax, sans-serif;
+	font-size: 9pt;
+	margin: 10px;
+}
+
+h1 {
+	color: #990000;
+	border-bottom: 1px solid #000000;
+	font-size: 12pt;
+	font-weight: normal;
+	margin-bottom: 2px;
+}
+
+h1.title {
+	border: 0;
+	color: #000000;
+	font-size: 16pt;
+	text-align: center;
+}
+
+h2, h3, h4 {
+	color: #990000;
+	border-bottom: 1px solid #999999;
+	font-size: 11pt;
+	font-weight: normal;
+	margin-bottom: 2px;
+}
+
+hr {
+	border: 0;
+	color: #000000;
+	background-color: #000000;
+	height: 1px;
+}
+
+.section hr {
+	width: 75%;
+}
+
+a.toc-backref {
+	color: #990000;
+	text-decoration: none;
+}
+
+p.topic-title {
+	color: #990000;
+	font-size: 12pt;
+	margin-bottom: 2px;
+}
+
+table.docinfo {
+	margin: 1em;
+}
+
+th.docinfo-name {
+	padding-right: 10px;
+	text-align: right;
+}
+
+pre.literal-block, pre.doctest-block {
+	margin-left: 2em;
+	margin-right: 2em;
+	background-color: #eeeeee;
+	border: 1px solid #cccccc;
+	padding: 3px;
+}
+
+ul.auto-toc {
+	list-style-type: none;
+}
+
+ol.simple, ul.simple {
+	margin-bottom: 1em;
+}
+
+ol.arabic {
+	list-style: decimal;
+}
+
+ol.loweralpha {
+	list-style: lower-alpha;
+}
+
+ol.upperalpha {
+	list-style: upper-alpha;
+}
+
+ol.lowerroman {
+	list-style: lower-roman;
+}
+
+ol.upperroman {
+	list-style: upper-roman;
+}
+
+p.caption {
+	font-style: italic;
+}
+
+p.credits {
+	font-style: italic;
+	font-size: smaller;
+}
+
+p.label {
+	white-space: nowrap;
+}
+
+dt {
+	margin-top: 1em;
+}
