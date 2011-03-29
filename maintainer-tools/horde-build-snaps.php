@@ -108,9 +108,11 @@ function tarballGit($dir, $module, $repo, $name)
     $filename = $module . '-' . $name . '.tar.gz';
     system('cd ' . $dir . '; ' . $GLOBALS['git_cmd'] . ' --git-dir=' . escapeshellarg($repo) . ' archive --format=tar --prefix=' . $module . '/ HEAD:' . $module . '/ | gzip -9 > ' . $filename);
 
+    $hash = array();
     foreach (array('md5', 'sha1', 'sha256') as $val) {
-        file_put_contents($dir . '/' . $filename . '.' . $val, hash_file($val, $dir . '/' . $filename));
+        $hash[] = $val . ': ' . hash_file($val, $dir . '/' . $filename);
     }
+    file_put_contents($dir . '/' . $filename . '.CHECKSUM', implode("\n", $hash));
 }
 
 function tarballCVS($dir, $module, $tag)
@@ -119,9 +121,11 @@ function tarballCVS($dir, $module, $tag)
     system('cd ' . $dir . '; cvs -Q export -r ' . $tag . ' -d ' . $module . '-' . $tag . ' ' . $module . ' > /dev/null');
     system('cd ' . $dir . '; tar -zcf ' . $filename . ' ' . $module . '-' . $tag);
 
+    $hash = array();
     foreach (array('md5', 'sha1', 'sha256') as $val) {
-        file_put_contents($dir . '/' . $filename . '.' . $val, hash_file($val, $dir . '/' . $filename));
+        $hash[] = $val . ': ' . hash_file($val, $dir . '/' . $filename);
     }
+    file_put_contents($dir . '/' . $filename . '.CHECKSUM', implode("\n", $hash));
 
     system('rm -rf ' . $dir . '/' . $module . '-' . $tag);
 }
