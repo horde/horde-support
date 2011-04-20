@@ -16,12 +16,12 @@ test -f $CONFIG || {
     echo docutils.conf not found at $CONFIG.
     exit
 }
-test -d $WEBROOT || {
-    echo $WEBROOT not found.
+test -d $FILEROOT || {
+    echo $FILEROOT not found.
     exit
 }
 
-echo > $WEBROOT/errors.txt
+echo > $FILEROOT/errors.txt
 
 # Search for docs directories
 echo "Searching applications..."
@@ -33,16 +33,12 @@ for DOC_DIR in $DOC_DIRS; do
         [ -f $DOC_DIR/../README ] &&
         [ "$1" = "" -o "$1" = "$APP" ]; then
         echo -n "$APP "
-        APPROOT=$WEBROOT/app/views/App/apps/$APP/docs
+        APPROOT=$FILEROOT/app/views/App/apps/$APP/docs
         mkdir -p $APPROOT
         # Generate HTML docs
         DOCS=$APPROOT/docs.html
         FILES=$(find $DOC_DIR -maxdepth 1 -type f -regex .*/[A-Z_]+ | sort)
         FILES="$DOC_DIR/../README $FILES"
-        if [ $APP = "horde" -a -e "$DOC_DIR/../po/README" ]
-        then
-            FILES="$FILES $DOC_DIR/../po/README"
-        fi
         cat > $DOCS <<EOF
 <h3>Documentation</h3>
 
@@ -58,7 +54,7 @@ EOF
                 cat $FILE | sed 's/</\&lt;/g' | sed 's;pear\s*\(bug\|request\)\s*#\([[:digit:]]*\);<a href="http://pear.php.net/bugs/bug.php?id=\2">\0</a>;gi' | sed 's;\(,\s*\|(\)\(\(bug\|request\)\s*#\([[:digit:]]*\)\);\1<a href="http://bugs.horde.org/ticket/\4">\2</a>;gi' >> $CHANGES
                 echo '</pre>' >> $CHANGES
                 echo -n .
-                echo "<li><a href=\"?f=CHANGES.html\">CHANGES</a></li>" >> $DOCS
+                echo "<li><a href=\"$WEBROOT/apps/$APP/docs/CHANGES\">CHANGES</a></li>" >> $DOCS
                 continue
             fi
             if [ $(basename $FILE) = "RELEASE_NOTES" ]; then
@@ -67,20 +63,16 @@ EOF
                 php -r "class n { function n() { require_once 'Horde/Release.php'; include '$FILE'; echo \$this->notes['ml']['changes']; } } new n;" | sed 's/</\&lt;/g' >> $NOTES
                 echo '</pre>' >> $NOTES
                 echo -n .
-                echo "<li><a href=\"?f=RELEASE_NOTES.html\">RELEASE_NOTES</a></li>" >> $DOCS
+                echo "<li><a href=\"$WEBROOT/apps/$APP/docs/RELEASE_NOTES\">RELEASE_NOTES</a></li>" >> $DOCS
                 continue
             fi
             echo -n .
-            if [ $(basename $(dirname $FILE)) = "po" ]; then
-                TO=po_README.html
-            else
-                TO=$(basename $FILE .txt).html
-            fi
+            TO=$(basename $FILE .txt).html
             OUTPUT=$($GENERATOR \
                 --output-encoding=UTF-8 \
                 --rfc-references \
                 $FILE \
-                2>>$WEBROOT/errors.txt)
+                2>>$FILEROOT/errors.txt)
             if [ $? ]; then
                 OUTPUT=$(echo "$OUTPUT" | sed '1,/<body>/d' | sed '/<\/body>/,$d');
                 echo "$OUTPUT" > $APPROOT/$TO;
@@ -89,7 +81,7 @@ EOF
                 else
                     DISPLAY=$(echo $FILE | sed "s|$DOC_DIR/\(../\)\?||")
                 fi
-                echo "<li><a href=\"?f=$TO\">$DISPLAY</a></li>" >> $DOCS
+                echo "<li><a href=\"$WEBROOT/apps/$APP/docs/$DISPLAY\">$DISPLAY</a></li>" >> $DOCS
             fi
         done
         echo "</ul>" >> $DOCS
