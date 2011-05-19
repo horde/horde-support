@@ -55,7 +55,7 @@ EOF
                 cat "$FILE" | sed 's/</\&lt;/g' | sed 's;pear\s*\(bug\|request\)\s*#\([[:digit:]]*\);<a href="http://pear.php.net/bugs/bug.php?id=\2">\0</a>;gi' | sed 's;\(,\s*\|(\)\(\(bug\|request\)\s*#\([[:digit:]]*\)\);\1<a href="http://bugs.horde.org/ticket/\4">\2</a>;gi' >> $CHANGES
                 echo '</pre>' >> $CHANGES
                 echo -n .
-                echo "<li><a href=\"$WEBROOT/apps/$APP/docs/CHANGES\">CHANGES</a></li>" >> $DOCS
+                echo "<li><a href=\"<?php echo \$GLOBALS['host_base'] ?>/apps/$APP/docs/CHANGES\">CHANGES</a></li>" >> $DOCS
                 continue
             fi
             if [ $(basename "$FILE") = "RELEASE_NOTES" ]; then
@@ -64,7 +64,7 @@ EOF
                 php -r "class n { function n() { require_once 'Horde/Release.php'; include '$FILE'; echo \$this->notes['ml']['changes']; } } new n;" | sed 's/</\&lt;/g' >> $NOTES
                 echo '</pre>' >> $NOTES
                 echo -n .
-                echo "<li><a href=\"$WEBROOT/apps/$APP/docs/RELEASE_NOTES\">RELEASE_NOTES</a></li>" >> $DOCS
+                echo "<li><a href=\"<?php echo \$GLOBALS['host_base'] ?>/apps/$APP/docs/RELEASE_NOTES\">RELEASE_NOTES</a></li>" >> $DOCS
                 continue
             fi
             echo -n .
@@ -82,7 +82,7 @@ EOF
                 else
                     DISPLAY=$(echo "$FILE" | sed "s|$DOC_DIR/\(../\)\?||")
                 fi
-                echo "<li><a href=\"$WEBROOT/apps/$APP/docs/$DISPLAY\">$DISPLAY</a></li>" >> $DOCS
+                echo "<li><a href=\"<?php echo \$GLOBALS['host_base'] ?>/apps/$APP/docs/$DISPLAY\">$DISPLAY</a></li>" >> $DOCS
             fi
         done
         echo "</ul>" >> $DOCS
