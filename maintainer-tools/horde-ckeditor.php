@@ -395,7 +395,7 @@ function _installFile($file, $dest_js, $subpath, $orig_file, $ext)
     $data = file_get_contents($orig_file);
 
     // Remove BOM & DOS linebreaks
-    if (in_array($ext, $strip)) {
+    if (in_array($ext, $GLOBALS['strip'])) {
         $data = preg_replace(array("/^\xEF\xBB\xBF/", "/\r\n/"), array('', "\n"), $data);
     }
 
