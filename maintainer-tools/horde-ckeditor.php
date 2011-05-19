@@ -324,43 +324,6 @@ foreach ($custom as $file) {
     $installed[] = $file;
 }
 
-print "\npackage.xml data:\n" .
-      "=================\n";
-
-$xml = new SimpleXMLElement('<dir name="/" />');
-$dirs['.'] = $xml;
-
-foreach ($installed as $val) {
-    $dname = dirname($val);
-    $pos = -1;
-
-    if (!isset($dirs[$dname])) {
-        $dirlist = array();
-        while (($pos = strpos($dname, '/', $pos + 1)) !== false) {
-            $dirlist[] = substr($dname, 0, $pos);
-        }
-        $dirlist[] = $dname;
-
-        foreach ($dirlist as $dir) {
-            if (!isset($dirs[$dir])) {
-                $dirs[$dir] = $dirs[dirname($dir)]->addChild('dir', '');
-                $dirs[$dir]->addAttribute('name', basename($dir));
-            }
-        }
-    }
-
-    $tmp = $dirs[$dname]->addChild('file', '');
-    $tmp->addAttribute('name', basename($val));
-    $tmp->addAttribute('role', 'horde');
-}
-
-print str_replace(array('></file>', '</dir>', '><dir', '><file'), array("/>\n", "</dir>\n", ">\n<dir", ">\n<file"), $xml->asXML());
-
-print "\n";
-foreach ($installed as $val) {
-    print '<install name="js/' . $val . '" as="js/ckeditor/' . $val ."\" />\n";
-}
-
 print "\nNot copied:\n" .
       "===========\n" .
       implode("\n", $not_copy) .
