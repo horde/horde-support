@@ -31,7 +31,7 @@ echo "Generating documentation..."
 for DOC_DIR in $DOC_DIRS; do
     APP=$(basename $(dirname $DOC_DIR))
     if [ $APP != ".." ] &&
-        [ -f "$DOC_DIR/README" -o -f "$DOC_DIR/../README" ] &&
+        [ -f "$DOC_DIR/../README" ] &&
         [ -d "$FILEROOT/app/views/App/apps/$APP" ] &&
         [ "$1" = "" -o "$1" = "$APP" ]; then
         echo -n "$APP "
