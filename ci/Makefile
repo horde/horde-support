@@ -50,9 +50,10 @@ JOBS=ActiveSync \
      View \
      Xml_Element \
      Yaml
-#    ActiveSync \
 #    Feed \
 #    KolabStorage \
+#    ImapClient \
+#    Pear
 
 .PHONY:install
 install: jenkins-install
