@@ -59,6 +59,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../<?php echo $toolsdir; ?>/php&quot
         <failedNewNormal></failedNewNormal>
         <failedNewLow></failedNewLow>
       </thresholds>
+      <shouldDetectModules>false</shouldDetectModules>
       <pattern>build/logs/pmd.xml</pattern>
     </hudson.plugins.pmd.PmdPublisher>
     <hudson.plugins.checkstyle.CheckStylePublisher>
@@ -87,6 +88,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../<?php echo $toolsdir; ?>/php&quot
         <failedNewNormal></failedNewNormal>
         <failedNewLow></failedNewLow>
       </thresholds>
+      <shouldDetectModules>false</shouldDetectModules>
       <pattern>build/logs/checkstyle.xml</pattern>
     </hudson.plugins.checkstyle.CheckStylePublisher>
     <hudson.plugins.dry.DryPublisher>
@@ -115,6 +117,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../<?php echo $toolsdir; ?>/php&quot
         <failedNewNormal></failedNewNormal>
         <failedNewLow></failedNewLow>
       </thresholds>
+      <shouldDetectModules>false</shouldDetectModules>
       <pattern>build/logs/pmd-cpd.xml</pattern>
       <highThreshold>50</highThreshold>
       <normalThreshold>25</normalThreshold>
@@ -127,11 +130,15 @@ php -d include_path=&quot;.:${WORKSPACE}/../../<?php echo $toolsdir; ?>/php&quot
       <cloverReportFileName>clover.xml</cloverReportFileName>
       <healthyTarget>
         <methodCoverage>70</methodCoverage>
-        <conditionalCoverage>80</conditionalCoverage>
+        <conditionalCoverage>-1</conditionalCoverage>
         <statementCoverage>80</statementCoverage>
       </healthyTarget>
-      <unhealthyTarget/>
-      <failingTarget/>
+      <unhealthyTarget>
+        <conditionalCoverage>-1</conditionalCoverage>
+      </unhealthyTarget>
+      <failingTarget>
+        <conditionalCoverage>-1</conditionalCoverage>
+      </failingTarget>
     </hudson.plugins.clover.CloverPublisher>
     <hudson.plugins.violations.ViolationsPublisher>
       <config>
@@ -519,6 +526,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../<?php echo $toolsdir; ?>/php&quot
           <pattern>build/logs/junit.xml</pattern>
           <faildedIfNotNew>true</faildedIfNotNew>
           <deleteOutputFiles>true</deleteOutputFiles>
+          <stopProcessingIfError>true</stopProcessingIfError>
         </com.thalesgroup.dtkit.metrics.hudson.model.PHPUnitJunitHudsonTestType>
       </types>
     </com.thalesgroup.hudson.plugins.xunit.XUnitPublisher>
