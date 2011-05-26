@@ -4,11 +4,13 @@ include jenkins/jenkins.mk
 HORDE_FRAMEWORK=workdir/jobs/horde-git/workspace/framework
 TOOLSDIR=workdir/jobs/php-ci-tools/workspace/pear/pear
 
-JOBS=Alarm \
+JOBS=ActiveSync \
+     Alarm \
      Argv \
      Auth \
      Autoloader \
      Cli_Modular \
+     Compress \
      Constraint \
      Controller \
      Core \
@@ -34,6 +36,7 @@ JOBS=Alarm \
      Perms \
      Prefs \
      PubSub \
+     Release \
      Secret \
      Share \
      Stream_Filter \
