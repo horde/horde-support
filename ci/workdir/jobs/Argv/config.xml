@@ -1,9 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>This package provides classes for parsing command line
- arguments with various actions, providing help, grouping options, and
- more.&lt;br/&gt;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Argv/ws/build/pdepend/overview-pyramid.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;&#xd;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Argv/ws/build/pdepend/dependencies.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;</description>
+  <description>This package provides classes for parsing command line arguments with various actions, providing help, grouping options, and more.&lt;br/&gt;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Argv/ws/build/pdepend/overview-pyramid.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;&#xd;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Argv/ws/build/pdepend/dependencies.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;</description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
     <numToKeep>10</numToKeep>
@@ -130,11 +128,15 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
       <cloverReportFileName>clover.xml</cloverReportFileName>
       <healthyTarget>
         <methodCoverage>70</methodCoverage>
-        <conditionalCoverage>80</conditionalCoverage>
+        <conditionalCoverage>-1</conditionalCoverage>
         <statementCoverage>80</statementCoverage>
       </healthyTarget>
-      <unhealthyTarget/>
-      <failingTarget/>
+      <unhealthyTarget>
+        <conditionalCoverage>-1</conditionalCoverage>
+      </unhealthyTarget>
+      <failingTarget>
+        <conditionalCoverage>-1</conditionalCoverage>
+      </failingTarget>
     </hudson.plugins.clover.CloverPublisher>
     <hudson.plugins.violations.ViolationsPublisher>
       <config>

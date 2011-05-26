@@ -57,6 +57,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
         <failedNewNormal></failedNewNormal>
         <failedNewLow></failedNewLow>
       </thresholds>
+      <shouldDetectModules>false</shouldDetectModules>
       <pattern>build/logs/pmd.xml</pattern>
     </hudson.plugins.pmd.PmdPublisher>
     <hudson.plugins.checkstyle.CheckStylePublisher>
@@ -85,6 +86,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
         <failedNewNormal></failedNewNormal>
         <failedNewLow></failedNewLow>
       </thresholds>
+      <shouldDetectModules>false</shouldDetectModules>
       <pattern>build/logs/checkstyle.xml</pattern>
     </hudson.plugins.checkstyle.CheckStylePublisher>
     <hudson.plugins.dry.DryPublisher>
@@ -113,6 +115,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
         <failedNewNormal></failedNewNormal>
         <failedNewLow></failedNewLow>
       </thresholds>
+      <shouldDetectModules>false</shouldDetectModules>
       <pattern>build/logs/pmd-cpd.xml</pattern>
       <highThreshold>50</highThreshold>
       <normalThreshold>25</normalThreshold>
@@ -125,11 +128,15 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
       <cloverReportFileName>clover.xml</cloverReportFileName>
       <healthyTarget>
         <methodCoverage>70</methodCoverage>
-        <conditionalCoverage>80</conditionalCoverage>
+        <conditionalCoverage>-1</conditionalCoverage>
         <statementCoverage>80</statementCoverage>
       </healthyTarget>
-      <unhealthyTarget/>
-      <failingTarget/>
+      <unhealthyTarget>
+        <conditionalCoverage>-1</conditionalCoverage>
+      </unhealthyTarget>
+      <failingTarget>
+        <conditionalCoverage>-1</conditionalCoverage>
+      </failingTarget>
     </hudson.plugins.clover.CloverPublisher>
     <hudson.plugins.violations.ViolationsPublisher>
       <config>
@@ -304,12 +311,12 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <fileType>csv</fileType>
               <strExclusionSet>
                 <string>Functions</string>
-                <string>Files</string>
-                <string>Namespaces</string>
                 <string>Classes</string>
+                <string>Namespaces</string>
+                <string>Files</string>
                 <string>Directories</string>
-                <string>Interfaces</string>
                 <string>Methods</string>
+                <string>Interfaces</string>
                 <string>Constants</string>
                 <string>Anonymous Functions</string>
               </strExclusionSet>
@@ -335,8 +342,8 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <label></label>
               <fileType>csv</fileType>
               <strExclusionSet>
-                <string>Average Class Length (NCLOC)</string>
                 <string>Average Method Length (NCLOC)</string>
+                <string>Average Class Length (NCLOC)</string>
               </strExclusionSet>
               <inclusionFlag>INCLUDE_BY_STRING</inclusionFlag>
               <exclusionValues>Average Class Length (NCLOC),Average Method Length (NCLOC)</exclusionValues>
@@ -412,8 +419,8 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <fileType>csv</fileType>
               <strExclusionSet>
                 <string>Methods</string>
-                <string>Non-Static Methods</string>
                 <string>Static Methods</string>
+                <string>Non-Static Methods</string>
                 <string>Public Methods</string>
                 <string>Non-Public Methods</string>
               </strExclusionSet>
