@@ -28,7 +28,7 @@ JOBS=ActiveSync \
      Kolab_Config \
      Kolab_Format \
      Kolab_Session \
-     KolabStorage \
+     Kolab_Storage \
      Ldap \
      Log \
      LoginTasks \
