@@ -53,8 +53,6 @@ JOBS=ActiveSync \
      Xml_Element \
      Yaml
 #    Feed \
-#    KolabStorage \
-#    ImapClient \
 #    Pear
 
 .PHONY:install
