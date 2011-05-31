@@ -22,11 +22,13 @@ JOBS=ActiveSync \
      Group \
      History \
      Http \
+     ImapClient \
      Injector \
      Itip \
      Kolab_Config \
      Kolab_Format \
      Kolab_Session \
+     KolabStorage \
      Ldap \
      Log \
      LoginTasks \
