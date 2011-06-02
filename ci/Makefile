@@ -35,6 +35,7 @@ JOBS=ActiveSync \
      Mail \
      Mime \
      Pdf \
+     Pear \
      Perms \
      Prefs \
      PubSub \
@@ -53,7 +54,6 @@ JOBS=ActiveSync \
      Xml_Element \
      Yaml
 #    Feed \
-#    Pear
 
 .PHONY:install
 install: jenkins-install
