@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>This package provides classes for parsing command line arguments with various actions, providing help, grouping options, and more.&lt;br/&gt;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Argv/ws/build/pdepend/overview-pyramid.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;&#xd;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Argv/ws/build/pdepend/dependencies.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;</description>
+  <description>A library for accessing the Avatar services at gravatar.com.&lt;br/&gt;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Service_Gravatar/ws/build/pdepend/overview-pyramid.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;&#xd;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Service_Gravatar/ws/build/pdepend/dependencies.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;</description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
     <numToKeep>10</numToKeep>
@@ -20,10 +20,10 @@
   <builders>
     <hudson.tasks.Shell>
       <command>rm -rf ${WORKSPACE}/deps
-rsync -avz --exclude=&quot;build.xml&quot; --delete-after ${WORKSPACE}/../../horde-git/workspace/framework/Argv/* ${WORKSPACE}/
+rsync -avz --exclude=&quot;build.xml&quot; --delete-after ${WORKSPACE}/../../horde-git/workspace/framework/Service_Gravatar/* ${WORKSPACE}/
 mkdir -p ${WORKSPACE}/deps
-php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps/.pearrc --channelxmlpath=${WORKSPACE}/../../horde-pear-dependencies/workspace/channels --sourcepath=${WORKSPACE}/../../horde-pear-dependencies/workspace/packages --exclude=&quot;pear.php.net/PEAR_Frontend_Web,pear.php.net/PEAR_Frontend_Gtk,channel:pecl.php.net,Horde_Test&quot; -N ${WORKSPACE}/../../horde-git/workspace/framework/Argv
-php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/horde-components -t ../../../../templates -T ../../php-ci-tools/workspace/pear/pear --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/../.pearrc ${WORKSPACE}/../../horde-git/workspace/framework/Argv
+php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps/.pearrc --channelxmlpath=${WORKSPACE}/../../horde-pear-dependencies/workspace/channels --sourcepath=${WORKSPACE}/../../horde-pear-dependencies/workspace/packages --exclude=&quot;pear.php.net/PEAR_Frontend_Web,pear.php.net/PEAR_Frontend_Gtk,channel:pecl.php.net,Horde_Test&quot; -N ${WORKSPACE}/../../horde-git/workspace/framework/Service_Gravatar
+php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/horde-components -t ../../../../templates -T ../../php-ci-tools/workspace/pear/pear --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/../.pearrc ${WORKSPACE}/../../horde-git/workspace/framework/Service_Gravatar
     </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Ant>

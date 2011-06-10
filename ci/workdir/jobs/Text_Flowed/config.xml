@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>The Horde_Text_Flowed:: class provides common methods for manipulating text using the encoding described in RFC 3676 (&apos;flowed&apos; text).&lt;br/&gt;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Text_Flowed/ws/build/pdepend/overview-pyramid.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;&#xd;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Text_Flowed/ws/build/pdepend/dependencies.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;</description>
+  <description>The Horde_Text_Flowed:: class provides common methods for manipulating text using the encoding described in RFC 3676 ('flowed' text).&lt;br/&gt;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Text_Flowed/ws/build/pdepend/overview-pyramid.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;&#xd;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Text_Flowed/ws/build/pdepend/dependencies.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;</description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
     <numToKeep>10</numToKeep>
@@ -123,21 +123,18 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
     <hudson.plugins.jdepend.JDependRecorder>
       <configuredJDependFile>build/logs/jdepend.xml</configuredJDependFile>
     </hudson.plugins.jdepend.JDependRecorder>
-    <hudson.plugins.clover.CloverPublisher>
-      <cloverReportDir>build/logs</cloverReportDir>
-      <cloverReportFileName>clover.xml</cloverReportFileName>
+    <org.jenkinsci.plugins.cloverphp.CloverPublisher>
+      <publishHtmlReport>true</publishHtmlReport>
+      <reportDir>build/coverage</reportDir>
+      <xmlLocation>build/logs/clover.xml</xmlLocation>
+      <disableArchiving>false</disableArchiving>
       <healthyTarget>
         <methodCoverage>70</methodCoverage>
-        <conditionalCoverage>-1</conditionalCoverage>
         <statementCoverage>80</statementCoverage>
       </healthyTarget>
-      <unhealthyTarget>
-        <conditionalCoverage>-1</conditionalCoverage>
-      </unhealthyTarget>
-      <failingTarget>
-        <conditionalCoverage>-1</conditionalCoverage>
-      </failingTarget>
-    </hudson.plugins.clover.CloverPublisher>
+      <unhealthyTarget/>
+      <failingTarget/>
+    </org.jenkinsci.plugins.cloverphp.CloverPublisher>
     <hudson.plugins.violations.ViolationsPublisher>
       <config>
         <suppressions class="tree-set">
