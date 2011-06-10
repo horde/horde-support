@@ -19,6 +19,7 @@ JOBS=ActiveSync \
      Date_Parser \
      Db \
      Exception \
+     Feed \
      Group \
      History \
      Http \
@@ -41,6 +42,7 @@ JOBS=ActiveSync \
      PubSub \
      Release \
      Secret \
+     Service_Gravatar \
      Share \
      Stream_Filter \
      Support \
@@ -53,7 +55,6 @@ JOBS=ActiveSync \
      View \
      Xml_Element \
      Yaml
-#    Feed \
 
 .PHONY:install
 install: jenkins-install
