@@ -23,7 +23,7 @@ JOBS=ActiveSync \
      Group \
      History \
      Http \
-     ImapClient \
+     Imap_Client \
      Injector \
      Itip \
      Kolab_Config \
