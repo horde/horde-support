@@ -2,6 +2,8 @@
 <project name="Kolab_Config" default="build" basedir=".">
  <property name="tooldir" location="<?php echo $toolsdir; ?>"/>
  <property name="incdirs" location="${basedir}/lib:${basedir}/deps/pear/php:${tooldir}/php"/>
+ <property environment="env"/>
+ <property name="job_name" value="${env.JOB_NAME}"/>
 
  <target name="clean">
   <!-- Clean up -->
@@ -48,6 +50,20 @@
    <antcall target="phpdoc"/>
    <antcall target="phploc"/>
   </parallel>
+ </target>
+
+ <target name="make-deps">
+  <mkdir dir="${basedir}/deps"/>
+
+  <exec executable="php">
+   <arg line="-d include_path=${incdirs} ${tooldir}/horde-components
+              --install=${basedir}/deps/.pearrc
+              --channelxmlpath=${basedir}/../../horde-pear-dependencies/workspace/channels
+              --sourcepath=${basedir}/../../horde-pear-dependencies/workspace/packages
+              --exclude=pear.php.net/PEAR_Frontend_Web,pear.php.net/PEAR_Frontend_Gtk,channel:pecl.php.net,Horde_Test
+              -N
+              ${basedir}/../../horde-git/${job_name}" />
+  </exec>
  </target>
 
  <!-- Generate jdepend.xml and software metrics charts -->
@@ -113,5 +129,10 @@
   </exec>
  </target>
 
- <target name="build" depends="clean,pdepend,phpcpd,phpcs,phploc,phpdoc,phpmd,phpunit,phpcb"/>
+ <target name="clean-deps">
+  <!-- Remove the deps directory. -->
+  <delete dir="deps"/>
+ </target>
+
+ <target name="build" depends="make-deps,clean,pdepend,phpcpd,phpcs,phploc,phpdoc,phpmd,phpunit,phpcb,clean-deps"/>
 </project>
