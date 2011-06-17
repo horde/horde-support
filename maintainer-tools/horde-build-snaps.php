@@ -24,6 +24,8 @@ if (!$git_cmd) {
 $apps = array(
     // Apps in horde-git
     'git' => array(
+        'bundles/groupware',
+        'bundles/webmail',
         'ansel',
         'babel',
         'beatnik',
@@ -87,7 +89,7 @@ prune($days);
 // Do git stuff
 system("git clone -q --depth=1 $github_url $gitclone_path");
 foreach ($apps['git'] as $val) {
-    tarballGit($dir, $val, $gitclone_path . '/.git/', 'git');
+    tarballGit($dir, $val, $gitclone_path . '/.git/');
 }
 system('rm -rf '. $gitclone_path);
 
@@ -103,10 +105,11 @@ system("ln -sfh $dir latest");
 /**
  * Functions
  */
-function tarballGit($dir, $module, $repo, $name)
+function tarballGit($dir, $path, $repo)
 {
-    $filename = $module . '-' . $name . '.tar.gz';
-    system('cd ' . $dir . '; ' . $GLOBALS['git_cmd'] . ' --git-dir=' . escapeshellarg($repo) . ' archive --format=tar --prefix=' . $module . '/ HEAD:' . $module . '/ | gzip -9 > ' . $filename);
+    $module = array_pop(explode('/', $path));
+    $filename = $module . '-git.tar.gz';
+    system('cd ' . $dir . '; ' . $GLOBALS['git_cmd'] . ' --git-dir=' . escapeshellarg($repo) . ' archive --format=tar --prefix=' . $module . '/ HEAD:' . $path . '/ | gzip -9 > ' . $filename);
 
     $hash = array();
     foreach (array('md5', 'sha1', 'sha256') as $val) {
