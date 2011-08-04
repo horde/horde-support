@@ -53,7 +53,7 @@ EOF
             if [ $(basename "$FILE") = "CHANGES" ]; then
                 CHANGES=$APPROOT/CHANGES.html
                 echo '<h3>Changes by Release</h3><pre>' > $CHANGES
-                cat "$FILE" | sed 's/</\&lt;/g' | sed 's;pear\s*\(bug\|request\)\s*#\([[:digit:]]*\);<a href="http://pear.php.net/bugs/bug.php?id=\2">\0</a>;gi' | sed 's;\(,\s*\|(\)\(\(bug\|request\)\s*#\([[:digit:]]*\)\);\1<a href="http://bugs.horde.org/ticket/\4">\2</a>;gi' >> $CHANGES
+                cat "$FILE" | sed 's/</\&lt;/g' | sed 's;pear\s*\(bug\|request\)\s*#\([[:digit:]]*\);<a href="http://pear.php.net/bugs/bug.php?id=\2">\0</a>;gi' | sed ':a;N;$!ba;s;\(,\s*\|(\)\(\(bug\|request\)[[:space:]]*#\([[:digit:]]*\)\);\1<a href="http://bugs.horde.org/ticket/\4">\2</a>;gi' >> $CHANGES
                 echo '</pre>' >> $CHANGES
                 echo -n .
                 echo "<li><a href=\"<?php echo \$GLOBALS['host_base'] ?>/apps/$APP/docs/CHANGES\">CHANGES</a></li>" >> $DOCS
