@@ -44,7 +44,7 @@ for DOC_DIR in $DOC_DIRS; do
         cat > $DOCS <<EOF
 <h3>Documentation</h3>
 
-<p>These are the documentation files as distributed with the application's tarballs and stable CVS checkouts. Documentation for the current development version may differ</p>
+<p>These are the documentation files as distributed with the application's stable Git checkouts. Documentation for the latest release version may differ</p>
 
 <ul>
 EOF
