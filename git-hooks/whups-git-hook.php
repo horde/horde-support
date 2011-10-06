@@ -90,6 +90,7 @@ if (!empty($log_message)) {
     if (count($tickets)) {
         $log_message = "Changes have been made in Git for this ticket:\n\n$log_message$links";
         foreach ($tickets as $ticket) {
+            print "Updating Ticket #" . $ticket . "...\n";
             post_comment($ticket, $log_message);
         }
     }
