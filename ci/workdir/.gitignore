@@ -11,6 +11,7 @@
 /hudson.tasks.Maven.xml
 /hudson.tasks.Shell.xml
 /hudson.triggers.SCMTrigger.xml
+/identity.key
 /users
 hudson.model.UpdateCenter.xml
 hudson.plugins.git.GitTool.xml
