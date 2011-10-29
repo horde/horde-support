@@ -15,7 +15,7 @@ $testpath  = strtr(basename($directory), '_', '/');
   </testsuites>
 
   <logging>
-    <log type="coverage-html" target="build/coverage" title="%1$s"
+    <log type="coverage-html" target="build/coverage" title="Horde_<?php echo $testclass; ?>"
          charset="UTF-8" yui="true" highlight="true"
          lowUpperBound="35" highLowerBound="80"/>
     <log type="coverage-clover" target="build/logs/clover.xml"/>
