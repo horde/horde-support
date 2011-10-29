@@ -1,3 +1,8 @@
+<?php
+$directory = $config->getPath();
+$testclass = basename($directory);
+$testpath  = strtr(basename($directory), '_', '/');
+?>
 <?php echo '<?xml version=\'1.0\' encoding=\'UTF-8\'?>' . "\n"; ?>
 
 <phpunit backupGlobals="false"

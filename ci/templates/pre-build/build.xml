@@ -1,7 +1,30 @@
-<?php ?>
-<project name="Kolab_Config" default="build" basedir=".">
+<?php
+$options = $config->getOptions();
+if (!isset($options['toolsdir'])) {
+    throw new Components_Exception(
+        'You are required to set the path to a PEAR tool environment.'
+    );
+}
+$component = $config->getComponent();
+$job = preg_replace('/^Horde_/', '', $component->getName());
+if (preg_match('/^Horde_/', $component->getName())) {
+    $job_path = 'framework/' . $job;
+} else {
+    $job_path = $job;
+}
+$toolsdir = $options['toolsdir'];
+$hash = md5(serialize($component->getDependencies()));
+$hash_file = $options['ciprebuild'] . '/deps/.deps.hash';
+if (file_exists($hash_file)) {
+    $old_hash = file_get_contents($hash_file);
+} else {
+    $old_hash = false;
+}
+?>
+<project name="<?php echo $job;?>" default="build" basedir=".">
  <property name="tooldir" location="<?php echo $toolsdir; ?>"/>
  <property name="incdirs" location="${basedir}/lib:${basedir}/deps/pear/php:${tooldir}/php"/>
+ <property name="incdirs-install" location="${tooldir}/php"/>
  <property environment="env"/>
  <property name="job_name" value="${env.JOB_NAME}"/>
 
@@ -53,17 +76,25 @@
  </target>
 
  <target name="make-deps">
-  <mkdir dir="${basedir}/deps"/>
+  <?php if ($old_hash === false || $old_hash !== $hash): ?>
+    <!-- Remove the deps directory. -->
+    <delete dir="deps"/>
 
-  <exec executable="php">
-   <arg line="-d include_path=${incdirs} ${tooldir}/horde-components
-              --install=${basedir}/deps/.pearrc
-              --channelxmlpath=${basedir}/../../horde-pear-dependencies/workspace/channels
-              --sourcepath=${basedir}/../../horde-pear-dependencies/workspace/packages
-              --exclude=pear.php.net/PEAR_Frontend_Web,pear.php.net/PEAR_Frontend_Gtk,channel:pecl.php.net,Horde_Test
-              -N
-              ${basedir}/../../horde-git/${job_name}" />
-  </exec>
+    <mkdir dir="${basedir}/deps"/>
+
+    <exec executable="php">
+     <arg line="-d include_path=${incdirs-install} ${tooldir}/horde-components
+                ${basedir}/../../horde-git/workspace/<?php echo $job_path;?>
+                install --destination=${basedir}/deps
+                --channelxmlpath=${basedir}/../../horde-pear-dependencies/workspace/channels
+                --sourcepath=${basedir}/../../horde-pear-dependencies/workspace/packages
+                --instructions=${basedir}/dependency.instructions -N" />
+    </exec>
+
+    <echo message="<?php echo $hash;?>"
+          file="<?php echo $hash_file;?>"
+          />
+  <?php endif;?>
  </target>
 
  <!-- Generate jdepend.xml and software metrics charts -->
@@ -129,10 +160,5 @@
   </exec>
  </target>
 
- <target name="clean-deps">
-  <!-- Remove the deps directory. -->
-  <delete dir="deps"/>
- </target>
-
- <target name="build" depends="make-deps,clean,pdepend,phpcpd,phpcs,phploc,phpdoc,phpmd,phpunit,phpcb,clean-deps"/>
+ <target name="build" depends="make-deps,clean,pdepend,phpcpd,phpcs,phploc,phpdoc,phpmd,phpunit,phpcb"/>
 </project>

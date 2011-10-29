@@ -1,3 +1,24 @@
+<?php
+$options = $config->getOptions();
+
+if (!isset($options['toolsdir'])) {
+    throw new Components_Exception(
+        'You are required to set the path to a PEAR tool environment.'
+    );
+}
+$toolsdir = $options['toolsdir'];
+
+$directory = $config->getPath();
+if (basename(dirname($directory)) == 'framework') {
+    $sourcepath = 'framework/' . basename($directory);
+} else {
+    $sourcepath = basename($directory);
+}
+
+$component = $config->getComponent();
+$description = $component->getDescription();
+
+?>
 <?php echo '<?xml version=\'1.0\' encoding=\'UTF-8\'?>' . "\n"; ?>
 <project>
   <actions/>
@@ -19,10 +40,9 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>rm -rf ${WORKSPACE}/deps
-rsync -avz --exclude=&quot;build.xml&quot; --delete-after ${WORKSPACE}/../../horde-git/workspace/<?php echo $sourcepath; ?>/* ${WORKSPACE}/
+      <command>rsync -avz --exclude=&quot;deps&quot; --delete-after ${WORKSPACE}/../../horde-git/workspace/<?php echo $sourcepath; ?>/* ${WORKSPACE}/
 
-php -d include_path=&quot;.:${WORKSPACE}/../../<?php echo $toolsdir; ?>/php&quot; ${WORKSPACE}/../../<?php echo $toolsdir; ?>/horde-components -t ../../../../templates -T ../../<?php echo $toolsdir; ?> --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../<?php echo $toolsdir; ?>/../.pearrc ${WORKSPACE}/../../horde-git/workspace/<?php echo $sourcepath; ?>
+php -d include_path=&quot;.:${WORKSPACE}/../../<?php echo $toolsdir; ?>/php&quot; ${WORKSPACE}/../../<?php echo $toolsdir; ?>/horde-components -t ${WORKSPACE}/../../../../templates/pre-build -T ${WORKSPACE}/../../<?php echo $toolsdir; ?> --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../<?php echo $toolsdir; ?>/../.pearrc ${WORKSPACE}/../../horde-git/workspace/<?php echo $sourcepath; ?>
 
     </command>
     </hudson.tasks.Shell>
