@@ -1,7 +1,8 @@
 include settings.mk
 include jenkins/jenkins.mk
 
-HORDE_FRAMEWORK=workdir/jobs/horde-git/workspace/framework
+HORDE_APPS=workdir/jobs/horde-git/workspace
+HORDE_FRAMEWORK=$(HORDE_APPS)/framework
 TOOLSDIR=workdir/jobs/php-ci-tools/workspace/pear/pear
 
 JOBS=ActiveSync \
@@ -35,26 +36,36 @@ JOBS=ActiveSync \
      LoginTasks \
      Mail \
      Mime \
+     Notification \
      Pdf \
      Pear \
      Perms \
      Prefs \
      PubSub \
+     Push \
      Release \
+     Routes \
      Secret \
      Service_Gravatar \
+     Serialize \
      Share \
      Stream_Filter \
      Support \
      Text_Diff \
+     Text_Filter \
      Text_Flowed \
+     Text_Textile \
      Token \
      Translation \
      Url \
      Util \
+     Vfs \
      View \
      Xml_Element \
+     Xml_Wbxml \
      Yaml
+
+APP_JOBS=mnemo
 
 .PHONY:install
 install: jenkins-install
@@ -63,13 +74,17 @@ install: jenkins-install
 install-latest: jenkins-install-latest
 
 .PHONY:jenkins-jobs
-jenkins-jobs: $(JOBS:%=job-%)
+jenkins-jobs: $(JOBS:%=job-%) $(APP_JOBS:%=job-%)
 
 .PHONY:$(JOBS:%=job-%)
 $(JOBS:%=job-%):
 	mkdir -p workdir/jobs/$(@:job-%=%)
-	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -T php-ci-tools/workspace/pear/pear -t $(WORKDIR)/templates -c workdir/jobs/$(@:job-%=%) --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_FRAMEWORK)/$(@:job-%=%)
-	cp templates/job-gitignore workdir/jobs/$(@:job-%=%)/.gitignore
+	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -T php-ci-tools/workspace/pear/pear -t $(WORKDIR)/templates/config --cisetup=workdir/jobs/$(@:job-%=%) --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_FRAMEWORK)/$(@:job-%=%)
+
+.PHONY:$(APP_JOBS:%=job-%)
+$(APP_JOBS:%=job-%):
+	mkdir -p workdir/jobs/$(@:job-%=%)
+	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -T php-ci-tools/workspace/pear/pear -t $(WORKDIR)/templates/config --cisetup=workdir/jobs/$(@:job-%=%) --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_APPS)/$(@:job-%=%)
 
 PHONY:clean-all
 clean-all: clean clean-jobs

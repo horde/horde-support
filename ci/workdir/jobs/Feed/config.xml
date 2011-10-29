@@ -4,9 +4,9 @@
   <description>This package provides support for working with feed formats such as RSS and Atom.&lt;br/&gt;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Feed/ws/build/pdepend/overview-pyramid.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;&#xd;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Feed/ws/build/pdepend/dependencies.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;</description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
-    <numToKeep>8</numToKeep>
-    <artifactDaysToKeep>-1</artifactDaysToKeep>
-    <artifactNumToKeep>-1</artifactNumToKeep>
+    <numToKeep>2</numToKeep>
+    <artifactDaysToKeep>5</artifactDaysToKeep>
+    <artifactNumToKeep>2</artifactNumToKeep>
   </logRotator>
   <keepDependencies>false</keepDependencies>
   <properties/>
@@ -19,11 +19,9 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>rm -rf ${WORKSPACE}/deps
-rsync -avz --exclude=&quot;build.xml&quot; --delete-after ${WORKSPACE}/../../horde-git/workspace/framework/Feed/* ${WORKSPACE}/
-mkdir -p ${WORKSPACE}/deps
-php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/horde-components --install=${WORKSPACE}/deps/.pearrc --channelxmlpath=${WORKSPACE}/../../horde-pear-dependencies/workspace/channels --sourcepath=${WORKSPACE}/../../horde-pear-dependencies/workspace/packages --exclude=&quot;pear.php.net/PEAR_Frontend_Web,pear.php.net/PEAR_Frontend_Gtk,channel:pecl.php.net,Horde_Test&quot; -N ${WORKSPACE}/../../horde-git/workspace/framework/Feed
-php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/horde-components -t ../../../../templates -T ../../php-ci-tools/workspace/pear/pear --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/../.pearrc ${WORKSPACE}/../../horde-git/workspace/framework/Feed
+      <command>rsync -avz --exclude=&quot;deps&quot; --delete-after ${WORKSPACE}/../../horde-git/workspace/framework/Feed/* ${WORKSPACE}/
+
+php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/horde-components -t ${WORKSPACE}/../../../../templates/pre-build -T ${WORKSPACE}/../../php-ci-tools/workspace/pear/pear --ciprebuild=${WORKSPACE} --pearrc=${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/../.pearrc ${WORKSPACE}/../../horde-git/workspace/framework/Feed
     </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Ant>
@@ -308,12 +306,12 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <fileType>csv</fileType>
               <strExclusionSet>
                 <string>Functions</string>
-                <string>Classes</string>
-                <string>Namespaces</string>
                 <string>Files</string>
+                <string>Namespaces</string>
+                <string>Classes</string>
                 <string>Directories</string>
-                <string>Methods</string>
                 <string>Interfaces</string>
+                <string>Methods</string>
                 <string>Constants</string>
                 <string>Anonymous Functions</string>
               </strExclusionSet>
@@ -339,8 +337,8 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <label></label>
               <fileType>csv</fileType>
               <strExclusionSet>
-                <string>Average Method Length (NCLOC)</string>
                 <string>Average Class Length (NCLOC)</string>
+                <string>Average Method Length (NCLOC)</string>
               </strExclusionSet>
               <inclusionFlag>INCLUDE_BY_STRING</inclusionFlag>
               <exclusionValues>Average Class Length (NCLOC),Average Method Length (NCLOC)</exclusionValues>
@@ -416,8 +414,8 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <fileType>csv</fileType>
               <strExclusionSet>
                 <string>Methods</string>
-                <string>Static Methods</string>
                 <string>Non-Static Methods</string>
+                <string>Static Methods</string>
                 <string>Public Methods</string>
                 <string>Non-Public Methods</string>
               </strExclusionSet>
