@@ -552,6 +552,13 @@ php -d include_path=&quot;.:${WORKSPACE}/../../<?php echo $toolsdir; ?>/php&quot
           <wrapperName>htmlpublisher-wrapper.html</wrapperName>
         </htmlpublisher.HtmlPublisherTarget>
         <htmlpublisher.HtmlPublisherTarget>
+          <reportName>Experimental API Documentation (DocBlox)</reportName>
+          <reportDir>build/xapi</reportDir>
+          <reportFiles>index.html</reportFiles>
+          <keepAll>false</keepAll>
+          <wrapperName>htmlpublisher-wrapper.html</wrapperName>
+        </htmlpublisher.HtmlPublisherTarget>
+        <htmlpublisher.HtmlPublisherTarget>
           <reportName>Code Browser</reportName>
           <reportDir>build/code-browser</reportDir>
           <reportFiles>index.html</reportFiles>
