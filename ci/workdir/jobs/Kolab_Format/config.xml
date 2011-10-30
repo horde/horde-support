@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>This package allows to convert Kolab data objects from XML to hashes.&lt;br/&gt;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Kolab_Format/ws/build/pdepend/overview-pyramid.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;&#xd;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Kolab_Format/ws/build/pdepend/dependencies.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;</description>
+  <description>This package allows to convert Kolab data objects from XML to data arrays.&lt;br/&gt;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Kolab_Format/ws/build/pdepend/overview-pyramid.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;&#xd;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Kolab_Format/ws/build/pdepend/dependencies.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;</description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
     <numToKeep>2</numToKeep>
@@ -163,6 +163,28 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
             </hudson.plugins.violations.TypeConfig>
           </entry>
           <entry>
+	    <string>cpplint</string>
+	    <hudson.plugins.violations.TypeConfig>
+              <type>cpplint</type>
+              <min>10</min>
+              <max>999</max>
+              <unstable>999</unstable>
+              <usePattern>false</usePattern>
+              <pattern></pattern>
+            </hudson.plugins.violations.TypeConfig>
+          </entry>
+          <entry>
+            <string>csslint</string>
+            <hudson.plugins.violations.TypeConfig>
+              <type>csslint</type>
+              <min>10</min>
+              <max>999</max>
+              <unstable>999</unstable>
+              <usePattern>false</usePattern>
+              <pattern></pattern>
+            </hudson.plugins.violations.TypeConfig>
+          </entry>
+          <entry>
             <string>findbugs</string>
             <hudson.plugins.violations.TypeConfig>
               <type>findbugs</type>
@@ -218,7 +240,17 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
             </hudson.plugins.violations.TypeConfig>
           </entry>
           <entry>
-            <string>pmd</string>
+            <string>pep8</string>
+            <hudson.plugins.violations.TypeConfig>
+              <type>pep8</type>
+              <min>10</min>
+              <max>999</max>
+              <unstable>999</unstable>
+              <usePattern>false</usePattern>
+              <pattern></pattern>
+            </hudson.plugins.violations.TypeConfig>
+          </entry>
+          <entry><string>pmd</string>
             <hudson.plugins.violations.TypeConfig>
               <type>pmd</type>
               <min>10</min>
@@ -498,15 +530,15 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
           <wrapperName>htmlpublisher-wrapper.html</wrapperName>
         </htmlpublisher.HtmlPublisherTarget>
         <htmlpublisher.HtmlPublisherTarget>
-          <reportName>Code Browser</reportName>
-          <reportDir>build/code-browser</reportDir>
+          <reportName>Experimental API Documentation (DocBlox)</reportName>
+          <reportDir>build/xapi</reportDir>
           <reportFiles>index.html</reportFiles>
           <keepAll>false</keepAll>
           <wrapperName>htmlpublisher-wrapper.html</wrapperName>
         </htmlpublisher.HtmlPublisherTarget>
         <htmlpublisher.HtmlPublisherTarget>
-          <reportName>Code Coverage</reportName>
-          <reportDir>build/coverage</reportDir>
+          <reportName>Code Browser</reportName>
+          <reportDir>build/code-browser</reportDir>
           <reportFiles>index.html</reportFiles>
           <keepAll>false</keepAll>
           <wrapperName>htmlpublisher-wrapper.html</wrapperName>
