@@ -1,7 +1,14 @@
 <?php
 $directory = $config->getPath();
-$testclass = basename($directory);
-$testpath  = strtr(basename($directory), '_', '/');
+
+$component = $config->getComponent();
+if (preg_match('/^Horde_/', $component->getName())) {
+    $testclass = 'Horde_' . basename($directory) . '_AllTests';
+    $testpath  = 'test/Horde/' . strtr(basename($directory), '_', '/');
+} else {
+    $testclass = basename($directory) . '_AllTests';
+    $testpath  = 'test/' . ucfirst(basename($directory));
+}
 ?>
 <?php echo '<?xml version=\'1.0\' encoding=\'UTF-8\'?>' . "\n"; ?>
 
@@ -9,13 +16,13 @@ $testpath  = strtr(basename($directory), '_', '/');
          backupStaticAttributes="false"
          syntaxCheck="false">
   <testsuites>
-    <testsuite name="Horde_<?php echo $testclass; ?>_AllTests">
-      <directory suffix="AllTests.php">test/Horde/<?php echo $testpath; ?></directory>
+    <testsuite name="<?php echo $testclass; ?>">
+      <directory suffix="AllTests.php"><?php echo $testpath; ?></directory>
     </testsuite>
   </testsuites>
 
   <logging>
-    <log type="coverage-html" target="build/coverage" title="Horde_<?php echo $testclass; ?>"
+    <log type="coverage-html" target="build/coverage" title="<?php echo $testclass; ?>"
          charset="UTF-8" yui="true" highlight="true"
          lowUpperBound="35" highLowerBound="80"/>
     <log type="coverage-clover" target="build/logs/clover.xml"/>
