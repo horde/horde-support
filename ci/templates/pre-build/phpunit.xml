@@ -32,6 +32,9 @@ if (preg_match('/^Horde_/', $component->getName())) {
   <filter>
     <whitelist addUncoveredFilesFromWhitelist="true">
       <directory suffix=".php">lib</directory>
+      <exclude>
+        <file>lib/Application.php</file>
+      </exclude>
     </whitelist>
   </filter>
 </phpunit>
