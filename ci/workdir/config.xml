@@ -1,5 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
+  <disabledAdministrativeMonitors>
+    <string>hudson.diagnosis.TooManyJobsButNoView</string>
+  </disabledAdministrativeMonitors>
   <version>1.384</version>
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
@@ -8,6 +11,8 @@
   <securityRealm class="hudson.security.PAMSecurityRealm">
     <serviceName>sshd</serviceName>
   </securityRealm>
+  <workspaceDir>${ITEM_ROOTDIR}/workspace</workspaceDir>
+  <buildsDir>${ITEM_ROOTDIR}/builds</buildsDir>
   <jdks/>
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
@@ -28,7 +33,4 @@
   <label></label>
   <nodeProperties/>
   <globalNodeProperties/>
-  <disabledAdministrativeMonitors>
-    <string>hudson.diagnosis.TooManyJobsButNoView</string>
-  </disabledAdministrativeMonitors>
 </hudson>
