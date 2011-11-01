@@ -5,3 +5,4 @@
 /nextBuildNumber
 /workspace
 *.csv
+trigger-polling.log
