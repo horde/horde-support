@@ -26,7 +26,8 @@
  <rule ref="PEAR.Classes.ClassDeclaration"/>
  <rule ref="PEAR.Commenting.InlineComment"/>
  <rule ref="PEAR.ControlStructures.ControlSignature"/>
- <rule ref="PEAR.Functions.FunctionCallSignature"/>
+ <!-- Horde does not require this.
+    <rule ref="PEAR.Functions.FunctionCallSignature"/> -->
  <rule ref="PEAR.Functions.FunctionDeclaration"/>
  <rule ref="PEAR.Functions.ValidDefaultValue"/>
  <rule ref="PEAR.NamingConventions.ValidClassName"/>
