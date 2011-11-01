@@ -62,14 +62,6 @@
     </hudson.tasks.Ant>
   </builders>
   <publishers>
-    <hudson.tasks.BuildTrigger>
-      <childProjects>ActiveSync, Alarm, Autoloader, Argv, Auth, Cli_Modular, Compress, Constraint, Controller, Core, Crypt, Date, Date_Parser, Db, Exception, Feed, Group, History, Http, Imap_Client, Injector, Itip, Kolab_Config, Kolab_Format, Kolab_Session, Kolab_Storage, Ldap, Log, LoginTasks, Mail, Mime, Notification, Pear, Pdf, Perms, Prefs, PubSub, Push, Release, Routes, Secret, Serialize, Service_Gravatar, Share, Stream_Filter, Support, Text_Diff, Text_Filter, Text_Flowed, Text_Textile, Token, Translation, Url, Util, Vfs, View, Xml_Element, Xml_Wbxml, Yaml, mnemo</childProjects>
-      <threshold>
-        <name>SUCCESS</name>
-        <ordinal>0</ordinal>
-        <color>BLUE</color>
-      </threshold>
-    </hudson.tasks.BuildTrigger>
     <hudson.tasks.Mailer>
       <recipients>commits@lists.horde.org</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
