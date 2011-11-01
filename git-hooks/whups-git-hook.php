@@ -136,6 +136,8 @@ function post_comment($ticket, $log_message) {
             array((int)$ticket, $log_message));
     } catch (Horde_Http_Exception $e) {
         abort($e->getMessage());
+    } catch (Horde_Rpc_Exception $e) {
+        // Ignore
     }
 
     return true;
