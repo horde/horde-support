@@ -38,7 +38,7 @@ $description = $component->getDescription();
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector">
     <org.jenkinsci.plugins.fstrigger.triggers.FolderContentTrigger>
-      <spec>* * * * *</spec>
+      <spec><?php echo rand(0, 59) . ' '; $j = rand(0,2);for ($i = 0;$i < 8;$i++) {echo $i * 3 + $j; if ($i < 7) {echo ',';}} ?> * * *</spec>
       <path>./workdir/jobs/horde-git/workspace/<?php echo $sourcepath; ?></path>
     </org.jenkinsci.plugins.fstrigger.triggers.FolderContentTrigger>
   </triggers>

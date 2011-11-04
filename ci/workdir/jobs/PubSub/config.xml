@@ -17,7 +17,7 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector">
     <org.jenkinsci.plugins.fstrigger.triggers.FolderContentTrigger>
-      <spec>* * * * *</spec>
+      <spec>53 2,5,8,11,14,17,20,23 * * *</spec>
       <path>./workdir/jobs/horde-git/workspace/framework/PubSub</path>
     </org.jenkinsci.plugins.fstrigger.triggers.FolderContentTrigger>
   </triggers>

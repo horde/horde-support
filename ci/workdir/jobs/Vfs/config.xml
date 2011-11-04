@@ -27,7 +27,7 @@ Reading, writing and listing of files are all supported, and there are both obje
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector">
     <org.jenkinsci.plugins.fstrigger.triggers.FolderContentTrigger>
-      <spec>* * * * *</spec>
+      <spec>20 1,4,7,10,13,16,19,22 * * *</spec>
       <path>./workdir/jobs/horde-git/workspace/framework/Vfs</path>
     </org.jenkinsci.plugins.fstrigger.triggers.FolderContentTrigger>
   </triggers>
