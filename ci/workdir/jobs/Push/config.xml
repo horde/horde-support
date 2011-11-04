@@ -4,7 +4,7 @@
   <description>The package provides a simple definition of a content element that can be pushed to a number of social network services. This will not leverage some of the more complex features the supported services provide but instead focus on a simple status and content update. The content element provides a bridge to quickly broadcast content curated within your own account.&lt;br/&gt;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Push/ws/build/pdepend/overview-pyramid.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;&#xd;&lt;embed height=&quot;300&quot; src=&quot;http://ci.horde.org/job/Push/ws/build/pdepend/dependencies.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;500&quot;&gt;&lt;/embed&gt;</description>
   <logRotator>
     <daysToKeep>-1</daysToKeep>
-    <numToKeep>100</numToKeep>
+    <numToKeep>3</numToKeep>
     <artifactDaysToKeep>-1</artifactDaysToKeep>
     <artifactNumToKeep>-1</artifactNumToKeep>
   </logRotator>
