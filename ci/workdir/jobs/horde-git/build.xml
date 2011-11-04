@@ -40,6 +40,7 @@
      <env key="LC_ALL" value="C"/>
      <arg value="-d include_path=${incdirs}" />
      <arg path="${basedir}/framework/bin/test_framework" />
+     <arg value="--verbose" />
   </exec>
 </target>
 
