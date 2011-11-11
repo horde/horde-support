@@ -1,4 +1,4 @@
-ALL: include,symlink
+ALL: include
 Horde_Memcache: exclude
 Horde_Test: exclude
 channel:pecl.php.net: exclude
