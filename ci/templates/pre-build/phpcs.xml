@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?php echo '<?xml version="1.0"?>'; ?>
 <ruleset name="Horde">
  <description>The Horde coding standard.</description>
 
@@ -28,6 +28,7 @@
  <rule ref="PEAR.ControlStructures.ControlSignature"/>
  <!-- Horde does not require this.
     <rule ref="PEAR.Functions.FunctionCallSignature"/> -->
+ <rule ref="PEAR.Functions.FunctionDeclaration"/>
  <rule ref="PEAR.Functions.ValidDefaultValue"/>
  <rule ref="PEAR.NamingConventions.ValidClassName"/>
  <rule ref="PEAR.WhiteSpace.ObjectOperatorIndent"/>
