@@ -19,9 +19,11 @@ horde-build-website-docs.sh
 horde-ckeditor.php
     Updates CKeditor for packaging with Horde.
 
+horde-compress-jpgs.php
+    Optimizes JPEG images to reduce their size as much as possible.
+
 horde-compress-pngs.php
-    Runs advpng and optipng on PNG images to reduce their size as much as
-    possible.
+    Optimizes PNG images to reduce their size as much as possible.
 
 horde-js-compress.php
     Runs the YUI compressor or other alternatives on all .js files in the
