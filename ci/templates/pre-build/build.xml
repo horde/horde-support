@@ -227,17 +227,22 @@ echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n\n";
      <env key="DB_ADAPTER_PDO_MYSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
      <env key="DB_ADAPTER_PDO_MYSQLI_TEST_CONFIG" value="${basedir}/../conf.php"/>
      <env key="DB_ADAPTER_PDO_PGSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
-     <env key="SHARE_SQL_MYSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
-     <env key="SHARE_SQL_MYSQLI_TEST_CONFIG" value="${basedir}/../conf.php"/>
-     <env key="SHARE_SQL_PDO_MYSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
-     <env key="SHARE_SQL_PDO_MYSQLI_TEST_CONFIG" value="${basedir}/../conf.php"/>
-     <env key="SHARE_SQL_PDO_PGSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
      <env key="GROUP_SQL_MYSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
      <env key="GROUP_SQL_MYSQLI_TEST_CONFIG" value="${basedir}/../conf.php"/>
      <env key="GROUP_SQL_PDO_MYSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
      <env key="GROUP_SQL_PDO_MYSQLI_TEST_CONFIG" value="${basedir}/../conf.php"/>
      <env key="GROUP_SQL_PDO_PGSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
      <env key="GROUP_LDAP_TEST_CONFIG" value="${basedir}/../conf.php"/>
+     <env key="PREFS_SQL_MYSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
+     <env key="PREFS_SQL_MYSQLI_TEST_CONFIG" value="${basedir}/../conf.php"/>
+     <env key="PREFS_SQL_PDO_MYSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
+     <env key="PREFS_SQL_PDO_MYSQLI_TEST_CONFIG" value="${basedir}/../conf.php"/>
+     <env key="PREFS_SQL_PDO_PGSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
+     <env key="SHARE_SQL_MYSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
+     <env key="SHARE_SQL_MYSQLI_TEST_CONFIG" value="${basedir}/../conf.php"/>
+     <env key="SHARE_SQL_PDO_MYSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
+     <env key="SHARE_SQL_PDO_MYSQLI_TEST_CONFIG" value="${basedir}/../conf.php"/>
+     <env key="SHARE_SQL_PDO_PGSQL_TEST_CONFIG" value="${basedir}/../conf.php"/>
      <arg value="-d include_path=${incdirs}" />
      <arg path="${tooldir}/phpunit" />
   </exec>
