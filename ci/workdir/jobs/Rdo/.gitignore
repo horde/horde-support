@@ -1,0 +1,8 @@
+/builds
+/htmlreports
+/lastStable
+/lastSuccessful
+/nextBuildNumber
+/workspace
+*.csv
+trigger-polling.log

@@ -43,6 +43,7 @@ JOBS=ActiveSync \
      Prefs \
      PubSub \
      Push \
+     Rdo \
      Release \
      Routes \
      Secret \
