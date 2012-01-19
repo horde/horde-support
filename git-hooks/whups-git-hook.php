@@ -5,7 +5,7 @@
  * denoted by a flexible regular expression and post the log message
  * and a link to the changeset diff in a comment to those tickets.
  *
- * Usage: whups-git-hook.php PATH_TO_REPO REVISION
+ * Usage: whups-git-hook.php PATH_TO_REPO REVISION REFNAME LINKS
  *
  * @category Horde
  * @package  maintainer_tools
@@ -54,6 +54,7 @@ if (count($_SERVER['argv']) < 4) {
 array_shift($_SERVER['argv']);
 $repo = array_shift($_SERVER['argv']);
 $rev = array_shift($_SERVER['argv']);
+$refname = array_shift($_SERVER['argv']);
 $links = implode("\n", $_SERVER['argv']);
 
 if (!file_exists($repo)) {
@@ -74,7 +75,7 @@ $log_message = shell_exec(implode(' ', array(
     escapeshellcmd($git),
     '--git-dir=' . escapeshellarg($repo),
     'show',
-    '--shortstat',
+    '--stat',
     '--pretty=format:%s%n%b',
     escapeshellarg($rev)
 )));
@@ -88,7 +89,7 @@ if (!empty($log_message)) {
     }
 
     if (count($tickets)) {
-        $log_message = "Changes have been made in Git for this ticket:\n\n$log_message$links";
+        $log_message = "Changes have been made in Git (" . $refname . "):\n\n" . $log_message . $links;
         foreach ($tickets as $ticket) {
             print "Updating Ticket #" . $ticket . "...\n";
             post_comment($ticket, $log_message);
@@ -109,7 +110,7 @@ function abort($msg) {
 }
 
 function usage() {
-    abort("usage: whups-git-hook.php PATH_TO_REPO REVISION LINKS");
+    abort("usage: whups-git-hook.php PATH_TO_REPO REVISION REFNAME LINKS");
 }
 
 function find_tickets($log_message) {

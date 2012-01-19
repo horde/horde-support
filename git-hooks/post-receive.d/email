@@ -167,7 +167,7 @@ generate_email()
         fn_name=atag
         ;;
     esac
-    generate_${change_type}_${fn_name}_email
+    generate_${change_type}_${fn_name}_email $refname
 
     generate_email_footer
 }
@@ -441,7 +441,7 @@ generate_update_branch_email()
             links="$GIT_WEB_URL/$reponame/-/commit/$rev"
             echo $links
 
-            whups_update $rev "$links"
+            whups_update $rev $1 "$links"
 
             echo ""
         done
@@ -634,7 +634,7 @@ send_mail()
 
 whups_update()
 {
-    $GIT_DIR/hooks/whups-git-hook.php $GIT_DIR $1 $2
+    $GIT_DIR/hooks/whups-git-hook.php $GIT_DIR $1 $2 $3
 }
 
 # ---------------------------- main()
