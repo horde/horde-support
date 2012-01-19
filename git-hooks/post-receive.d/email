@@ -441,10 +441,7 @@ generate_update_branch_email()
             links="$GIT_WEB_URL/$reponame/-/commit/$rev"
             echo $links
 
-            # Only link tickets in master
-            if [ "$short_refname" = "master" ]; then
-                whups_update $rev "$links"
-            fi
+            whups_update $rev "$links"
 
             echo ""
         done
