@@ -179,15 +179,15 @@ generate_email_header()
     # --- Email (all stdout will be the email)
     # Generate header
     cat <<-EOF
-    To: $recipients
-    From: $mailfrom
-    Subject: ${emailprefix}$projectdesc $refname_type $short_refname ${change_type}d. $describe
-    X-Git-Refname: $refname
-    X-Git-Reftype: $refname_type
-    X-Git-Oldrev: $oldrev
-    X-Git-Newrev: $newrev
+To: $recipients
+From: $mailfrom
+Subject: ${emailprefix}$projectdesc $refname_type $short_refname ${change_type}d. $describe
+X-Git-Refname: $refname
+X-Git-Reftype: $refname_type
+X-Git-Oldrev: $oldrev
+X-Git-Newrev: $newrev
 
-    The $refname_type "$short_refname" has been ${change_type}d.
+The $refname_type "$short_refname" has been ${change_type}d.
 EOF
 }
 
