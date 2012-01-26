@@ -188,7 +188,7 @@ generate_email_header()
     X-Git-Newrev: $newrev
 
     The $refname_type "$short_refname" has been ${change_type}d.
-    EOF
+EOF
 }
 
 generate_email_footer()
