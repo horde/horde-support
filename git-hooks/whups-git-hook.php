@@ -54,7 +54,7 @@ if (count($_SERVER['argv']) < 4) {
 array_shift($_SERVER['argv']);
 $repo = array_shift($_SERVER['argv']);
 $rev = array_shift($_SERVER['argv']);
-$refname = array_shift($_SERVER['argv']);
+$refname = basename(array_shift($_SERVER['argv']));
 $links = implode("\n", $_SERVER['argv']);
 
 if (!file_exists($repo)) {
