@@ -65,6 +65,14 @@ if (!is_dir($repo)) {
     abort("Repository $repo is not a directory.");
 }
 
+/* Only track changes to the following branches. */
+$track = array(
+    'develop',
+    'master'
+);
+if (!in_array($refname, $track)) {
+    abort("Not updating tickets ($refname branch is not being tracked).");
+}
 
 /**
  ** Read the log message for this revision
