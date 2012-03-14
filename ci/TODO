@@ -1,0 +1,11 @@
+=======================================
+ ci.horde.org Development TODO List
+=======================================
+
+ - Add more application jobs
+
+ - Think about PHP 5.3/5.4 builds
+
+ - Think about moving jobs to travis-ci.org
+
+ - Client builds?
