@@ -6,3 +6,4 @@
 /workspace
 *.csv
 trigger-polling.log
+trigger-polling-folder.log

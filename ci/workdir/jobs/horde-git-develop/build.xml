@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="horde-git" default="build" basedir="workspace">
+ <property name="tooldir" location="${basedir}/../../php-ci-tools/workspace/pear/pear"/>
+ <property name="incdirs" location="${basedir}/lib:${basedir}/lib/pear/php:${tooldir}/php"/>
+ <property name="incdirs-install" location="${tooldir}/php"/>
+
+ <target name="build"
+	 description="Orchestrates the execution of the various tools."
+	 depends="prepare,test-framework"
+	 />
+
+ <target name="prepare"
+         description="Prepare for build.">
+   <delete dir="${basedir}/lib"/>
+   <mkdir dir="${basedir}/lib/h"/>
+   <exec executable="php">
+     <arg value="-d include_path=${incdirs}" />
+     <arg path="${basedir}/framework/bin/install_framework" />
+     <arg value="--horde" />
+     <arg path="${basedir}/lib/h" />
+   </exec>
+   <exec executable="php">
+     <arg value="-d include_path=${incdirs-install}"/>
+     <arg path="${tooldir}/horde-components"/>
+     <arg path="${basedir}/../../horde-git/workspace/framework/Core"/>
+     <arg value="install"/>
+     <arg value="--destination=${basedir}/lib"/>
+     <arg value="--channelxmlpath=${basedir}/../../horde-pear-dependencies/workspace/channels"/>
+     <arg value="--sourcepath=${basedir}/../../horde-pear-dependencies/workspace/packages"/>
+     <arg value="--instructions=${basedir}/../dependency.instructions"/>
+     <arg value="-N"/>
+   </exec>
+ </target>
+
+ <target name="test-framework"
+        description="Run the framework tests.">
+   <exec executable="php"
+	 failonerror="true">
+     <env key="LC_ALL" value="C"/>
+     <arg value="-d include_path=${incdirs}" />
+     <arg path="${basedir}/framework/bin/test_framework" />
+  </exec>
+</target>
+
+</project>

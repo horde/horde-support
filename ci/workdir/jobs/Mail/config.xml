@@ -23,8 +23,11 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector">
     <org.jenkinsci.plugins.fstrigger.triggers.FolderContentTrigger>
-      <spec>50 1,4,7,10,13,16,19,22 * * *</spec>
+      <spec>48 0,3,6,9,12,15,18,21 * * *</spec>
       <path>./workdir/jobs/horde-git/workspace/framework/Mail</path>
+      <excludeCheckLastModificationDate>false</excludeCheckLastModificationDate>
+      <excludeCheckContent>false</excludeCheckContent>
+      <excludeCheckFewerOrMoreFiles>false</excludeCheckFewerOrMoreFiles>
     </org.jenkinsci.plugins.fstrigger.triggers.FolderContentTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
@@ -67,6 +70,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
         <failedNewLow></failedNewLow>
       </thresholds>
       <shouldDetectModules>false</shouldDetectModules>
+      <dontComputeNew>false</dontComputeNew>
       <pattern>build/logs/pmd.xml</pattern>
     </hudson.plugins.pmd.PmdPublisher>
     <hudson.plugins.checkstyle.CheckStylePublisher>
@@ -96,6 +100,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
         <failedNewLow></failedNewLow>
       </thresholds>
       <shouldDetectModules>false</shouldDetectModules>
+      <dontComputeNew>false</dontComputeNew>
       <pattern>build/logs/checkstyle.xml</pattern>
     </hudson.plugins.checkstyle.CheckStylePublisher>
     <hudson.plugins.dry.DryPublisher>
@@ -125,6 +130,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
         <failedNewLow></failedNewLow>
       </thresholds>
       <shouldDetectModules>false</shouldDetectModules>
+      <dontComputeNew>false</dontComputeNew>
       <pattern>build/logs/pmd-cpd.xml</pattern>
       <highThreshold>50</highThreshold>
       <normalThreshold>25</normalThreshold>
@@ -174,8 +180,8 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
             </hudson.plugins.violations.TypeConfig>
           </entry>
           <entry>
-	    <string>cpplint</string>
-	    <hudson.plugins.violations.TypeConfig>
+            <string>cpplint</string>
+            <hudson.plugins.violations.TypeConfig>
               <type>cpplint</type>
               <min>10</min>
               <max>999</max>
@@ -261,7 +267,8 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <pattern></pattern>
             </hudson.plugins.violations.TypeConfig>
           </entry>
-          <entry><string>pmd</string>
+          <entry>
+            <string>pmd</string>
             <hudson.plugins.violations.TypeConfig>
               <type>pmd</type>
               <min>10</min>
@@ -349,12 +356,12 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <fileType>csv</fileType>
               <strExclusionSet>
                 <string>Functions</string>
-                <string>Files</string>
-                <string>Namespaces</string>
                 <string>Classes</string>
+                <string>Namespaces</string>
+                <string>Files</string>
                 <string>Directories</string>
-                <string>Interfaces</string>
                 <string>Methods</string>
+                <string>Interfaces</string>
                 <string>Constants</string>
                 <string>Anonymous Functions</string>
               </strExclusionSet>
@@ -380,8 +387,8 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <label></label>
               <fileType>csv</fileType>
               <strExclusionSet>
-                <string>Average Class Length (NCLOC)</string>
                 <string>Average Method Length (NCLOC)</string>
+                <string>Average Class Length (NCLOC)</string>
               </strExclusionSet>
               <inclusionFlag>INCLUDE_BY_STRING</inclusionFlag>
               <exclusionValues>Average Class Length (NCLOC),Average Method Length (NCLOC)</exclusionValues>
@@ -457,8 +464,8 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <fileType>csv</fileType>
               <strExclusionSet>
                 <string>Methods</string>
-                <string>Non-Static Methods</string>
                 <string>Static Methods</string>
+                <string>Non-Static Methods</string>
                 <string>Public Methods</string>
                 <string>Non-Public Methods</string>
               </strExclusionSet>
