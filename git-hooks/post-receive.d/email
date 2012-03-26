@@ -382,26 +382,26 @@ generate_update_branch_email()
             # Check if any of these revisions are changes that were already
             # commited on master. This keeps the commit email clean for
             # commits from branches that have been rebased to master.
-            if [ "$short_refname" != "master" ]; then
-                skip=0
-                for cherry in $(git cherry master $short_refname)
-                do
-                    if [ $skip == 0 ]; then
-                        expr=`expr "$cherry " : -`
-                        if [ $expr == 1 ]; then
-                            skip=1
-                        fi
-                    else
-                        # Last match was a '-', see if we need to skip this
-                        if [ $rev == $cherry ]; then
-                            ## skip
-                            continue 2
-                        else
-                            skip=0
-                        fi
-                    fi
-                done
-            fi
+            # if [ "$short_refname" != "master" ]; then
+            #     skip=0
+            #     for cherry in $(git cherry master $short_refname)
+            #     do
+            #         if [ $skip == 0 ]; then
+            #             expr=`expr "$cherry " : -`
+            #             if [ $expr == 1 ]; then
+            #                 skip=1
+            #             fi
+            #         else
+            #             # Last match was a '-', see if we need to skip this
+            #             if [ $rev == $cherry ]; then
+            #                 ## skip
+            #                 continue 2
+            #             else
+            #                 skip=0
+            #             fi
+            #         fi
+            #     done
+            # fi
 
             # Output the summary commit line
             git log --abbrev-commit --no-color --pretty=oneline -1 $rev
@@ -413,26 +413,26 @@ generate_update_branch_email()
             # Check if any of these revisions are changes that were already
             # commited on master. This keeps the commit email clean for
             # commits from branches that have been rebased to master.
-            if [ "$short_refname" != "master" ]; then
-                skip=0
-                for cherry in $(git cherry master $short_refname)
-                do
-                    if [ $skip == 0 ]; then
-                        expr=`expr "$cherry " : -`
-                        if [ $expr == 1 ]; then
-                            skip=1
-                        fi
-                    else
-                        # Last match was a '-', see if we need to skip this
-                        if [ $rev == $cherry ]; then
-                            ## skip
-                            continue 2
-                        else
-                            skip=0
-                        fi
-                    fi
-                done
-            fi
+            # if [ "$short_refname" != "master" ]; then
+            #     skip=0
+            #     for cherry in $(git cherry master $short_refname)
+            #     do
+            #         if [ $skip == 0 ]; then
+            #             expr=`expr "$cherry " : -`
+            #             if [ $expr == 1 ]; then
+            #                 skip=1
+            #             fi
+            #         else
+            #             # Last match was a '-', see if we need to skip this
+            #             if [ $rev == $cherry ]; then
+            #                 ## skip
+            #                 continue 2
+            #             else
+            #                 skip=0
+            #             fi
+            #         fi
+            #     done
+            # fi
             echo $LOGBEGIN
             echo ""
             git show --stat=,999 --summary --no-color $rev
