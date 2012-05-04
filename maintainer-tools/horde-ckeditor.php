@@ -5,9 +5,10 @@
  * Usage: horde-ckeditor.php -a [advpng binary]
  *                           -d [destination (horde/Editor base)]
  *                           -o [optipng binary]
+ *                           -p [pngout binary]
  *                           -s [source]
  *
- * Copyright 1999-2010 The Horde Project (http://www.horde.org/)
+ * Copyright 1999-2012 The Horde Project (http://www.horde.org/)
  *
  * See the enclosed file COPYING for license information (LGPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
@@ -263,13 +264,13 @@ require 'Console/Getopt.php';
 $c = new Console_Getopt();
 $argv = $c->readPHPArgv();
 array_shift($argv);
-$options = $c->getopt2($argv, 'a:d:o:s:');
+$options = $c->getopt2($argv, 'a:d:o:p:s:');
 if (PEAR::isError($options)) {
     print "Invalid arguments.\n";
     exit;
 }
 
-$advpng = $dest = $optipng = $source = null;
+$advpng = $dest = $optipng = $pngout = $source = null;
 
 foreach ($options[0] as $val) {
     switch ($val[0]) {
@@ -286,6 +287,10 @@ foreach ($options[0] as $val) {
         $optipng = $val[1];
         break;
 
+    case 'p':
+        $pngout = $val[1];
+        break;
+
     case 's':
         $source = rtrim($val[1], '/ ');
         break;
@@ -295,6 +300,7 @@ foreach ($options[0] as $val) {
 if (is_null($advpng) ||
     is_null($dest) ||
     is_null($optipng) ||
+    is_null($pngout) ||
     is_null($source)) {
     exit("Invalid arguments.\n");
 }
@@ -345,7 +351,7 @@ copy(dirname(__FILE__) . '/ckeditor/config.js', $dest_js . '/config.js');
 print "DONE.\n";
 
 print "\nCompressing PNGs...\n";
-system('php ' . dirname(__FILE__) . '/horde-compress-pngs.php -a ' . escapeshellarg($advpng) . ' -d ' . escapeshellarg($dest) . ' -o ' . escapeshellarg($optipng));
+system('php ' . dirname(__FILE__) . '/horde-compress-pngs.php -a ' . escapeshellarg($advpng) . ' -d ' . escapeshellarg($dest) . ' -o ' . escapeshellarg($optipng) . ' -p ' . escapeshellarg($pngout));
 print "DONE.\n";
 
 print "\nUpdating package.xml...\n";
