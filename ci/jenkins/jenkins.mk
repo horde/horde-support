@@ -1,4 +1,4 @@
-WAR_URL=http://mirrors.jenkins-ci.org/war/1.455/jenkins.war
+WAR_URL=http://mirrors.jenkins-ci.org/war/1.475/jenkins.war
 PLUGIN_URL=http://mirrors.jenkins-ci.org/plugins/
 
 PLUGINS=analysis-collector.hpi.1.18 \
