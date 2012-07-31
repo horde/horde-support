@@ -1,3 +1,0 @@
-[submodule "ci/jenkins"]
-	path = ci/jenkins
-	url = git@github.com:wrobel/jenkins-install.git
