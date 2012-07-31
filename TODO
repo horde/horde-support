@@ -1,0 +1,6 @@
+=======================================
+ jenkins-install Development TODO List
+=======================================
+
+ - Use a PHING install script rather than the Makefile as this is
+   oriented towards PHP users (maybe keep both if not too much work)

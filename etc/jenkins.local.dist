@@ -1,0 +1,17 @@
+# Copy this file to "jenkins.local" to override values from the default
+# configuration in "jenkins"
+
+# Override the default jenkins user here if required.
+#JENKINS_USER=ubuntu
+
+# Disable checking for an open port
+#CHECK_PORT=0
+
+# IP address for the HTTP connector (leave commented for the default)
+#HTTP_LISTEN_ADDRESS=127.0.0.1
+
+# Port for the HTTP connector (leave commented for the default)
+#HTTP_PORT=9080
+
+# Additional prefix for the PATH
+#ADDITIONAL_PATH=/kolab/bin:
