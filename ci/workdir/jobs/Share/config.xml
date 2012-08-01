@@ -16,15 +16,7 @@ owns or has access to.&lt;br/&gt;&lt;embed height=&quot;300&quot; src=&quot;http
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers class="vector">
-    <org.jenkinsci.plugins.fstrigger.triggers.FolderContentTrigger>
-      <spec>56 1,4,7,10,13,16,19,22 * * *</spec>
-      <path>./workdir/jobs/horde-git/workspace/framework/Share</path>
-      <excludeCheckLastModificationDate>false</excludeCheckLastModificationDate>
-      <excludeCheckContent>false</excludeCheckContent>
-      <excludeCheckFewerOrMoreFiles>false</excludeCheckFewerOrMoreFiles>
-    </org.jenkinsci.plugins.fstrigger.triggers.FolderContentTrigger>
-  </triggers>
+  <triggers class="vector"/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
@@ -66,6 +58,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
       </thresholds>
       <shouldDetectModules>false</shouldDetectModules>
       <dontComputeNew>false</dontComputeNew>
+      <doNotResolveRelativePaths>false</doNotResolveRelativePaths>
       <pattern>build/logs/pmd.xml</pattern>
     </hudson.plugins.pmd.PmdPublisher>
     <hudson.plugins.checkstyle.CheckStylePublisher>
@@ -96,6 +89,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
       </thresholds>
       <shouldDetectModules>false</shouldDetectModules>
       <dontComputeNew>false</dontComputeNew>
+      <doNotResolveRelativePaths>false</doNotResolveRelativePaths>
       <pattern>build/logs/checkstyle.xml</pattern>
     </hudson.plugins.checkstyle.CheckStylePublisher>
     <hudson.plugins.dry.DryPublisher>
@@ -126,6 +120,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
       </thresholds>
       <shouldDetectModules>false</shouldDetectModules>
       <dontComputeNew>false</dontComputeNew>
+      <doNotResolveRelativePaths>false</doNotResolveRelativePaths>
       <pattern>build/logs/pmd-cpd.xml</pattern>
       <highThreshold>50</highThreshold>
       <normalThreshold>25</normalThreshold>
@@ -351,12 +346,12 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <fileType>csv</fileType>
               <strExclusionSet>
                 <string>Functions</string>
-                <string>Classes</string>
-                <string>Namespaces</string>
                 <string>Files</string>
+                <string>Namespaces</string>
+                <string>Classes</string>
                 <string>Directories</string>
-                <string>Methods</string>
                 <string>Interfaces</string>
+                <string>Methods</string>
                 <string>Constants</string>
                 <string>Anonymous Functions</string>
               </strExclusionSet>
@@ -382,8 +377,8 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <label></label>
               <fileType>csv</fileType>
               <strExclusionSet>
-                <string>Average Method Length (NCLOC)</string>
                 <string>Average Class Length (NCLOC)</string>
+                <string>Average Method Length (NCLOC)</string>
               </strExclusionSet>
               <inclusionFlag>INCLUDE_BY_STRING</inclusionFlag>
               <exclusionValues>Average Class Length (NCLOC),Average Method Length (NCLOC)</exclusionValues>
@@ -459,8 +454,8 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
               <fileType>csv</fileType>
               <strExclusionSet>
                 <string>Methods</string>
-                <string>Static Methods</string>
                 <string>Non-Static Methods</string>
+                <string>Static Methods</string>
                 <string>Public Methods</string>
                 <string>Non-Public Methods</string>
               </strExclusionSet>
@@ -567,6 +562,7 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-ci-tools/workspace/pear/pear/
           <stopProcessingIfError>true</stopProcessingIfError>
         </PHPUnitJunitHudsonTestType>
       </types>
+      <thresholdMode>0</thresholdMode>
     </xunit>
     <hudson.tasks.Mailer>
       <recipients>commits@lists.horde.org</recipients>
