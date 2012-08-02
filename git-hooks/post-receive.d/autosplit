@@ -8,23 +8,36 @@
 # github. "git subtree" is the command that the script uses to execute
 # the module split.
 #
-# The hook is expected to be installed into a "bare" git repository
-# (configured by running "git config --bool core.bare true"). This is
-# necessary so that this repository can be used as a mirror with "git
-# push --mirror". "git subtree" however only works on a checkout. So
-# this hook expects an external git checkout in a directory "checkout"
-# right beside the directory containing only the ".git" dir.
+# The approach is slightly complicated as pushing to the remote
+# repository expects the remote to be a bare repository. At the same
+# time "git subtree" requires a local checkout to work correctly. In
+# addition the "git subtree split --rejoin" operations adds marker
+# merges that may not end up in the main branch - otherwise we won't
+# be able to push to it anymore.
 #
-# Examle:
-#.
-#|-- horde-split
-#    |-- git
-#    |   `-- .git
-#    |-- checkout
-#        |-- ansel
-#        |-- horde
-#        |-- imp
-#        ...
+# As a result the script:
+#
+# 1) Marks the repo as non-bare so that subtree will be able to work.
+#
+# 2) Switches to the branch that has been pushed to. This allows subtree
+#    to work on the splitted subtree in the checkout.
+#
+# 3) Resets to HEAD for this branch so that the subtree to be splitted
+#    is ensured to be present.
+#
+# 4) Potentially creates a new branch that will receive the subtree
+#    marker merges - only if that branch does not exist yet.
+#
+# 5) Switches to this subtree specific branch and executes the
+#    split. The split will "--rejoin" the splitted branch onto the
+#    current branch. The splitted code will end up in a module and
+#    branch specific branch.
+#
+# 6) Pushes the splitted branch to the module specific repository on
+#    github.
+#
+# 7) Reverts back to a bare repository so that it can be used for
+#    pushing again.
 #
 autosplit()
 {
@@ -107,13 +120,17 @@ autosplit()
 		    module=$subtree
 		    ;;
 	    esac
-            git_tree=$(git rev-parse --git-dir 2>/dev/null)
-            work_tree=$git_tree/../../checkout
-            GIT_WORK_TREE=$work_tree git checkout $short_refname
-            cd $work_tree
-            GIT_WORK_TREE=$work_tree  GIT_DIR=$git_tree/.git git subtree split --prefix=$subtree --annotate="(horde) " --branch subtrees/$module/master --rejoin
-            cd $git_tree
-            git push git://github.com:horde/$module.git subtrees/$module/$short_refname:$short_refname
+	    git config --bool core.bare false
+            git checkout $short_refname
+	    git reset --hard HEAD
+	    if [ -z "`git branch | grep subtrees/$short_refname`" ]; then
+		git branch subtrees/$short_refname
+	    fi
+            git checkout subtrees/$short_refname
+	    git merge $short_refname
+            git subtree split f6f896c195d49b.. --prefix=$subtree --annotate="(horde) " --branch subtrees/$module/$short_refname --rejoin
+            git push git@github.com:wrobel/$module.git subtrees/$module/$short_refname:$short_refname
+	    git config --bool core.bare true
 	done
 }
 
