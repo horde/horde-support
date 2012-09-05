@@ -11,7 +11,8 @@
  * @package maintainer_tools
  */
 
-/* Files containing MIME extensions (Apache format). */
+/* Files containing MIME extensions (Apache format).
+ * http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types */
 $files = array('mime.types', 'mime.types.horde');
 
 /* Files contating MIME extensions (freedesktop.org format).
