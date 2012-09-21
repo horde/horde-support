@@ -65,7 +65,8 @@ foreach ($od_files as $val) {
         if ($pos !== false) {
             $val2 = substr($fields[1], $pos + 2);
             if ((strpos($val2, '*') !== false) ||
-                (strpos($val2, '[') !== false)) {
+                (strpos($val2, '[') !== false) ||
+                isset($exts[$val2])) {
                 continue;
             }
             $maxperiod = max(substr_count($val2, '.'), $maxperiod);
