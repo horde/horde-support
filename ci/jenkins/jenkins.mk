@@ -45,7 +45,7 @@ jenkins-install: jenkins-war jenkins-plugins
 jenkins-war: $(INSTALLDIR)/war/jenkins.war
 
 $(INSTALLDIR)/war/jenkins.war: $(INSTALLDIR)/war/.keep
-	cd $(INSTALLDIR)/war && wget $(WAR_URL)
+	cd $(INSTALLDIR)/war && wget -T 2 $(WAR_URL)
 
 $(INSTALLDIR)/war/.keep:
 	mkdir -p $(INSTALLDIR)/war
@@ -62,7 +62,7 @@ PHONY: $(PLUGINS)
 $(PLUGINS): $(WORKDIR)/workdir/plugins/.keep
 	NAME=$(shell echo $(@) | sed -e 's/\.hpi\..*//'); \
 	  VERSION=$(shell echo $(@) | sed -e 's/.*\.hpi\.//'); \
-	  cd $(WORKDIR)/workdir/plugins && wget $(PLUGIN_URL)/$$NAME/$$VERSION/$$NAME.hpi
+	  cd $(WORKDIR)/workdir/plugins && wget -T 2 $(PLUGIN_URL)/$$NAME/$$VERSION/$$NAME.hpi
 
 # Should be:
 #jenkins-install-latest: jenkins-war-latest jenkins-plugins-latest
@@ -72,14 +72,14 @@ jenkins-install-latest: jenkins-war-latest jenkins-plugins
 
 PHONY:jenkins-war-latest
 jenkins-war-latest: $(INSTALLDIR)/war/.keep
-	cd $(INSTALLDIR)/war && wget $(WAR_LATEST_URL)
+	cd $(INSTALLDIR)/war && wget -T 2 $(WAR_LATEST_URL)
 
 PHONY: jenkins-plugins-latest
 jenkins-plugins-latest: $(PLUGINS_LATEST)
 
 PHONY:$(PLUGINS_LATEST)
 $(PLUGINS_LATEST): $(WORKDIR)/workdir/plugins/.keep
-	cd $(WORKDIR)/workdir/plugins && wget $(PLUGIN_LATEST_URL)/$(@)
+	cd $(WORKDIR)/workdir/plugins && wget -T 2 $(PLUGIN_LATEST_URL)/$(@)
 
 .PHONY:start
 start:
