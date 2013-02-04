@@ -110,6 +110,7 @@ $files = array(
     'plugins/a11yhelp/lang/he.js',
     'plugins/a11yhelp/lang/it.js',
     'plugins/a11yhelp/lang/ku.js',
+    'plugins/a11yhelp/lang/lv.js',
     'plugins/a11yhelp/lang/mk.js',
     'plugins/a11yhelp/lang/nb.js',
     'plugins/a11yhelp/lang/nl.js',
@@ -146,6 +147,7 @@ $files = array(
     'plugins/devtools/lang/hr.js',
     'plugins/devtools/lang/it.js',
     'plugins/devtools/lang/ku.js',
+    'plugins/devtools/lang/lv.js',
     'plugins/devtools/lang/nb.js',
     'plugins/devtools/lang/nl.js',
     'plugins/devtools/lang/no.js',
@@ -203,6 +205,7 @@ $files = array(
     'plugins/placeholder/lang/hr.js',
     'plugins/placeholder/lang/it.js',
     'plugins/placeholder/lang/ku.js',
+    'plugins/placeholder/lang/lv.js',
     'plugins/placeholder/lang/nb.js',
     'plugins/placeholder/lang/nl.js',
     'plugins/placeholder/lang/no.js',
@@ -267,10 +270,12 @@ $files = array(
     'plugins/specialchar/lang/hr.js',
     'plugins/specialchar/lang/it.js',
     'plugins/specialchar/lang/ku.js',
+    'plugins/specialchar/lang/lv.js',
     'plugins/specialchar/lang/nb.js',
     'plugins/specialchar/lang/nl.js',
     'plugins/specialchar/lang/no.js',
     'plugins/specialchar/lang/pt-br.js',
+    'plugins/specialchar/lang/sk.js',
     'plugins/specialchar/lang/tr.js',
     'plugins/specialchar/lang/ug.js',
     'plugins/specialchar/lang/zh-cn.js',
@@ -302,6 +307,7 @@ $files = array(
     'plugins/uicolor/lang/hr.js',
     'plugins/uicolor/lang/it.js',
     'plugins/uicolor/lang/ku.js',
+    'plugins/uicolor/lang/lv.js',
     'plugins/uicolor/lang/mk.js',
     'plugins/uicolor/lang/nb.js',
     'plugins/uicolor/lang/nl.js',
@@ -474,6 +480,7 @@ foreach ($custom as $file) {
     $installed[] = $file;
 }
 
+natsort($not_copy);
 print "\nNot copied:\n" .
       "===========\n" .
       implode("\n", $not_copy) .
