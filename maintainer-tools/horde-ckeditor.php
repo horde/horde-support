@@ -419,7 +419,7 @@ foreach ($options[0] as $val) {
 
     case 'd':
         $dest = rtrim($val[1], '/ ');
-        $dest_js = $dest . '/js';
+        $dest_js = $dest . '/js/ckeditor';
         break;
 
     case 'o':
