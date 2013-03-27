@@ -90,6 +90,9 @@ foreach ($exts as $key => $val) {
 }
 
 /* Generate the PHP output file. */
+$generated = strftime('%D %T') . " by " . $_SERVER['USER'] . " on " . $_SERVER['HOST'];
+$map = implode(",\n    ", $output);
+
 print <<<HEADER
 <?php
 /**
@@ -104,12 +107,12 @@ print <<<HEADER
  * Any unknown file extensions will automatically be mapped to
  * 'x-extension/<ext>' where <ext> is the unknown file extension.
  *
+ * Generated: $generated
+ *
  * @category Horde
  * @package  Horde_Mime
- *
+ */
+\$mime_extension_map = array(
+    $map
+);
 HEADER;
-
-/* Add the generated information. */
-print "\n * Generated: " . strftime('%D %T') . " by " . $_SERVER['USER'] . " on " . $_SERVER['HOST'] . "\n";
-print " */\n";
-print "\$mime_extension_map = array(\n    " . implode(",\n    ", $output) . "\n);";
