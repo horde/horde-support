@@ -2,13 +2,17 @@
 /**
  * Create MIME mapping file from data sources.
  *
- * Copyright 2001-2009 The Horde Project (http://www.horde.org/)
+ * Copyright 2001-2013 The Horde Project (http://www.horde.org/)
  *
  * See the enclosed file COPYING for license information (GPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/gpl.html.
  *
- * @author  Anil Madhavapeddy <avsm@horde.org>
- * @package maintainer_tools
+ * @author    Anil Madhavapeddy <avsm@horde.org>
+ * @author    Michael Slusarz <slusarz@horde.org>
+ * @category  Horde
+ * @copyright 2001-2013 Horde LLC
+ * @license   http://www.fsf.org/copyleft/gpl.html GPL
+ * @package   maintainer_tools
  */
 
 /* Files containing MIME extensions (Apache format).
