@@ -8,16 +8,18 @@
  *                                -d [directory]
  *                                -o [optipng binary]
  *                                -p [pngout binary]
+ *                                -z [zopfli binary]
  *
- * Copyright 2011 The Horde Project (http://www.horde.org/)
+ * Copyright 2011-2013 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file COPYING for license information (LGPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  *
- * @author   Michael Slusarz <slusarz@horde.org>
- * @category Horde
- * @license  http://www.fsf.org/copyleft/lgpl.html LGPL
- * @package  maintainer_tools
+ * @author    Michael Slusarz <slusarz@horde.org>
+ * @category  Horde
+ * @copyright 2011-2013 Horde LLC
+ * @license   http://www.fsf.org/copyleft/lgpl.html LGPL
+ * @package   maintainer_tools
  */
 
 require 'Console/Getopt.php';
@@ -25,7 +27,7 @@ require 'Console/Getopt.php';
 $c = new Console_Getopt();
 $argv = $c->readPHPArgv();
 array_shift($argv);
-$options = $c->getopt2($argv, 'a:d:o:p:');
+$options = $c->getopt2($argv, 'a:d:o:p:z:');
 if (PEAR::isError($options)) {
     print "Invalid arguments.\n";
     exit;
@@ -50,10 +52,14 @@ foreach ($options[0] as $val) {
     case 'p':
         $pngout_binary = $val[1];
         break;
+
+    case 'z':
+        $zopfli_binary = $val[1];
+        break;
     }
 }
 
-if (empty($advpng_binary) || empty($optipng_binary) || empty($pngout_binary)) {
+if (empty($advpng_binary) || empty($optipng_binary) || empty($pngout_binary) || empty($zopfli_binary)) {
     exit("Invalid arguments.\n");
 }
 
@@ -62,13 +68,17 @@ while ($it->valid()) {
     if ($it->isFile() &&
         (strcasecmp('.png', substr($it->key(), -4)) === 0)) {
         $start_size = $it->getSize();
+        copy($it->key(), $it->key() . '.bak');
 
         system($advpng_binary . ' -z4 -q ' . $it->key());
-        system($optipng_binary . ' -zc1-9 -zm1-9 -zs0-3 -f0-5 -quiet ' . $it->key());
         system($pngout_binary . ' ' . $it->key() . ' -y -q');
 
-        system($optipng_binary . ' -zc1-9 -zm1-9 -zs0-3 -f0-5 -quiet ' . $it->key());
+        system($zopfli_binary . ' --png -i1000 ' . $it->key());
+        unlink($it->key());
+        rename($it->key() . '.png', $it->key());
+
         system($advpng_binary . ' -z4 -q ' . $it->key());
+        system($optipng_binary . ' -zc1-9 -zm1-9 -zs0-3 -f0-5 -quiet ' . $it->key());
         system($pngout_binary . ' ' . $it->key() . ' -y -q');
 
         clearstatcache();
@@ -77,6 +87,10 @@ while ($it->valid()) {
         if ($start_size > $end_size) {
             print $it->key() . ":\n" .
                   '    ' . $start_size . ' => ' . $end_size . ' (' . round((($start_size - $end_size) / $start_size) * 100, 1) . "%)\n";
+            unlink($it->key() . '.bak');
+        } else {
+            unlink($it->key());
+            rename($it->key() . '.bak', $it->key());
         }
     }
     $it->next();
