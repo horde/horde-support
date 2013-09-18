@@ -438,7 +438,10 @@ generate_update_branch_email()
             git show --stat=,999 --summary --no-color $rev
             echo ""
 
-            links="$GIT_WEB_URL/$reponame/-/commit/$rev"
+            ghublink="$GIT_GITHUB_URL/$reponame/commit/$rev"
+            echo $ghublink
+
+            links="$GIT_CHORA_URL/$reponame/-/commit/$rev"
             echo $links
 
             whups_update $rev $1 "$links"
@@ -653,7 +656,10 @@ if [ -z "$GIT_DIR" ]; then
 fi
 
 # Location of Horde web server (Chora) - no trailing slash
-GIT_WEB_URL=$(git config hooks.weburl || echo 'http://git.horde.org')
+GIT_CHORA_URL=$(git config hooks.weburl || echo 'http://git.horde.org')
+
+# Location of Github - no trailing slash
+GIT_GITHUB_URL=$(git config hooks.githuburl || echo 'http://github.com/horde')
 
 projectdesc=$(sed -ne '1p' "$GIT_DIR/description")
 # Check if the description is unchanged from it's default, and shorten it to
