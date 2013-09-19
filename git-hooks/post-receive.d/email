@@ -368,6 +368,7 @@ generate_update_branch_email()
 
     if [ -z "$rewind_only" ]; then
         reponame=$(git config hooks.reponame)
+        ghubreponame=$(git config hooks.github-reponame || git config hooks.reponame)
 
         echo "The following is a summary of the commits."
         echo ""
@@ -438,7 +439,7 @@ generate_update_branch_email()
             git show --stat=,999 --summary --no-color $rev
             echo ""
 
-            ghublink="$GIT_GITHUB_URL/$reponame/commit/$rev"
+            ghublink="$GIT_GITHUB_URL/$ghubreponame/commit/$rev"
             echo $ghublink
 
             links="$GIT_CHORA_URL/$reponame/-/commit/$rev"
