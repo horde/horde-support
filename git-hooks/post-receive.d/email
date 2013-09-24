@@ -409,7 +409,6 @@ generate_update_branch_email()
         done
         echo ""
 
-        echo
         ghubcompare="$GIT_GITHUB_URL/$ghubreponame/compare/$oldrev...$newrev"
         echo "Summary: $ghubcompare"
         echo ""
