@@ -409,6 +409,11 @@ generate_update_branch_email()
         done
         echo ""
 
+        echo
+        ghubcompare="$GIT_GITHUB_URL/$ghubreponame/compare/$oldrev...$newrev"
+        echo "Summary: $ghubcompare"
+        echo ""
+
         for rev in $(git rev-list --reverse $oldrev..$newrev)
         do
             # Check if any of these revisions are changes that were already
