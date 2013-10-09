@@ -8,7 +8,10 @@
  *                                -d [directory]
  *                                -o [optipng binary]
  *                                -p [pngout binary]
- *                                -z [zopfli binary]
+ *                                -z [zopflipng binary -- OPTIONAL]
+ *
+ * ZopfliPNG = https://code.google.com/p/zopfli/
+ *
  *
  * Copyright 2011-2013 Horde LLC (http://www.horde.org/)
  *
@@ -59,7 +62,7 @@ foreach ($options[0] as $val) {
     }
 }
 
-if (empty($advpng_binary) || empty($optipng_binary) || empty($pngout_binary) || empty($zopfli_binary)) {
+if (empty($advpng_binary) || empty($optipng_binary) || empty($pngout_binary)) {
     exit("Invalid arguments.\n");
 }
 
@@ -67,15 +70,19 @@ $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, R
 while ($it->valid()) {
     if ($it->isFile() &&
         (strcasecmp('.png', substr($it->key(), -4)) === 0)) {
+        print "FILE: {$it->key()}\n";
+
         $start_size = $it->getSize();
         copy($it->key(), $it->key() . '.bak');
 
         system($advpng_binary . ' -z4 -q ' . $it->key());
         system($pngout_binary . ' ' . $it->key() . ' -y -q');
 
-        system($zopfli_binary . ' --png -i1000 ' . $it->key());
-        unlink($it->key());
-        rename($it->key() . '.png', $it->key());
+        if (!empty($zopfli_binary)) {
+            system($zopfli_binary . ' -m ' . $it->key() . ' ' . $it->key() . '.out');
+            unlink($it->key());
+            rename($it->key() . '.out', $it->key());
+        }
 
         system($advpng_binary . ' -z4 -q ' . $it->key());
         system($optipng_binary . ' -zc1-9 -zm1-9 -zs0-3 -f0-5 -quiet ' . $it->key());
