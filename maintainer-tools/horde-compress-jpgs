@@ -6,10 +6,10 @@
  *
  * Jpegtran binary from the standard libjpeg library (http://ijg.org).
  *
- * Usage: horde-compress-jpgs.php -d [directory]
- *                                -j [jpegtran binary]
+ * Usage: horde-compress-jpgs -d [directory]
+ *                            -j [jpegtran binary]
  *
- * Copyright 2011 The Horde Project (http://www.horde.org/)
+ * Copyright 2011-2013 The Horde Project (http://www.horde.org/)
  *
  * See the enclosed file COPYING for license information (LGPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.

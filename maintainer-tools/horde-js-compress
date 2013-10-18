@@ -3,9 +3,9 @@
 /**
  * Compress JavaScript file(s).
  *
- * Usage: horde-js-compress.php [--file=filename] [--noyui] [--noshrinksafe]
- *                              [--nojsmin] [--noeolstrip] [--overwrite]
- *                              [--debug] [file1] [file2] [file3] ...
+ * Usage: horde-js-compress [--file=filename] [--noyui] [--noshrinksafe]
+ *                          [--nojsmin] [--noeolstrip] [--overwrite]
+ *                          [--debug] [file1] [file2] [file3] ...
  *
  * By default, all files in the current working directory are compressed.
  *

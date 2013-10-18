@@ -2,11 +2,11 @@
 /**
  * Ckeditor copy script - copies files used for Horde.
  *
- * Usage: horde-ckeditor.php -a [advpng binary]
- *                           -d [destination (horde/Editor base)]
- *                           -o [optipng binary]
- *                           -p [pngout binary]
- *                           -s [source]
+ * Usage: horde-ckeditor -a [advpng binary]
+ *                       -d [destination (horde/Editor base)]
+ *                       -o [optipng binary]
+ *                       -p [pngout binary]
+ *                       -s [source]
  *
  * Copyright 1999-2012 The Horde Project (http://www.horde.org/)
  *

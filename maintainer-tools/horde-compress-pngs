@@ -4,11 +4,11 @@
  * Script to recursively find all PNG's in a directory and attempt to max
  * compress them.
  *
- * Usage: horde-compress-pngs.php -a [advpng binary]
- *                                -d [directory]
- *                                -o [optipng binary]
- *                                -p [pngout binary]
- *                                -z [zopflipng binary -- OPTIONAL]
+ * Usage: horde-compress-pngs -a [advpng binary]
+ *                            -d [directory]
+ *                            -o [optipng binary]
+ *                            -p [pngout binary]
+ *                            -z [zopflipng binary -- OPTIONAL]
  *
  * ZopfliPNG = https://code.google.com/p/zopfli/
  *

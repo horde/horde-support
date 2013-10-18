@@ -9,34 +9,34 @@ This directory contains various maintainer scripts for the Horde distribution.
 
 Script Index
 ~~~~~~~~~~~~
-horde-build-snaps.php
+horde-build-snaps
     Builds the nightly snapshots for all Git modules and selected
     FRAMEWORK_3 modules.
 
 horde-build-website-docs.sh
     Converts reST documentation into HTML for the website.
 
-horde-ckeditor.php
+horde-ckeditor
     Updates CKeditor for packaging with Horde.
 
-horde-compress-jpgs.php
+horde-compress-jpgs
     Optimizes JPEG images to reduce their size as much as possible.
 
-horde-compress-pngs.php
+horde-compress-pngs
     Optimizes PNG images to reduce their size as much as possible.
 
-horde-js-compress.php
+horde-js-compress
     Runs the YUI compressor or other alternatives on all .js files in the
     current directory, writing them to a compressed file in the parent
     directory.
 
-horde-update-ISO3166-countries.php
+horde-update-ISO3166-countries
     Fetch the current ISO-3166 country definitions to update Horde's
     country list file in horde/lib/NLS/countries.php.
 
 jsmin/
     This directory contains the jsmin tool for minifying JavaScript source.
-    jsmin is used as a fallback from horde-js-compress.php.
+    jsmin is used as a fallback from horde-js-compress.
 
 mime_mapping/
     This script converts an Apache-style mime.types file into a
