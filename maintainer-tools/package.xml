@@ -48,6 +48,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <file name="horde-compress-pngs" role="script">
     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config"/>
    </file>
+   <file name="horde-installer-phar-create" role="script">
+    <tasks:replace from="@php_bin@" to="php_bin" type="pear-config"/>
+   </file>
    <file name="horde-js-compress" role="script">
     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config"/>
    </file>

@@ -25,6 +25,9 @@ horde-compress-jpgs
 horde-compress-pngs
     Optimizes PNG images to reduce their size as much as possible.
 
+horde-installer-phar-create
+    ...
+
 horde-js-compress
     Runs the YUI compressor or other alternatives on all .js files in the
     current directory, writing them to a compressed file in the parent

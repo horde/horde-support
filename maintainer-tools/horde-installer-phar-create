@@ -1,0 +1,102 @@
+#!@php_bin@
+<?php
+/**
+ * Create the Phar Horde installer.
+ *
+ * @author    Michael Slusarz <slusarz@horde.org>
+ * @category  Horde
+ * @copyright 2013 Horde LLC
+ * @package   maintainer_tools
+ */
+
+class HordeCreatePharInstaller
+{
+    private $_base;
+    private $_build;
+    private $_temp;
+
+    public function __construct()
+    {
+        if (ini_get('phar.readonly')) {
+            throw new Exception("ERROR: Need to disable phar.readonly php.ini setting.");
+        }
+
+        $this->_base = dirname(__FILE__) . '/installer';
+        $this->_tmp = sys_get_temp_dir() . '/' . mt_rand();
+        $this->_build = $this->_tmp . '/build';
+
+        register_shutdown_function(array($this, 'shutdown'));
+
+        print "TEMP DIR: " . $this->_tmp . "\n";
+
+        mkdir($this->_tmp);
+        mkdir($this->_build);
+    }
+
+    public function create()
+    {
+        /* Copy base files to temp directory. */
+        $i = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator(
+                $this->_base,
+                FilesystemIterator::SKIP_DOTS
+            )
+        );
+
+        foreach ($i as $val) {
+            if ($val->isFile()) {
+                copy(
+                    $val->getRealPath(),
+                    $this->_build . '/' . $val->getFilename()
+                );
+            } elseif ($val->isDir()) {
+                mkdir($val->getRealPath());
+            }
+        }
+
+        /* Get latest composer. */
+        file_put_contents(
+            $this->_tmp . '/composer.phar',
+            file_get_contents('http://getcomposer.org/composer.phar')
+        );
+
+        /* Install dependencies. */
+        system('php ' . $this->_tmp . '/composer.phar -d=' . $this->_build . ' install');
+
+        /* Build Phar file. */
+        $phar = new Phar('horde-installer.phar');
+        $phar->setSignatureAlgorithm(Phar::SHA1);
+
+        $phar->buildFromDirectory($this->_build);
+        $phar->setStub($phar->createDefaultStub('installer.php'));
+
+        $phar->compressFiles(Phar::GZ);
+    }
+
+    public function shutdown()
+    {
+        $i = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator(
+                $this->_tmp,
+                FilesystemIterator::SKIP_DOTS
+            ),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($i as $val) {
+            if ($val->isFile()) {
+                unlink($val->getRealPath());
+            } else {
+                rmdir($val->getRealPath());
+            }
+        }
+
+        rmdir($this->_tmp);
+
+        print "REMOVED TEMP DIR: " . $this->_tmp . "\n";
+    }
+
+}
+
+$create = new HordeCreatePharInstaller();
+$create->create();
