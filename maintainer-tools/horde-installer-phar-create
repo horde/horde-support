@@ -66,7 +66,13 @@ class HordeCreatePharInstaller
         $phar->setSignatureAlgorithm(Phar::SHA1);
 
         $phar->buildFromDirectory($this->_build);
-        $phar->setStub($phar->createDefaultStub('installer.php'));
+        $phar->setStub(
+            '<?php ' .
+            'if (!extension_exists("zlib")) { exit("The installer requires the zlib library to be compiled into PHP."); }' .
+            'Phar::mapPhar("installer.phar");' .
+            'require "phar://installer.phar/installer.php";' .
+            '__HALT_COMPILER(); ?>'
+        );
 
         $phar->compressFiles(Phar::GZ);
     }
