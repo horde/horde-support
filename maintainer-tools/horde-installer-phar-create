@@ -1,4 +1,4 @@
-#!@php_bin@
+#!/usr/bin/env php
 <?php
 /**
  * Create the Phar Horde installer.
@@ -49,8 +49,6 @@ class HordeCreatePharInstaller
                     $val->getRealPath(),
                     $this->_build . '/' . $val->getFilename()
                 );
-            } elseif ($val->isDir()) {
-                mkdir($val->getRealPath());
             }
         }
 
