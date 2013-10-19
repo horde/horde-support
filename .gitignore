@@ -13,5 +13,6 @@ maintainer-tools/jsmin/jsmin.o
 git-hooks/whups-git-hook-conf.php
 maintainer-tools/horde-build-website-docs.conf
 
-# Ignore horde-installer.phar
+# Ignore horde-installer.phar files
+maintainer-tools/composer.phar
 maintainer-tools/horde-installer.phar

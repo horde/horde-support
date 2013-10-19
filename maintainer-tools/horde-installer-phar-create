@@ -11,9 +11,10 @@
 
 class HordeCreatePharInstaller
 {
+    const COMPOSER_DOWNLOAD = 'http://getcomposer.org/composer.phar';
+
     private $_base;
     private $_build;
-    private $_temp;
 
     public function __construct()
     {
@@ -22,14 +23,12 @@ class HordeCreatePharInstaller
         }
 
         $this->_base = dirname(__FILE__) . '/installer';
-        $this->_tmp = sys_get_temp_dir() . '/' . mt_rand();
-        $this->_build = $this->_tmp . '/build';
+        $this->_build = sys_get_temp_dir() . '/' . mt_rand();
 
         register_shutdown_function(array($this, 'shutdown'));
 
-        print "TEMP DIR: " . $this->_tmp . "\n";
+        print "TEMP DIR: " . $this->_build . "\n";
 
-        mkdir($this->_tmp);
         mkdir($this->_build);
     }
 
@@ -55,19 +54,58 @@ class HordeCreatePharInstaller
         }
 
         /* Get latest composer. */
-        file_put_contents(
-            $this->_tmp . '/composer.phar',
-            file_get_contents('http://getcomposer.org/composer.phar')
-        );
+        if (file_exists('./composer.phar')) {
+            system('php ./composer.phar self-update');
+        } else {
+            file_put_contents(
+                'composer.phar',
+                file_get_contents(self::COMPOSER_DOWNLOAD)
+            );
+        }
 
         /* Install dependencies. */
-        system('php ' . $this->_tmp . '/composer.phar -d=' . $this->_build . ' install');
+        system('php ./composer.phar -d=' . $this->_build . ' install');
 
         /* Build Phar file. */
+        @unlink('horde-installer.phar');
         $phar = new Phar('horde-installer.phar');
         $phar->setSignatureAlgorithm(Phar::SHA1);
 
-        $phar->buildFromDirectory($this->_build);
+        $phar->startBuffering();
+
+        $i = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($this->_build)
+        );
+
+        foreach ($i as $val) {
+            if ($val->isDir()) {
+                continue;
+            }
+
+            $realpath = $val->getRealPath();
+            $pharpath = str_replace($this->_build . '/', '', $realpath);
+
+            print "ADDING: " . $pharpath . "\n";
+
+            switch ($val->getFilename()) {
+            case 'Translation.php':
+                /* Fix @data_dir@. */
+                $phar->addFromString(
+                    $pharpath,
+                    preg_replace(
+                        '/self::\$_directory =.*;/',
+                        'self::$_directory = preg_replace(\'/\/Horde\/.*$/\', \'/data/locale\', __FILE__);',
+                        file_get_contents($realpath)
+                    )
+                );
+                break;
+
+            default:
+                $phar->addFile($realpath, $pharpath);
+                break;
+            }
+        }
+
         $phar->setStub(
             '<?php ' .
             'if (!extension_loaded("zlib")) { exit("The installer requires the zlib library to be compiled into PHP."); }' .
@@ -76,6 +114,8 @@ class HordeCreatePharInstaller
             '__HALT_COMPILER(); ?>'
         );
 
+        $phar->stopBuffering();
+
         $phar->compressFiles(Phar::GZ);
     }
 
@@ -83,7 +123,7 @@ class HordeCreatePharInstaller
     {
         $i = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(
-                $this->_tmp,
+                $this->_build,
                 FilesystemIterator::SKIP_DOTS
             ),
             RecursiveIteratorIterator::CHILD_FIRST
@@ -97,9 +137,9 @@ class HordeCreatePharInstaller
             }
         }
 
-        rmdir($this->_tmp);
+        rmdir($this->_build);
 
-        print "REMOVED TEMP DIR: " . $this->_tmp . "\n";
+        print "REMOVED TEMP DIR: " . $this->_build . "\n";
     }
 
 }
