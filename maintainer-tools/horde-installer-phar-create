@@ -50,7 +50,7 @@ class HordeCreatePharInstaller
                     $this->_build . '/' . $val->getFilename()
                 );
             } elseif ($val->isDir()) {
-                mkdir($val->getRealPath());
+                mkdir($this->_build . '/' . $val->getFilename());
             }
         }
 
