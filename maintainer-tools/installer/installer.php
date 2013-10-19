@@ -37,24 +37,29 @@ while (!strlen($values->horde_dir)) {
 
 $c->writeln();
 $c->message('Upgrading PEAR to the latest version...', 'cli.message');
-
 system('pear upgrade PEAR');
+$c->message('Success.', 'cli.success');
 
+$c->writeln();
 $c->message('Clearing the PEAR cache...', 'cli.message');
-
 system('pear clear-cache');
+$c->message('Success.', 'cli.success');
 
+$c->writeln();
 $c->message('Registering pear.horde.org PEAR channel...', 'cli.message');
-
 system('pear channel-discover pear.horde.org');
+$c->message('Success.', 'cli.success');
 
+$c->writeln();
 $c->message('Set Horde installation directory...', 'cli.message');
-
 system('pear install horde/horde_role');
-system('pear config-set -c pear.horde.org horde_dir ' . escapeshellarg($horde_dir));
+system('pear config-set -c pear.horde.org horde_dir ' . escapeshellarg($values->horde_dir));
+$c->message('Success.', 'cli.success');
 
-$c->message('Installing Horde packages...', 'cli.message');
+$c->writeln();
+$c->message('Installing Horde packages (this may take awhile)...', 'cli.message');
+system('pear -d auto_discover=1 install -a -B horde/horde');
+$c->message('Success.', 'cli.success');
 
-system('pear -d preferred_state=alpha -d auto_discover=1 install -a -B horde/horde');
-
+$c->writeln();
 $c->message('Installation complete!', 'cli.success');
