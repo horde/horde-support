@@ -29,12 +29,19 @@ $argv->addOption('-i', '--install-dir', array(
 ));
 list($values,) = $argv->parseArgs();
 
+$version = phpversion();
+if (version_compare($version, '5.3.0') === -1) {
+    $c->fatal('You need at least PHP version 5.3.0 to run Horde.');
+}
+
+$c->writeln();
+$c->message('PHP version: ' . $version, 'cli.message');
+
 exec('which pear', $pear_output);
 if (empty($pear_output)) {
     $c->fatal('Could not find PEAR script in your include path.');
 }
 
-$c->writeln();
 $c->message('PEAR location: ' . $pear_output[0], 'cli.message');
 
 while (!strlen($values->horde_dir)) {
