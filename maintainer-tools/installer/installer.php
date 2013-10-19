@@ -8,11 +8,19 @@ $c->writeln($c->bold('----------------------'));
 $c->writeln($c->bold('Horde installer script'));
 $c->writeln($c->bold('----------------------'));
 
+$argv = new Horde_Argv_Parser();
+$argv->addOption('-i', '--install-dir', array(
+    'action' => 'store',
+    'dest' => 'horde_dir',
+    'help' => 'Horde install directory'
+));
+list($values,) = $argv->parseArgs();
+
 // TODO: Check for PEAR to exist in PATH
 
-do {
-    $horde_dir = $c->prompt('The directory to install Horde into:');
-} while (!strlen($horde_dir));
+while (!strlen($values->horde_dir)) {
+    $values->horde_dir = $c->prompt('The directory to install Horde into:');
+}
 
 $c->writeln();
 $c->message('Upgrading PEAR to the latest version...', 'cli.message');

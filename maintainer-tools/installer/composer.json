@@ -6,6 +6,8 @@
         }
     ],
     "require": {
-        "pear-pear.horde.org/Horde_Cli": "*"
+        "pear-pear.horde.org/Horde_Argv": "*",
+        "pear-pear.horde.org/Horde_Cli": "*",
+        "pear-pear.horde.org/Horde_Log": "*"
     }
 }
