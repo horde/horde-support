@@ -29,7 +29,13 @@ $argv->addOption('-i', '--install-dir', array(
 ));
 list($values,) = $argv->parseArgs();
 
-// TODO: Check for PEAR to exist in PATH
+exec('which pear', $pear_output);
+if (empty($pear_output)) {
+    $c->fatal('Could not find PEAR script in your include path.');
+}
+
+$c->writeln();
+$c->message('PEAR location: ' . $pear_output[0], 'cli.message');
 
 while (!strlen($values->horde_dir)) {
     $values->horde_dir = $c->prompt('The directory to install Horde into:');
