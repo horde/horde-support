@@ -35,21 +35,19 @@ class HordeCreatePharInstaller
     public function create()
     {
         /* Copy base files to temp directory. */
-        $i = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator(
-                $this->_base,
-                FilesystemIterator::SKIP_DOTS
-            )
-        );
+        $di = new RecursiveDirectoryIterator($this->_base);
 
-        foreach ($i as $val) {
+        foreach (new RecursiveIteratorIterator($di) as $val) {
+            $path = substr($val->getRealPath(), strlen($this->_base) + 1);
+
             if ($val->isFile()) {
+                print "COPYING: $path\n";
                 copy(
                     $val->getRealPath(),
-                    $this->_build . '/' . $val->getFilename()
+                    $this->_build . '/' . $path
                 );
-            } elseif ($val->isDir()) {
-                mkdir($this->_build . '/' . $val->getFilename());
+            } elseif ($val->isDir() && !$di->isDot() && $path) {
+                mkdir($this->_build . '/' . $path);
             }
         }
 

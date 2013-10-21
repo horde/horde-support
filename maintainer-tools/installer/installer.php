@@ -14,6 +14,7 @@
  */
 
 require 'vendor/autoload.php';
+require 'lib/HordeInstaller.php';
 
 $c = new Horde_Cli();
 
@@ -26,6 +27,11 @@ $argv->addOption('-i', '--install-dir', array(
     'action' => 'store',
     'dest' => 'horde_dir',
     'help' => 'Horde install directory'
+));
+$argv->addOption('-l', '--log', array(
+    'action' => 'store',
+    'dest' => 'log',
+    'help' => 'Log filename'
 ));
 list($values,) = $argv->parseArgs();
 
@@ -48,30 +54,43 @@ while (!strlen($values->horde_dir)) {
     $values->horde_dir = $c->prompt('The directory to install Horde into:');
 }
 
+$hi = new HordeInstaller();
+$logfile = isset($values->log)
+    ? realpath($values->log)
+    : dirname(Phar::running(false)) . '/horde-installer.log';
+
+$c->writeln();
+try {
+    $hi->initLogger($logfile);
+    $c->message('Log file: ' . $logfile, 'cli.message');
+} catch (Exception $e) {
+    $c->message(sprintf('Cannot write to log file "%s".', $logfile), 'cli.warning');
+}
+
 $c->writeln();
 $c->message('Upgrading PEAR to the latest version...', 'cli.message');
-system('pear upgrade PEAR');
+$hi->pear('pear upgrade PEAR');
 $c->message('Success.', 'cli.success');
 
 $c->writeln();
 $c->message('Clearing the PEAR cache...', 'cli.message');
-system('pear clear-cache');
+$hi->pear('pear clear-cache');
 $c->message('Success.', 'cli.success');
 
 $c->writeln();
 $c->message('Registering pear.horde.org PEAR channel...', 'cli.message');
-system('pear channel-discover pear.horde.org');
+$hi->pear('pear channel-discover pear.horde.org');
 $c->message('Success.', 'cli.success');
 
 $c->writeln();
 $c->message('Set Horde installation directory...', 'cli.message');
-system('pear install horde/horde_role');
-system('pear config-set -c pear.horde.org horde_dir ' . escapeshellarg($values->horde_dir));
+$hi->pear('pear install horde/horde_role');
+$hi->pear('pear config-set -c pear.horde.org horde_dir ' . escapeshellarg($values->horde_dir));
 $c->message('Success.', 'cli.success');
 
 $c->writeln();
 $c->message('Installing Horde packages (this may take awhile)...', 'cli.message');
-system('pear -d auto_discover=1 install -a -B horde/horde');
+$hi->pear('pear -d auto_discover=1 install -a -B horde/horde');
 $c->message('Success.', 'cli.success');
 
 $c->writeln();
