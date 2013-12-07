@@ -21,7 +21,12 @@ function parseDiff($oldrev, $newrev, $diffcmd, $regex)
     }
 
     foreach ($diff as $diffline) {
-        preg_match($regex, $diffline, $matches);
+        if (!preg_match($regex, $diffline, $matches)) {
+            printf('Unknown line format "%s" from command call "%s"',
+                   $diffline,
+                   $diffcmd);
+            continue;
+        }
         $blob = $matches[1];
         $filename = $matches[2];
 
