@@ -67,10 +67,10 @@ if (!is_dir($repo)) {
 
 /* Only track changes to the following branches. */
 $track = array(
-    'develop',
     'master',
     'FRAMEWORK_4',
     'FRAMEWORK_5_0',
+    'FRAMEWORK_5_1',
 );
 if (!in_array($refname, $track)) {
     abort("Not updating tickets ($refname branch is not being tracked).");
