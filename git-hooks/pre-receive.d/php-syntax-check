@@ -73,9 +73,11 @@ function parseCommit($oldrev, $newrev)
 
 // This pre-receive git hook gets passed the ref before the push, and the ref
 // that would be created if the push succeeds.
-$oldrev = $_SERVER['argv'][1];
-$newrev = $_SERVER['argv'][2];
-$refname = $_SERVER['argv'][3];
+$stdin = file_get_contents('php://stdin');
+$argv = explode(' ',$stdin);
+$oldrev =  $argv[0];
+$newrev =  $argv[1];
+$refname = $argv[2];
 
 parseCommit($oldrev, $newrev);
 
