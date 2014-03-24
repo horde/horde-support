@@ -449,7 +449,8 @@ generate_update_branch_email()
             #links="$GIT_CHORA_URL/$reponame/-/commit/$rev"
             #echo $links
 
-            whups_update $rev $1 "$links"
+            #whups_update $rev $1 "$links"
+            whups_update $rev $1 "$ghublink"
 
             echo ""
         done
