@@ -134,8 +134,8 @@ autosplit()
 	done
 }
 
-while read oldrev newrev refname
-do
+#while read oldrev newrev refname
+#do
     # Currently deactivated until this approach has been discussed and shown to be working
     #autosplit $oldrev $newrev $refname
-done
+#done
