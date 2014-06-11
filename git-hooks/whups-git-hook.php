@@ -71,6 +71,7 @@ $track = array(
     'FRAMEWORK_4',
     'FRAMEWORK_5_0',
     'FRAMEWORK_5_1',
+    'FRAMEWORK_5_2',
 );
 if (!in_array($refname, $track)) {
     abort("Not updating tickets ($refname branch is not being tracked).");
