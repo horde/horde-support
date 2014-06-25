@@ -62,7 +62,7 @@ EOF
             if [ $(basename "$FILE") = "RELEASE_NOTES" ]; then
                 NOTES=$APPROOT/RELEASE_NOTES.html
                 echo '<h3>Release notes for the latest release</h3><pre>' > $NOTES
-                php -r "\$n = function() { require_once 'Horde/Release.php'; include '$FILE'; echo \$this->notes['changes']; }; \$n();" | sed 's/</\&lt;/g' >> $NOTES
+                php -r "call_user_func(function() { \$notes = include '$FILE'; echo htmlspecialchars(\$notes['changes']); });" >> $NOTES
                 echo '</pre>' >> $NOTES
                 echo -n .
                 echo "<li><a href=\"<?php echo \$GLOBALS['host_base'] ?>/apps/$APP/docs/RELEASE_NOTES\">RELEASE_NOTES</a></li>" >> $DOCS
