@@ -60,7 +60,7 @@ while ($it->valid()) {
         system($args->pngout . ' ' . $it->key() . ' -y -q');
 
         if (!empty($args->zopfli)) {
-            system($args->zopfli . ' -m ' . $it->key() . ' ' . $it->key() . '.out');
+            exec($args->zopfli . ' -m ' . $it->key() . ' ' . $it->key() . '.out');
             unlink($it->key());
             rename($it->key() . '.out', $it->key());
         }
