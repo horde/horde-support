@@ -20,38 +20,27 @@
  * @package  maintainer_tools
  */
 
-require 'Console/Getopt.php';
+require_once 'Horde/Autoloader/Default.php';
 
-$c = new Console_Getopt();
-$argv = $c->readPHPArgv();
-array_shift($argv);
-$options = $c->getopt2($argv, 'd:j:');
-if (PEAR::isError($options)) {
-    print "Invalid arguments.\n";
-    exit;
+$parser = new Horde_Argv_Parser(array(
+    'usage' => "%prog\n\t[--directory=path]\n\t--jpegtran=path",
+    'optionList' => array(
+        new Horde_Argv_Option('-d', '--directory', array(
+            'default' => getcwd(),
+            'help' => 'Directory to recursively parse'
+        )),
+        new Horde_Argv_Option('-j', '--jpegtran', array(
+            'help' => 'Location of jpegtran binary'
+        ))
+    )
+));
+list($args,) = $parser->parseArgs();
+
+if (!$args->jpegtran || !is_executable($args->jpegtran)) {
+    $parser->parserError("Invalid arguments.");
 }
 
-$directory = getcwd();
-
-foreach ($options[0] as $val) {
-    switch ($val[0]) {
-    case 'd':
-        $directory = $val[1];
-        break;
-
-    case 'j':
-        if (is_executable($val[1])) {
-            $jpegtran_binary = $val[1];
-        }
-        break;
-    }
-}
-
-if (empty($jpegtran_binary)) {
-    exit("Invalid arguments.\n");
-}
-
-$it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, RecursiveIteratorIterator::SELF_FIRST));
+$it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($args->directory, RecursiveIteratorIterator::SELF_FIRST));
 while ($it->valid()) {
     if ($it->isFile() &&
         (strcasecmp('.jpg', substr($it->key(), -4)) === 0)) {
@@ -59,7 +48,7 @@ while ($it->valid()) {
         $jpeg = '';
         $start_size = $it->getSize();
 
-        $fp = popen($jpegtran_binary . ' -optimize ' . escapeshellarg($file), 'r');
+        $fp = popen($args->jpegtran . ' -optimize ' . escapeshellarg($file), 'r');
         while (!feof($fp)) {
             $jpeg .= fread($fp, 8192);
         }
