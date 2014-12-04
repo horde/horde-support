@@ -34,8 +34,3 @@ horde-update-ISO3166-countries
 jsmin/
     This directory contains the jsmin tool for minifying JavaScript source.
     jsmin is used as a fallback from horde-js-compress.
-
-mime_mapping/
-    This script converts an Apache-style mime.types file into a
-    mime.mapping.php driver file suitable for use with Horde.  It is useful
-    for syncing Apache updates to their MIME types with Horde.
