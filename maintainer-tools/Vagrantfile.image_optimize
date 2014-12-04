@@ -1,0 +1,48 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Image optimization VM image
+#
+# Instructions:
+#   - execute 'vagrant up' in directory with this Vagrantfile
+#   - login to vagrant VM
+#   - execute 'git clone --depth 1 [git repo] horde'
+#   - execute 'cd horde'
+#   - execute 'image_optim -r .'
+#   - execute 'git config user.email "<email>"'
+#   - execute 'git config user.name "<name>"'
+#   - execute 'git commit -a -m "image optimizations"'
+#   - execute 'git push origin master:image-optimize'
+#   - destroy vagrant VM ('vagrant destroy' in directory with this Vagrantfile)
+
+$script = <<SCRIPT
+# Create swap, since image only has 512 MB
+fallocate -l 512M /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo '/swapfile none swap defaults 0 0' >> /etc/fstab
+
+# Upgrade Ubuntu
+apt-get update
+apt-get upgrade -y
+
+apt-get install -y git npm nodejs-legacy
+
+gem install image_optim
+gem install image_optim_pack
+
+cd /tmp
+wget -q  http://static.jonof.id.au/dl/kenutils/pngout-20130221-linux-static.tar.gz
+tar zxf pngout-20130221-linux-static.tar.gz
+cp pngout-20130221-linux-static/x86_64/pngout-static /usr/local/bin/pngout
+
+npm install -gs svgo
+SCRIPT
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.provision "shell", inline: $script
+end

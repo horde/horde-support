@@ -19,12 +19,6 @@ horde-build-website-docs.sh
 horde-ckeditor
     Updates CKeditor for packaging with Horde.
 
-horde-compress-jpgs
-    Optimizes JPEG images to reduce their size as much as possible.
-
-horde-compress-pngs
-    Optimizes PNG images to reduce their size as much as possible.
-
 horde-installer-phar-create
     ...
 
