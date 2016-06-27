@@ -42,7 +42,9 @@ function parseDiff($oldrev, $newrev, $diffcmd, $regex)
 function syntaxCheckFile($blob, $filename)
 {
     $needle = '/(\.php)$/';
-    if (preg_match($needle, $filename)) {
+    if (preg_match($needle, $filename) &&
+        // @todo Skip until updated to PHP 5.6.
+        $filename != 'autoload_static.php') {
         $dummy = array();
         exec("git show $blob | /usr/bin/env php -l", $output, $returnCode);
         if ($returnCode != 0) {
