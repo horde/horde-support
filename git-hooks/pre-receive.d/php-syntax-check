@@ -44,7 +44,7 @@ function syntaxCheckFile($blob, $filename)
     $needle = '/(\.php)$/';
     if (preg_match($needle, $filename) &&
         // @todo Skip until updated to PHP 5.6.
-        strpos($filename, 'composer/autoload_static.php') === false) {
+        $filename != 'autoload_static.php') {
         $dummy = array();
         exec("git show $blob | /usr/bin/env php -l", $output, $returnCode);
         if ($returnCode != 0) {
