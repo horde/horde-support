@@ -41,6 +41,9 @@ function parseDiff($oldrev, $newrev, $diffcmd, $regex)
 
 function syntaxCheckFile($blob, $filename)
 {
+    if (str_pos($filename, 'framework/Test/bundle')) {
+        return;
+    }
     $needle = '/(\.php)$/';
     if (preg_match($needle, $filename)) {
         $dummy = array();
