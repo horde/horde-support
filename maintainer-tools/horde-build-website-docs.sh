@@ -55,7 +55,7 @@ EOF
                 cat "$FILE" | sed 's/</\&lt;/g' | sed 's;pear\s*\(bug\|request\)\s*#\([[:digit:]]*\);<a href="http://pear.php.net/bugs/bug.php?id=\2">\0</a>;gi' | sed ':a;N;$!ba;s;\(,\s*\|(\)\(\(bug\|request\)[[:space:]]*#\([[:digit:]]*\)\);\1<a href="http://bugs.horde.org/ticket/\4">\2</a>;gi' >> $CHANGES
                 echo '</pre>' >> $CHANGES
                 echo -n .
-                echo "<li><a href=\"<?php echo \$GLOBALS['host_base'] ?>/apps/$APP/docs/CHANGES\">CHANGES</a></li>" >> $DOCS
+                echo "<li><a href=\"<?php echo \$GLOBALS['host_base'] ?>/apps/$APP/docs/CHANGES\">Changes</a></li>" >> $DOCS
                 continue
             fi
             if [ $(basename "$FILE") = "RELEASE_NOTES" ]; then
@@ -64,7 +64,7 @@ EOF
                 php -r "call_user_func(function() { \$notes = include '$FILE'; echo htmlspecialchars(\$notes['changes']); });" >> $NOTES
                 echo '</pre>' >> $NOTES
                 echo -n .
-                echo "<li><a href=\"<?php echo \$GLOBALS['host_base'] ?>/apps/$APP/docs/RELEASE_NOTES\">RELEASE_NOTES</a></li>" >> $DOCS
+                echo "<li><a href=\"<?php echo \$GLOBALS['host_base'] ?>/apps/$APP/docs/RELEASE_NOTES\">Release Notes</a></li>" >> $DOCS
                 continue
             fi
             echo -n .
@@ -77,12 +77,13 @@ EOF
             if [ $? ]; then
                 OUTPUT=$(echo "$OUTPUT" | sed '1,/<body>/d' | sed '/<\/body>/,$d');
                 echo "$OUTPUT" > $APPROOT/$TO;
-                if [ "$(uname)" = "FreeBSD" ]; then
-                    DISPLAY=$(echo "$FILE" | sed -r "s|$DOC_DIR/(\.\./)?||")
+                BARE=$(echo "$FILE" | sed -r "s|$DOC_DIR/(\.\./)?||")
+                if [ $BARE = "README" ]; then
+                    DISPLAY=$BARE
                 else
-                    DISPLAY=$(echo "$FILE" | sed "s|$DOC_DIR/\(../\)\?||")
+                    DISPLAY=$(echo "$BARE" | sed -r "s/_/ /g; s/(^| )([A-Z])([A-Z]*)/\1\U\2\L\3/g")
                 fi
-                echo "<li><a href=\"<?php echo \$GLOBALS['host_base'] ?>/apps/$APP/docs/$DISPLAY\">$DISPLAY</a></li>" >> $DOCS
+                echo "<li><a href=\"<?php echo \$GLOBALS['host_base'] ?>/apps/$APP/docs/$BARE\">$DISPLAY</a></li>" >> $DOCS
             fi
         done
         echo "</ul>" >> $DOCS
