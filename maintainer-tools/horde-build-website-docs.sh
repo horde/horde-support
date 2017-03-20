@@ -1,11 +1,10 @@
 #!/bin/bash
 #
-# Usage: horde-build-website-docs.sh [module [/path/to/modules /path/to/HEAD]]
+# Usage: horde-build-website-docs.sh [module [/path/to/modules]]
 
 . $(dirname $0)/horde-build-website-docs.conf || exit
 
 SOURCEDIR=${2:-$(pwd)}
-HEADDIR=${3:-$(pwd)}
 
 # Check if everything is in place
 test -x $GENERATOR || {
