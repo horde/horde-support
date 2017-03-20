@@ -11,6 +11,10 @@ test -x $GENERATOR || {
     echo html.py not found at $GENERATOR.
     exit
 }
+test -x $COMPONENTS || {
+    echo horde-components not found at $COMPONENTS.
+    exit
+}
 test -f $CONFIG || {
     echo docutils.conf not found at $CONFIG.
     exit
@@ -39,6 +43,11 @@ for DOC_DIR in $DOC_DIRS; do
         # Generate HTML docs
         DOCS=$APPROOT/docs.html
         FILES=$(find "$DOC_DIR" -maxdepth 1 -type f -regex .*/[A-Z_]+ | sort)
+        RELEASE_YML=""
+        if [ -f "$DOC_DIR/release.yml" ]; then
+            FILES="$DOC_DIR/release.yml"$'\n'"$FILES"
+            RELEASE_YML=1
+        fi
         FILES="$DOC_DIR/../README"$'\n'"$FILES"
         cat > $DOCS <<EOF
 <h3>Documentation</h3>
@@ -58,11 +67,25 @@ EOF
                 echo "<li><a href=\"<?php echo \$GLOBALS['host_base'] ?>/apps/$APP/docs/CHANGES\">Changes</a></li>" >> $DOCS
                 continue
             fi
-            if [ $(basename "$FILE") = "RELEASE_NOTES" ]; then
+            if [ $(basename "$FILE") = "RELEASE_NOTES" -a -n "$RELEASE_YML" ]; then
+                continue
+            fi
+            if [ $(basename "$FILE") = "release.yml" -o \
+                 $(basename "$FILE") = "RELEASE_NOTES" ]; then
                 NOTES=$APPROOT/RELEASE_NOTES.html
-                echo '<h3>Release notes for the latest release</h3><pre>' > $NOTES
-                php -r "call_user_func(function() { \$notes = include '$FILE'; echo htmlspecialchars(\$notes['changes']); });" >> $NOTES
-                echo '</pre>' >> $NOTES
+                echo '<h3>Release notes for the latest release</h3><code>' > $NOTES
+                if [ $(basename "$FILE") = "release.yml" ]; then
+                    $COMPONENTS "$DOC_DIR/.." release --dump \
+                        | php -R 'echo htmlspecialchars($argn) . "\n";'
+                    $COMPONENTS "$DOC_DIR/.." release --dump \
+                        | php -R 'echo htmlspecialchars($argn) . "\n";' \
+                        | sed -r 's#(https?://[^ ]*)(\.| |$)#<a href="\1">\1</a>\2#' \
+                        | php -R 'echo nl2br($argn) . "<br />\n";' \
+                        >> $NOTES
+                elif [ ! $RELEASE_YML ]; then
+                    php -r "call_user_func(function() { \$notes = include '$FILE'; echo nl2br(htmlspecialchars(\$notes['changes'])); });" >> $NOTES
+                fi
+                echo '</code>' >> $NOTES
                 echo -n .
                 echo "<li><a href=\"<?php echo \$GLOBALS['host_base'] ?>/apps/$APP/docs/RELEASE_NOTES\">Release Notes</a></li>" >> $DOCS
                 continue

@@ -1,3 +1,4 @@
 GENERATOR=/usr/local/horde/i18n/HEAD/hordedoc/docutils/html.py
 CONFIG=/usr/local/horde/i18n/HEAD/hordedoc/docutils/docutils.conf
 FILEROOT=/horde/checkout/horde-web
+COMPONENTS=/horde/checkout/horde/components/bin/horde-components
