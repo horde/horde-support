@@ -1,0 +1,22 @@
+<?php
+/**
+ * push.php configuration
+ */
+
+// Mailing list address
+$recipients = 'commits@lists.horde.org';
+
+// File with developer data
+$usersfile = '/horde/cvs/CVSROOT/cvsusers';
+
+// RPC endpoint
+$rpc_endpoint = 'https://dev.horde.org/horde/rpc.php';
+
+// RPC method to call
+$rpc_method = 'tickets.addComment';
+
+// HTTP options, usually username and password
+$http_options = array(
+    'request.username' => '',
+    'request.password' => ''
+);
