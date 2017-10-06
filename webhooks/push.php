@@ -76,8 +76,7 @@ if ($file) {
     }
 }
 
-$projectdesc = $payload['repository']['description']
-    ?: $payload['repository']['name'];
+$projectdesc = $payload['repository']['name'];
 $refname = $payload['ref'];
 $oldrev = $payload['before'];
 $newrev = $payload['after'];
