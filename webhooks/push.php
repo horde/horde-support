@@ -173,7 +173,7 @@ pclose($proc);
 
 function find_tickets($log_message)
 {
-    preg_match_all('/(?:(?<!kolab\/)(?:bug|ticket|request|enhancement|issue):?\s*#?|#)(\d+)/i', $log_message, $matches);
+    preg_match_all('/(?:(?<!kolab\/)(?:bug|ticket|request|enhancement|issue):?\s*#?|#)(\d{4,})/i', $log_message, $matches);
     return array_unique($matches[1]);
 }
 
