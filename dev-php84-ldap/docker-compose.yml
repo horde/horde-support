@@ -1,0 +1,57 @@
+services:
+  php-apache84:
+    image: php8.4-apache-horde:latest
+    build: ./images/php8.4-apache-horde/
+    ports:
+      - 127.0.0.1:5080:80
+    volumes:
+      - ./git-tree:/srv/git
+      - ./install-tree:/var/www/horde-dev
+      - ./tools:/usr/local/tools
+    env_file:
+      - path: ./dev-setup.dist.env
+        required: "true"
+      - path: ./dev-setup.local.env
+        required: "false"
+    environment:
+      - GITHUB_TOKEN
+    container_name: horde_apache
+  horde_db:
+    image: mariadb
+    restart: always
+    container_name: horde_db
+    env_file:
+      - path: ./dev-setup.dist.env
+        required: "true"
+      - path: ./dev-setup.local.env
+        required: "false"
+    volumes:
+      - ./mariadb-seed:/docker-entrypoint-initdb.d
+      - ./mariadb-data:/var/lib/mysql
+  horde_ldap:
+    container_name: horde_ldap
+    image: osixia/openldap
+    ports:
+      - 127.0.0.1:389:389
+    volumes:
+      - ./ldap-data:/var/lib/ldap
+      - ./ldap-config:/etc/ldap/slapd.d/
+    env_file:
+      - path: ./dev-setup.dist.env
+        required: "true"
+      - path: ./dev-setup.local.env
+        required: "false"
+      #LDAP_ORGANISATION: "horde.org"
+      #LDAP_DOMAIN: "demo.horde.org"
+      #LDAP_ADMIN_PASSWORD: horde
+  ldap_admin:
+    container_name: ldap_admin
+    image: osixia/phpldapadmin
+    ports:
+    ## TODO: Bind to localhost and serve through https reverse proxy
+      - 127.0.0.1:6080:80
+    env_file: 
+      - path: ./dev-setup.dist.env
+        required: "true"
+      - path: ./dev-setup.local.env
+        required: "false"

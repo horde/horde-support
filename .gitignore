@@ -17,3 +17,12 @@ maintainer-tools/horde-build-website-docs.conf
 # Ignore horde-installer.phar files
 maintainer-tools/composer.phar
 maintainer-tools/horde-installer.phar
+dev-php84-ldap/git-tree/*
+dev-php84-ldap/install-tree/*
+dev-php84-ldap/tools/*
+dev-php84-ldap/mariadb-data/*
+dev-php84-ldap/mariadb-seed/*
+dev-php84-ldap/ldap-data/*
+dev-php84-ldap/ldap-config/*
+
+!.keep

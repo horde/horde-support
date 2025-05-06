@@ -7,3 +7,107 @@ Introduction
 
 This repository contains supporting scripts for developing Horde or maintaining
 the horde.org infrastructure.
+
+Developer Container Setup
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The developer setup runs horde in a derivative of the upstream php/apache container and some supporting containers for mariadb and ldap.
+The code is not actually part of the image but fetched by running horde-components. This allows to easily modify code on the host system with your favourite editor or tool chain.
+The install tree is also exposed and persisted between container refreshes.
+You will need a github personal access token to run this setup.
+
+Prerequisites
+~~~~~~~~~~~~~
+
+Make sure you don't use Ubuntu's ancient docker but some recent docker-ce variant. Or use podman.
+
+# make sure you have curl
+apt install curl
+
+## Get the docker repo for ubuntu
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+## Replace jammy with your actual distribution version
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable"
+sudo apt update;
+sudo apt install docker-ce
+docker compose version
+## Output should be > v2.26.0
+Docker Compose version v2.35.1
+
+
+Install
+~~~~~~~
+Change to the dev-php84-ldap deployment directory and ask docker compose to pull up the setup.
+
+cd dev-php84-ldap/
+docker compose build
+docker compose down
+docker compose up -d
+
+[+] Running 5/5
+ ✔ Network dev-php84-ldap_default  Created                                                                                                                                                                  0.1s
+ ✔ Container horde_apache          Started                                                                                                                                                                  0.9s
+ ✔ Container ldap_admin            Started                                                                                                                                                                  0.6s
+ ✔ Container horde_db              Started                                                                                                                                                                  0.5s
+ ✔ Container horde_ldap            Started                                                                                                                                                                  0.8s
+
+This will download the base images, build the necessary modifications, locales and extra php modules on top and then setup the containers.
+
+NOTE: The default setup is ready-to-run on your laptop but it uses trivial and publicly known passwords. If you intend to expose this to the internet through a reverse proxy, PLEASE look at dev-setup.dist.env and override all passwords with a dev-setup.local.env file.
+
+On first start the container will try to install several php tools unless they have been pre-installed using the 01-install-tools.sh command.
+
+If no existing checkout is present,
+
+ horde-components downloads the repos from the horde organization into horde_apache:/srv/git (./git-tree) and prepares an installation directory /var/www/horde-dev (./install-tree)
+
+NOTE: When redoing this a few times you can exhaust your GITHUB API rate limit. Just wait an hour to retry or let another user enter his github token as USER with any arbitrary PASSWORD to continue right away.
+
+✅ Cloned all horde components from github
+[   OK   ] Using Git Checkout Directory: /srv/git/
+[   OK   ] Using Web Tree Directory: /var/www/horde-dev
+[   OK   ] Packages from git dir are set as local repositories. Only foreign packages are installed via packagist.
+✅ Setup the local pseudo repository
+
+
+By now you should be able to access http://localhost:5080/horde/test.php
+
+ 
+This setup binds an unencrypted LDAP server horde_ldap to ldap://127.0.0.1:389, a phpldapadmin instance ldap_admin to http://127.0.0.1:6080 and an empty container horde_apache to http://127.0.0.1:5080 - try it out in your browser.
+
+
+TROUBLESHOOTING
+~~~~~~~~~~~~~~~
+
+If you see an error like this:
+
+services.horde_db.env_file contains {"path": "./dev-setup.dist.env", "required": "true"}, which is an invalid type, it should be a string
+services.horde_ldap.env_file contains {"path": "./dev-setup.dist.env", "required": "true"}, which is an invalid type, it should be a string
+
+then you have run "docker-compose" rather than "docker compose".
+
+
+In case horde does not come up within reasonable time, you can run these commands
+
+Check what's up
+
+docker compose logs horde_apache
+
+dev-php84-ldap/00-prechecks.sh 
+✅ Found GITHUB_TOKEN variable
+✅ gh is installed
+
+dev-php84-ldap/01-install-tools.sh
+✅ Downloaded composer, horde-components, phpstan and phive
+✅ Downloaded phpunit 12, 11, 10 and 9
+
+Verify by ls -lah dev-php84-ldap/tools
+-rwxr-xr-x  1 root root 3.0M May  7 10:45 composer.phar
+-rwxr-xr-x  1 root root 4.2M May  7 10:45 horde-components.phar
+-rw-r--r--  1 root root    0 May  7 10:28 .keep
+-rwxr-xr-x  1 root root 229K May  7 10:45 phive-0.16.0.phar
+-rwxr-xr-x  1 root root  23M May  7 10:45 phpstan.phar
+-rwxr-xr-x  1 root root 5.0M May  2 08:47 phpunit-10.phar
+-rwxr-xr-x  1 root root 5.4M May  2 08:58 phpunit-11.phar
+-rwxr-xr-x  1 root root 5.4M May  2 09:02 phpunit-12.phar
+-rwxr-xr-x  1 root root 4.9M May  2 08:41 phpunit-9.phar
