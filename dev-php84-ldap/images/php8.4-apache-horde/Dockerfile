@@ -7,13 +7,16 @@ RUN apt-get update && apt-get install -y \
         libfreetype-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
+        libldap2-dev \
         git gh \
         mc \
         vim \
         locales-all \
         libicu72 libicu-dev \
-        && docker-php-ext-install gettext mysqli pdo pdo_mysql intl iconv \
-        && docker-php-ext-enable gettext mysqli pdo pdo_mysql intl iconv
+    && docker-php-ext-install gettext mysqli pdo pdo_mysql intl iconv ldap \
+    && docker-php-ext-enable gettext mysqli pdo pdo_mysql intl iconv ldap \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY --chmod=775 --chown=root *.sh /usr/local/bin/
 ENTRYPOINT ["/usr/local/bin/horde-entrypoint.sh"]
 CMD ["apache2-foreground"]
