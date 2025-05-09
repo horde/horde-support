@@ -36,7 +36,8 @@ services:
     volumes:
       - ./ldap-data:/var/lib/ldap
       - ./ldap-config:/etc/ldap/slapd.d/
-      - ./ldap-seed:/container/service/slapd/assets/config/bootstrap/ldif/custom
+     # - ./ldap-seed:/container/service/slapd/assets/config/bootstrap/ldif/custom
+     ## Mounting the seed dir currently breaks stuff
 
     env_file:
       - path: ./dev-setup.dist.env
