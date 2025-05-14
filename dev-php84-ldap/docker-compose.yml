@@ -58,3 +58,45 @@ services:
         required: "true"
       - path: ./dev-setup.local.env
         required: "false"
+
+## Imported from maintaina/containers
+
+#  dovecot:
+#    hostname: ${DOVECOT_HOSTNAME}
+#    image: ghcr.io/maintaina/containers/dovecot-horde:latest
+#    container_name: ${CONTAINER_PREFIX}horde_dovecot
+#    environment:
+#      - MYSQL_USER=${MARIADB_HORDE_USER}
+#      - MYSQL_PASSWORD=${MARIADB_HORDE_USER_PASSWORD}
+#      - MYSQL_DATABASE=${MARIADB_HORDE_DB}
+#      - MYSQL_HOSTNAME=${MARIADB_HOSTNAME}
+#      - EXPAND_CONFIGS=${EXPAND_CONFIGS}
+    ## Use a config volume to provide a completely different config and certs
+    # volumes:
+    #   - ./dovecot/dovecot.conf:/etc/dovecot/dovecot.conf
+    #   - ./dovecot/dovecot-sql.conf.ext:/etc/dovecot/dovecot-sql.conf.ext
+#    networks:
+#      - hordenet
+#    entrypoint: ["/usr/bin/tini", "--", "/usr/local/bin/entrypoint.sh"]
+#    command: ["/usr/sbin/dovecot", "-F"]
+## Uncomment to expose imap port to all host interfaces
+#    ports:
+#    - "143:143"
+
+ # postfix:
+#    hostname: ${POSTFIX_HOSTNAME}
+#    image: ghcr.io/maintaina/containers/postfix-horde:latest
+#    container_name: ${CONTAINER_PREFIX}horde_postfix
+#    environment:
+#      - MYSQL_USER=${MARIADB_HORDE_USER}
+#      - MYSQL_PASSWORD=${MARIADB_HORDE_USER_PASSWORD}
+#      - MYSQL_DATABASE=${MARIADB_HORDE_DB}
+#      - MYSQL_HOSTNAME=${MARIADB_HOSTNAME}
+#      - EXPAND_CONFIGS=${EXPAND_CONFIGS}
+#      - HORDE_DOMAIN=${HORDE_DOMAIN}
+#      - CONTAINER_PREFIX=${CONTAINER_PREFIX}
+#    # volumes:
+#    #   - ./postfix/mysql_virtual_mailbox_domains.cf:/etc/postfix/mysql_virtual_mailbox_domains.cf
+    #   - ./postfix/mysql_virtual_mailbox_maps.cf:/etc/postfix/mysql_virtual_mailbox_maps.cf
+#    networks:
+#      - hordenet

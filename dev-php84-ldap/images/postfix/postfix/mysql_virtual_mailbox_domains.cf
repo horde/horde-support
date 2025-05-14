@@ -1,0 +1,5 @@
+user = postfix
+password = postfix
+hosts = localhost
+dbname = postfix
+query = SELECT 1 FROM postfix_domains WHERE name='%s'

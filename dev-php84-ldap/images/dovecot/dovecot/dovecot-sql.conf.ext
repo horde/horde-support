@@ -1,0 +1,8 @@
+driver = mysql
+
+connect = host=horde_db dbname=horde user=hordedbuser password=horde
+default_pass_scheme = SSHA
+user_query = SELECT user_uid AS username, 'horde.dev.local' as domain, user_pass as password FROM horde_users where user_uid= '%n'
+password_query = SELECT user_uid AS username, 'horde.dev.local' as domain, user_pass as password FROM horde_users where user_uid= '%n'
+iterate_query = SELECT user_uid AS username, 'horde.dev.local' as domain FROM horde
+

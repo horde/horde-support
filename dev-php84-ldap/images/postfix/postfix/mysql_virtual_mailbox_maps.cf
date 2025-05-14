@@ -1,0 +1,5 @@
+user = postfix
+password = postfix
+hosts = localhost
+dbname = postfix
+query = SELECT 1 FROM horde_users, postfix_domains WHERE user_uid='%u' AND name='%d'
