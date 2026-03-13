@@ -1,0 +1,46 @@
+{
+    "name": "horde/bundle",
+    "description": "A base project for a horde installation",
+    "type": "project",
+    "require": {
+        "composer-plugin-api": "^2.2",
+        "horde/horde-installer-plugin": "^3 || ^2.5.1 || dev-FRAMEWORK_6_0 || dev-master",
+        "horde/horde": "^6 || dev-FRAMEWORK_6_0",
+        "horde/routes": "^3 || dev-FRAMEWORK_6_0",
+        "horde/hordectl": "dev-FRAMEWORK_6_0",
+        "pear/console_color2": "^0.1.2",
+        "pear/console_table": "^1.3",
+        "horde/imp": "dev-FRAMEWORK_6_0",
+        "horde/kronolith": "dev-FRAMEWORK_6_0",
+        "horde/turba": "dev-FRAMEWORK_6_0",
+        "horde/nag": "dev-FRAMEWORK_6_0",
+        "horde/activesync": "dev-FRAMEWORK_6_0",
+        "horde/ingo": "dev-FRAMEWORK_6_0",
+        "horde/components": "dev-FRAMEWORK_6_0"
+    },
+    "require-dev": {
+        "horde/test": "dev-FRAMEWORK_6_0"
+    },
+    "license": "GPL-3.0-only",
+    "authors": [
+        {
+            "name": "Ralf Lang",
+            "email": "ralf.lang@ralf-lang.de"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "installer-types": [
+            "horde-library",
+            "horde-application"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "horde/horde-installer-plugin": true
+        }
+    }
+}
+
+

@@ -8,13 +8,13 @@ RUN apt-get update && apt-get install -y \
         libjpeg62-turbo-dev \
         libpng-dev \
         libldap2-dev \
-        git gh \
+        wget git gh \
         mc \
         vim \
         locales-all \
-        libicu72 libicu-dev \
-    && docker-php-ext-install gettext mysqli pdo pdo_mysql intl iconv ldap \
-    && docker-php-ext-enable gettext mysqli pdo pdo_mysql intl iconv ldap \
+        libicu76 libicu-dev \
+    && docker-php-ext-install gettext mysqli pdo pdo_mysql intl iconv bcmath ldap \
+    && docker-php-ext-enable gettext mysqli pdo pdo_mysql intl iconv bcmath ldap \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --chmod=775 --chown=root *.sh /usr/local/bin/

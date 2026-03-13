@@ -91,7 +91,7 @@ In case horde does not come up within reasonable time, you can run these command
 
 Check what's up
 
-docker compose logs horde_apache
+docker compose logs php-apache84
 
 dev-php84-ldap/00-prechecks.sh 
 ✅ Found GITHUB_TOKEN variable
