@@ -15,7 +15,7 @@ if [ ! -f /usr/local/tools/horde-components.phar ]; then
   /usr/local/bin/01-install-tools.sh
 fi
 
-if [ ! -d /srv/git/horde ]; then
+if [ ! -d /srv/git/git ]; then
   /usr/local/bin/02-refresh-git-checkout.sh
 fi
 
@@ -34,5 +34,5 @@ echo "✅ Linked all phar tools to /usr/local/bin"
 # Delegate towards Apache
 export APACHE_RUN_USER=horde
 export APACHE_RUN_GROUP=horde
-exec /usr/local/bin/apache2-foreground
+exec "$@"
 echo "Why am I here?"
