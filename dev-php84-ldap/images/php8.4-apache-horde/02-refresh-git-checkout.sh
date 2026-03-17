@@ -1,4 +1,4 @@
 #!/bin/bash
-runuser -u horde -m -- /usr/local/bin/horde-components.phar github-clone-org
+runuser -l horde -w GITHUB_TOKEN -c 'cd /srv/git && /usr/local/tools/horde-components.phar github-clone-org'
 echo "✅ Cloned all horde components from github"
 
